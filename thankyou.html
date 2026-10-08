@@ -10,11 +10,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═════ TOKENS (identical to index / login) ═════ */
+/* ═════ TOKENS ═════ */
 :root{
   --red:#E40000;--red-dk:#B20000;--red-lt:#FFE5E5;--red-soft:#FFF3F3;
   --ink:#0F0F12;--ink-2:#4A4A52;--ink-3:#7A7A82;
-  --bg:#FFFFFF;--surf:#FFFFFF;--surf-lo:#F5F5F8;--line:#E8E8EC;
+  --bg:#FFFFFF;--surf:#FFFFFF;--surf-lo:#F5F5F8;--surf-mid:#EFEFF3;--line:#E8E8EC;
   --ok:#1A7F37;--ok-soft:#E8F9EE;
 
   --container:560px;
@@ -47,13 +47,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
 :focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:6px}
 
 /* ═════ HEADER ═════ */
-.header{
-  background:#fff;border-bottom:1px solid var(--line);
-  position:sticky;top:0;z-index:10;
-}
+.header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
 .header-in{
   max-width:var(--container);margin-inline:auto;
-  padding:14px var(--pad-x);
+  padding:0 var(--pad-x);
   display:flex;align-items:center;gap:var(--g-3);
   height:var(--h-header);
 }
@@ -89,7 +86,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
   display:flex;flex-direction:column;gap:var(--g-4);
 }
 
-/* ═════ SUCCESS BLOCK ═════ */
+/* ═════ SUCCESS ═════ */
 .success{
   display:flex;flex-direction:column;align-items:center;
   gap:var(--g-3);
@@ -163,46 +160,58 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
 
 .divider{height:1px;background:var(--line)}
 
-/* Summary rows */
-.rows{padding:var(--g-1) var(--g-4)}
+/* ═════ SUMMARY ROWS (all share identical grid) ═════ */
+.rows{
+  display:flex;flex-direction:column;
+  padding:0 var(--g-4);
+}
 .row{
-  display:flex;align-items:center;justify-content:space-between;
+  display:grid;
+  grid-template-columns:auto 1fr;          /* label → value, value right-aligned */
+  align-items:center;
   gap:var(--g-3);
   padding:12px 0;
   border-bottom:1px dashed var(--line);
   font-size:13px;
+  min-width:0;
 }
 .row:last-child{border-bottom:none}
+
 .row-k{
   display:inline-flex;align-items:center;gap:8px;
   color:var(--ink-2);font-weight:500;
-  flex-shrink:0;line-height:1.2;
+  line-height:1.2;
+  min-width:0;
 }
 .row-k svg{flex-shrink:0;opacity:.5;color:var(--ink-3)}
+.row-k span{white-space:nowrap}
+
 .row-v{
   font-family:'DM Mono',ui-monospace,monospace;
   font-size:12.5px;font-weight:700;color:var(--ink);
-  text-align:right;word-break:break-word;
+  text-align:right;
+  word-break:break-word;
   line-height:1.2;
+  justify-self:end;
 }
 
-/* Total row */
-.total{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:var(--g-3);
-  margin:0 calc(var(--g-4) * -1);
-  padding:14px var(--g-4);
-  background:#FAFAFC;
+/* ── Deposit row — same grid, only color/weight changes ── */
+.row.deposit{
+  padding:14px 0;
+  border-bottom:none;
   border-top:1px solid var(--line);
+  background:linear-gradient(180deg, transparent 0%, #FAFAFC 100%);
+  margin:0 calc(var(--g-4) * -1);
+  padding-left:var(--g-4);
+  padding-right:var(--g-4);
 }
-.total-k{
-  font-size:13px;font-weight:700;color:var(--ink);
-  line-height:1;
+.row.deposit .row-k{
+  color:var(--ink);font-weight:700;font-size:13.5px;
 }
-.total-v{
+.row.deposit .row-v{
   font-family:'Space Grotesk',sans-serif;
-  font-size:19px;font-weight:700;letter-spacing:-.02em;
-  color:var(--red);line-height:1;
+  font-size:19px;font-weight:800;letter-spacing:-.02em;
+  color:var(--red);
 }
 
 /* ═════ NEXT STEPS ═════ */
@@ -327,7 +336,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/>
           </svg>
-          Numéro Airtel
+          <span>Numéro Airtel</span>
         </span>
         <span class="row-v" id="rPhone">—</span>
       </div>
@@ -337,7 +346,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
           </svg>
-          Paiement quotidien
+          <span>Paiement quotidien</span>
         </span>
         <span class="row-v" id="rDaily">—</span>
       </div>
@@ -347,7 +356,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/>
           </svg>
-          Durée du plan
+          <span>Durée du plan</span>
         </span>
         <span class="row-v" id="rDays">—</span>
       </div>
@@ -357,15 +366,22 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
           </svg>
-          Prix total
+          <span>Prix total</span>
         </span>
         <span class="row-v" id="rTotal">—</span>
       </div>
-    </div>
 
-    <div class="total">
-      <span class="total-k">Acompte payé</span>
-      <span class="total-v" id="rDeposit">—</span>
+      <!-- Deposit row — same grid, aligned right -->
+      <div class="row deposit">
+        <span class="row-k">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          <span>Acompte payé</span>
+        </span>
+        <span class="row-v" id="rDeposit">—</span>
+      </div>
     </div>
   </section>
 
@@ -473,7 +489,7 @@ setText('rDeposit',  forfait.deposit || '—');
 
 /* ── Load product image ───────────────────────── */
 var img  = document.getElementById('pImg');
-var file = IMG[forfait.name];
+var file = forfait.img || IMG[forfait.name];
 
 if (file){
   img.src = 'assets/' + file;
