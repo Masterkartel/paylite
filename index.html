@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#E40000">
-<title>PayLite — Vos appareils et motos avec un petit acompte</title>
+<title>DigiRoues — Vos appareils et motos avec un petit acompte</title>
 <meta name="description" content="Choisissez un téléphone ou une moto, versez un petit acompte et payez le reste en mensualités quotidiennes faciles.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════ DESIGN TOKENS ═══════════ */
 :root{
   --red:#E40000;--red-dk:#B20000;--red-lt:#FFE5E5;--red-soft:#FFF3F3;
   --ink:#0F0F12;--ink-2:#4A4A52;--ink-3:#7A7A82;
@@ -25,21 +24,18 @@
   --g-1:4px;--g-2:8px;--g-3:12px;--g-4:16px;--g-5:20px;--g-6:24px;
   --g-7:32px;--g-8:40px;--g-9:48px;--g-10:64px;
 
-  --r-xs:6px;--r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:24px;--r-full:999px;
+  --r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:24px;--r-full:999px;
 
   --h-input:52px;--h-btn:44px;--h-btn-lg:48px;--h-header:64px;
   --ease:cubic-bezier(.2,0,0,1);
 }
-
-/* ═══════════ RESET ═══════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   font-size:15px;line-height:1.55;color:var(--ink);background:var(--bg);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;overscroll-behavior-y:none;
-  text-rendering:optimizeLegibility;
+  overflow-x:hidden;overscroll-behavior-y:none;text-rendering:optimizeLegibility;
 }
 img,svg{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
@@ -47,23 +43,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
 input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:4px}
 
-/* ═══════════ LAYOUT PRIMITIVES ═══════════ */
 .container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--pad-x)}
-.stack{display:flex;flex-direction:column}
 .row{display:flex;align-items:center}
-.row-between{display:flex;align-items:center;justify-content:space-between}
 
-/* ═══════════ HEADER ═══════════ */
+/* ═════ HEADER ═════ */
 .header{
   position:sticky;top:0;z-index:30;
   background:rgba(255,255,255,.88);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
-.header-in{
-  display:flex;align-items:center;justify-content:space-between;
-  height:var(--h-header);gap:var(--g-4);
-}
+.header-in{display:flex;align-items:center;justify-content:space-between;height:var(--h-header);gap:var(--g-4)}
 .brand{display:flex;align-items:center;gap:var(--g-3);min-width:0}
 .brand-mark{
   display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;
@@ -78,7 +68,7 @@ input,select{font:inherit;color:inherit}
 .nav a{font-size:14px;font-weight:500;color:var(--ink-2);transition:color .15s}
 .nav a:hover{color:var(--ink)}
 
-/* ═══════════ BUTTONS ═══════════ */
+/* ═════ BUTTONS ═════ */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:var(--g-2);
   height:var(--h-btn);padding-inline:var(--g-6);
@@ -95,20 +85,16 @@ input,select{font:inherit;color:inherit}
 .btn-lg{height:var(--h-btn-lg);padding-inline:var(--g-7);font-size:15px}
 @media(max-width:520px){.btn-lg{width:100%}}
 
-/* ═══════════ HERO ═══════════ */
+/* ═════ HERO ═════ */
 .hero{border-bottom:1px solid var(--line)}
-.hero-in{
-  display:grid;gap:var(--g-8);
-  padding-block:var(--pad-y);
-}
+.hero-in{display:grid;gap:var(--g-8);padding-block:var(--pad-y)}
 @media(min-width:1024px){
   .hero-in{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:var(--g-10);align-items:center}
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:var(--g-2);
   background:#fff;border:1px solid var(--line);border-radius:var(--r-full);
-  padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--red);
-  line-height:1;
+  padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--red);line-height:1;
 }
 .hero-eyebrow svg{width:14px;height:14px;flex-shrink:0}
 .hero h1{
@@ -130,29 +116,35 @@ input,select{font:inherit;color:inherit}
 .stats > div{display:flex;flex-direction:column;gap:2px}
 .stats dd{
   font-family:'Space Grotesk',sans-serif;font-weight:700;
-  font-size:clamp(22px,3vw,28px);letter-spacing:-.02em;line-height:1.1;
-  order:-1;
+  font-size:clamp(22px,3vw,28px);letter-spacing:-.02em;line-height:1.1;order:-1;
 }
 .stats dt{font-size:12.5px;line-height:1.4;color:var(--ink-3)}
 
-/* Hero feature grid — proper 2×2, staggered columns */
+/* ═════ 2×2 FEATURE GRID (FIXED ALIGNMENT) ═════ */
 .features{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:var(--g-3);padding-bottom:var(--g-6);
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  grid-auto-rows:1fr;
+  gap:var(--g-3);
 }
 @media(min-width:640px){.features{gap:var(--g-4)}}
-.features > .fcard:nth-child(even){transform:translateY(var(--g-6))}
-@media(min-width:640px){.features > .fcard:nth-child(even){transform:translateY(var(--g-7))}}
+
 .fcard{
-  display:flex;flex-direction:column;gap:var(--g-3);
-  background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);
+  display:flex;
+  flex-direction:column;
+  gap:var(--g-3);
+  height:100%;
   padding:var(--g-5);
+  background:var(--surf);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
   box-shadow:0 1px 2px rgba(15,15,18,.03);
 }
 .fcard-icon{
-  display:grid;place-items:center;width:38px;height:38px;
-  border-radius:var(--r-sm);background:var(--red-lt);color:var(--red);
-  flex-shrink:0;
+  display:grid;place-items:center;
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:var(--r-sm);
+  background:var(--red-lt);color:var(--red);
 }
 .fcard-icon svg{width:18px;height:18px}
 .fcard h3{
@@ -161,12 +153,9 @@ input,select{font:inherit;color:inherit}
 }
 .fcard p{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
 
-/* ═══════════ OFFERS ═══════════ */
+/* ═════ OFFERS ═════ */
 .offers{padding-block:var(--pad-y)}
-.offers-head{
-  display:grid;gap:var(--g-6);
-  margin-bottom:var(--g-7);
-}
+.offers-head{display:grid;gap:var(--g-6);margin-bottom:var(--g-7)}
 @media(min-width:760px){
   .offers-head{grid-template-columns:minmax(0,1fr) 260px;align-items:end;gap:var(--g-8)}
 }
@@ -174,13 +163,9 @@ input,select{font:inherit;color:inherit}
 .offers-head h2{
   margin-top:var(--g-2);
   font-family:'Space Grotesk',sans-serif;font-weight:700;
-  font-size:clamp(24px,4.6vw,38px);line-height:1.12;letter-spacing:-.025em;
-  text-wrap:balance;
+  font-size:clamp(24px,4.6vw,38px);line-height:1.12;letter-spacing:-.025em;text-wrap:balance;
 }
-.offers-head .desc{
-  margin-top:var(--g-3);max-width:56ch;
-  font-size:14.5px;line-height:1.6;color:var(--ink-2);
-}
+.offers-head .desc{margin-top:var(--g-3);max-width:56ch;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
 .select{position:relative}
 .select select{
   appearance:none;-webkit-appearance:none;
@@ -195,30 +180,23 @@ input,select{font:inherit;color:inherit}
   position:absolute;right:18px;top:50%;transform:translateY(-50%);
   width:16px;height:16px;color:var(--ink-3);pointer-events:none;
 }
-
 .chips{display:flex;flex-wrap:wrap;gap:var(--g-2);margin-bottom:var(--g-7)}
 .chip{
   height:36px;padding-inline:var(--g-4);border-radius:var(--r-full);
   background:#fff;border:1px solid var(--line);
-  font-size:13px;font-weight:500;color:var(--ink-2);
-  transition:all .15s;
+  font-size:13px;font-weight:500;color:var(--ink-2);transition:all .15s;
 }
 .chip:hover{border-color:#D6D6DC;color:var(--ink)}
 .chip:active{transform:scale(.96)}
 .chip.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
 
-/* ═══════════ PRODUCT GRID ═══════════ */
-.grid{
-  display:grid;grid-template-columns:1fr;
-  gap:var(--g-4);
-}
+/* ═════ PRODUCT GRID ═════ */
+.grid{display:grid;grid-template-columns:1fr;gap:var(--g-4)}
 @media(min-width:520px){.grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.grid{grid-template-columns:repeat(4,1fr);gap:var(--g-5)}}
-
 .pcard{
   display:grid;grid-template-rows:auto 1fr;
-  background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);
-  overflow:hidden;
+  background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
   box-shadow:0 1px 2px rgba(15,15,18,.03);
   transition:box-shadow .22s var(--ease),transform .22s var(--ease);
 }
@@ -232,25 +210,16 @@ input,select{font:inherit;color:inherit}
   font-size:10.5px;font-weight:700;letter-spacing:.02em;
   padding:5px 10px;border-radius:var(--r-full);line-height:1;
 }
-.pcard-body{
-  display:grid;grid-template-rows:auto auto 1fr auto;
-  gap:var(--g-4);padding:var(--g-5);
-}
+.pcard-body{display:grid;grid-template-rows:auto auto 1fr auto;gap:var(--g-4);padding:var(--g-5)}
 .pcard-title{
   font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;
   line-height:1.3;letter-spacing:-.01em;min-height:2.6em;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .price-duo{display:grid;grid-template-columns:1fr 1fr;gap:var(--g-2)}
-.price-cell{
-  display:flex;flex-direction:column;gap:3px;
-  padding:10px;border-radius:var(--r-sm);
-}
+.price-cell{display:flex;flex-direction:column;gap:3px;padding:10px;border-radius:var(--r-sm)}
 .price-cell small{font-size:10.5px;font-weight:500;letter-spacing:.02em}
-.price-cell strong{
-  font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;
-  letter-spacing:-.02em;line-height:1.1;
-}
+.price-cell strong{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .price-cell.dep{background:var(--surf-lo);color:var(--ink)}
 .price-cell.dep small{color:var(--ink-3)}
 .price-cell.day{background:var(--red-lt);color:var(--red)}
@@ -266,12 +235,9 @@ input,select{font:inherit;color:inherit}
 .pcard-foot-total b{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700;letter-spacing:-.01em}
 .pcard-foot .btn{flex-shrink:0}
 
-.note{
-  margin-top:var(--g-7);font-size:12.5px;line-height:1.6;
-  color:var(--ink-3);max-width:70ch;
-}
+.note{margin-top:var(--g-7);font-size:12.5px;line-height:1.6;color:var(--ink-3);max-width:70ch}
 
-/* ═══════════ HOW IT WORKS ═══════════ */
+/* ═════ HOW ═════ */
 .how{background:var(--surf-lo);border-top:1px solid var(--line);padding-block:var(--pad-y)}
 .how h2{
   margin-top:var(--g-2);
@@ -279,44 +245,37 @@ input,select{font:inherit;color:inherit}
   font-size:clamp(24px,4.6vw,34px);line-height:1.12;letter-spacing:-.025em;
   text-wrap:balance;max-width:24ch;
 }
-.steps{
-  list-style:none;margin-top:var(--g-8);
-  display:grid;gap:var(--g-4);
-}
+.steps{list-style:none;margin-top:var(--g-8);display:grid;gap:var(--g-4)}
 @media(min-width:640px){.steps{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.steps{grid-template-columns:repeat(4,1fr);gap:var(--g-5)}}
 .step{
-  display:flex;flex-direction:column;gap:var(--g-3);
-  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:var(--g-6);
+  display:flex;flex-direction:column;gap:var(--g-3);height:100%;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--g-6);
 }
 .step-n{
-  display:grid;place-items:center;width:36px;height:36px;
+  display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;
   border-radius:50%;background:var(--red);color:#fff;
-  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;
-  line-height:1;flex-shrink:0;
+  font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;line-height:1;
 }
 .step h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
 .step p{font-size:13px;line-height:1.55;color:var(--ink-3)}
 
-/* ═══════════ FOOTER ═══════════ */
+/* ═════ FOOTER ═════ */
 .footer{border-top:1px solid var(--line);padding-block:var(--g-6)}
 .footer-in{
   display:flex;flex-direction:column;align-items:center;gap:var(--g-2);
   text-align:center;font-size:12.5px;color:var(--ink-3);
 }
-@media(min-width:640px){
-  .footer-in{flex-direction:row;justify-content:space-between;text-align:left}
-}
+@media(min-width:640px){.footer-in{flex-direction:row;justify-content:space-between;text-align:left}}
 .footer-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--ink);font-size:14px}
 
-/* ═══════════ BOTTOM SHEET ═══════════ */
+/* ═════ SHEET ═════ */
 .overlay{
   position:fixed;inset:0;z-index:100;
   background:rgba(15,15,18,.5);
   backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-  display:none;align-items:flex-end;justify-content:center;
-  opacity:0;transition:opacity .25s var(--ease);
+  display:none;align-items:flex-end;justify-content:center;opacity:0;
+  transition:opacity .25s var(--ease);
 }
 .overlay.show{display:flex;opacity:1}
 .sheet{
@@ -350,20 +309,17 @@ input,select{font:inherit;color:inherit}
 .field{
   display:flex;align-items:center;gap:var(--g-3);
   height:var(--h-input);padding-inline:var(--g-4);
-  background:var(--surf-lo);border:1.5px solid var(--line);
-  border-radius:var(--r-md);
+  background:var(--surf-lo);border:1.5px solid var(--line);border-radius:var(--r-md);
   transition:border-color .15s,background .15s,box-shadow .15s;
 }
 .field:focus-within{border-color:var(--red);background:#fff;box-shadow:0 0 0 4px rgba(228,0,0,.1)}
 .field.invalid{border-color:#D32F2F;background:#FFF5F5}
 .field-flag{
   font-size:14px;font-weight:700;color:var(--ink);
-  flex-shrink:0;padding-right:var(--g-3);border-right:1px solid var(--line);
-  line-height:1;
+  flex-shrink:0;padding-right:var(--g-3);border-right:1px solid var(--line);line-height:1;
 }
 .field input{
-  flex:1;height:100%;min-width:0;
-  background:transparent;border:none;outline:none;
+  flex:1;height:100%;min-width:0;background:transparent;border:none;outline:none;
   font-family:'DM Mono',ui-monospace,'SF Mono',Menlo,monospace;
   font-size:17px;font-weight:600;letter-spacing:.06em;
   -webkit-user-select:text;user-select:text;
@@ -371,10 +327,7 @@ input,select{font:inherit;color:inherit}
 .field input::placeholder{color:#B5B5BE;font-weight:500;letter-spacing:.04em}
 .sheet-hint{font-size:11.5px;line-height:1.5;color:var(--ink-3);text-align:center}
 .sheet-hint b{color:var(--red);font-weight:700}
-.sheet-err{
-  min-height:18px;font-size:12px;font-weight:600;color:#D32F2F;
-  text-align:center;line-height:1.4;
-}
+.sheet-err{min-height:18px;font-size:12px;font-weight:600;color:#D32F2F;text-align:center;line-height:1.4}
 .sheet-btn{
   display:grid;place-items:center;width:100%;height:var(--h-input);
   border-radius:var(--r-full);background:var(--red);color:#fff;
@@ -384,20 +337,16 @@ input,select{font:inherit;color:inherit}
 }
 .sheet-btn:active:not(:disabled){transform:scale(.98);box-shadow:none}
 .sheet-btn:disabled{background:#ECECEF;color:#B5B5BE;box-shadow:none;cursor:not-allowed;transform:none}
-.sheet-cancel{
-  display:grid;place-items:center;width:100%;height:44px;
-  border-radius:var(--r-full);font-size:14px;font-weight:600;color:var(--ink-3);
-}
+.sheet-cancel{display:grid;place-items:center;width:100%;height:44px;border-radius:var(--r-full);font-size:14px;font-weight:600;color:var(--ink-3)}
 .sheet-cancel:active{background:var(--surf-lo)}
 </style>
 </head>
 
 <body>
 
-<!-- ═══════════ HEADER ═══════════ -->
 <header class="header">
   <div class="container header-in">
-    <a href="#" class="brand" aria-label="PayLite accueil">
+    <a href="#" class="brand" aria-label="DigiRoues accueil">
       <span class="brand-mark">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
@@ -405,7 +354,7 @@ input,select{font:inherit;color:inherit}
           <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
         </svg>
       </span>
-      <span class="brand-name">PayLite</span>
+      <span class="brand-name">DigiRoues</span>
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
@@ -419,526 +368,428 @@ input,select{font:inherit;color:inherit}
 
 <main>
 
-  <!-- ═══════════ HERO ═══════════ -->
-  <section class="hero">
-    <div class="container hero-in">
+<section class="hero">
+  <div class="container hero-in">
+    <div>
+      <span class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        Petit acompte · Paiements quotidiens faciles
+      </span>
 
-      <div>
-        <span class="hero-eyebrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
-            <path d="m9 12 2 2 4-4"/>
-          </svg>
-          Petit acompte · Paiements quotidiens faciles
+      <h1>Obtenez le téléphone ou la moto que vous voulez, jour après jour.</h1>
+
+      <p class="hero-desc">
+        Versez un petit acompte aujourd'hui et payez le reste en mensualités quotidiennes abordables.
+        Choisissez parmi iPhone, Samsung, Tecno, Infinix et motos.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#offers" class="btn btn-primary btn-lg">Voir les offres</a>
+        <a href="#how" class="btn btn-ghost btn-lg">Comment ça marche</a>
+      </div>
+
+      <dl class="stats">
+        <div><dd>18+</dd><dt>Appareils et motos</dt></div>
+        <div><dd>35 $</dd><dt>Acompte dès</dt></div>
+        <div><dd>0,65 $</dd><dt>Par jour dès</dt></div>
+      </dl>
+    </div>
+
+    <div class="features">
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
         </span>
+        <h3>Derniers appareils</h3>
+        <p>iPhone, Galaxy Ultra, Tecno et Infinix en stock.</p>
+      </div>
 
-        <h1>Obtenez le téléphone ou la moto que vous voulez, jour après jour.</h1>
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
+        </span>
+        <h3>Plans quotidiens</h3>
+        <p>Remboursez un peu chaque jour sur 12 à 18 mois.</p>
+      </div>
 
-        <p class="hero-desc">
-          Versez un petit acompte aujourd'hui et payez le reste en mensualités quotidiennes abordables.
-          Choisissez parmi iPhone, Samsung, Tecno, Infinix et motos.
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <h3>Aucuns frais cachés</h3>
+        <p>Acompte et montant quotidien clairs dès le départ.</p>
+      </div>
+
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+        </span>
+        <h3>Propriété totale</h3>
+        <p>Terminez votre plan et l'article est 100 % à vous.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="offers" class="offers">
+  <div class="container">
+    <div class="offers-head">
+      <div>
+        <p class="eyebrow">Choisissez une marque</p>
+        <h2>Parcourir les offres disponibles</h2>
+        <p class="desc">
+          Sélectionnez une catégorie pour voir les appareils et motos que vous pouvez emporter
+          aujourd'hui avec un petit acompte et des paiements quotidiens faciles.
         </p>
-
-        <div class="hero-cta">
-          <a href="#offers" class="btn btn-primary btn-lg">Voir les offres</a>
-          <a href="#how" class="btn btn-ghost btn-lg">Comment ça marche</a>
-        </div>
-
-        <dl class="stats">
-          <div><dd>18+</dd><dt>Appareils et motos</dt></div>
-          <div><dd>35 $</dd><dt>Acompte dès</dt></div>
-          <div><dd>0,65 $</dd><dt>Par jour dès</dt></div>
-        </dl>
       </div>
-
-      <div class="features">
-        <div class="fcard">
-          <span class="fcard-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
-          </span>
-          <h3>Derniers appareils</h3>
-          <p>iPhone, Galaxy Ultra, Tecno et Infinix en stock.</p>
-        </div>
-
-        <div class="fcard">
-          <span class="fcard-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
-          </span>
-          <h3>Plans quotidiens</h3>
-          <p>Remboursez un peu chaque jour sur 12 à 18 mois.</p>
-        </div>
-
-        <div class="fcard">
-          <span class="fcard-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-          </span>
-          <h3>Aucuns frais cachés</h3>
-          <p>Acompte et montant quotidien clairs dès le départ.</p>
-        </div>
-
-        <div class="fcard">
-          <span class="fcard-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
-          </span>
-          <h3>Propriété totale</h3>
-          <p>Terminez votre plan et l'article est 100 % à vous.</p>
-        </div>
+      <div class="select">
+        <label for="category" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Catégorie</label>
+        <select id="category">
+          <option value="all" selected>Toutes les offres</option>
+          <option value="iphone">iPhone</option>
+          <option value="samsung">Samsung</option>
+          <option value="tecno">Tecno</option>
+          <option value="infinix">Infinix</option>
+          <option value="motorcycle">Moto</option>
+        </select>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
       </div>
+    </div>
+
+    <div class="chips" id="chips" role="tablist">
+      <button class="chip active" data-cat="all" role="tab">Tous</button>
+      <button class="chip" data-cat="iphone" role="tab">iPhone</button>
+      <button class="chip" data-cat="samsung" role="tab">Samsung</button>
+      <button class="chip" data-cat="tecno" role="tab">Tecno</button>
+      <button class="chip" data-cat="infinix" role="tab">Infinix</button>
+      <button class="chip" data-cat="motorcycle" role="tab">Moto</button>
+    </div>
+
+    <div class="grid" id="productGrid">
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 12" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
+        <div class="pcard-media"><img src="assets/iphone-12.png" alt="iPhone 12" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 12</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>35 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,65 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>35 $</b> aujourd'hui, puis <b>0,65 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>269 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 12 Pro Max" data-price="297 $" data-deposit="45 $" data-daily="0,70 $" data-days="360">
+        <div class="pcard-media"><img src="assets/iphone-12-pro-max.png" alt="iPhone 12 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 12 Pro Max</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,70 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,70 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>297 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 13" data-price="310 $" data-deposit="40 $" data-daily="0,75 $" data-days="360">
+        <div class="pcard-media"><img src="assets/iphone-13.png" alt="iPhone 13" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 13</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>40 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>40 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>310 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 13 Pro Max" data-price="338 $" data-deposit="50 $" data-daily="0,80 $" data-days="360">
+        <div class="pcard-media"><img src="assets/iphone-13-pro-max.png" alt="iPhone 13 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 13 Pro Max</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>50 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,80 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>50 $</b> aujourd'hui, puis <b>0,80 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>338 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 14 Pro Max" data-price="397 $" data-deposit="55 $" data-daily="0,95 $" data-days="360">
+        <div class="pcard-media"><img src="assets/iphone-14-pro-max.png" alt="iPhone 14 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 14 Pro Max</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>55 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,95 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>55 $</b> aujourd'hui, puis <b>0,95 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>397 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S23 Ultra" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+        <div class="pcard-media"><img src="assets/galaxy-s23-ultra.png" alt="Samsung Galaxy S23 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy S23 Ultra</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S24 Ultra" data-price="356 $" data-deposit="50 $" data-daily="0,85 $" data-days="360">
+        <div class="pcard-media"><img src="assets/galaxy-s24-ultra.png" alt="Samsung Galaxy S24 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy S24 Ultra</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>50 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,85 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>50 $</b> aujourd'hui, puis <b>0,85 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>356 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S25 Ultra" data-price="425 $" data-deposit="65 $" data-daily="1,00 $" data-days="360">
+        <div class="pcard-media"><img src="assets/galaxy-s25-ultra.png" alt="Samsung Galaxy S25 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy S25 Ultra</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>65 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>1,00 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>65 $</b> aujourd'hui, puis <b>1,00 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>425 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
+        <div class="pcard-media"><img src="assets/tecno-camon-40.png" alt="Tecno Camon 40" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Camon 40</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>35 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,65 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>35 $</b> aujourd'hui, puis <b>0,65 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>269 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+        <div class="pcard-media"><img src="assets/tecno-camon-50.png" alt="Tecno Camon 50" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Camon 50</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
+        <div class="pcard-media"><img src="assets/tecno-spark-40.png" alt="Tecno Spark 40" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Spark 40</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>35 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,65 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>35 $</b> aujourd'hui, puis <b>0,65 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>269 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+        <div class="pcard-media"><img src="assets/tecno-spark-50.png" alt="Tecno Spark 50" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Spark 50</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 60 Pro Plus" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+        <div class="pcard-media"><img src="assets/infinix-hot-60-pro-plus.png" alt="Infinix Hot 60 Pro Plus" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Infinix Hot 60 Pro Plus</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 70 Pro Plus" data-price="361 $" data-deposit="55 $" data-daily="0,85 $" data-days="360">
+        <div class="pcard-media"><img src="assets/infinix-hot-70-pro-plus.png" alt="Infinix Hot 70 Pro Plus" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Infinix Hot 70 Pro Plus</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>55 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>0,85 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>55 $</b> aujourd'hui, puis <b>0,85 $</b> /jour pendant 360 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>361 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="Boxer 125cc" data-price="708 $" data-deposit="60 $" data-daily="1,20 $" data-days="540">
+        <div class="pcard-media"><img src="assets/boxer-125cc.png" alt="Boxer 125cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Boxer 125cc</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>60 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>1,20 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>60 $</b> aujourd'hui, puis <b>1,20 $</b> /jour pendant 540 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>708 $ *</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="Boxer 150cc" data-price="799 $" data-deposit="70 $" data-daily="1,35 $" data-days="540">
+        <div class="pcard-media"><img src="assets/boxer-150cc.png" alt="Boxer 150cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Boxer 150cc</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>70 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>1,35 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>70 $</b> aujourd'hui, puis <b>1,35 $</b> /jour pendant 540 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>799 $ *</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="TVS 125cc" data-price="735 $" data-deposit="60 $" data-daily="1,25 $" data-days="540">
+        <div class="pcard-media"><img src="assets/tvs-125cc.png" alt="TVS 125cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">TVS 125cc</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>60 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>1,25 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>60 $</b> aujourd'hui, puis <b>1,25 $</b> /jour pendant 540 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>735 $ *</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="TVS 150cc" data-price="826 $" data-deposit="70 $" data-daily="1,40 $" data-days="540">
+        <div class="pcard-media"><img src="assets/tvs-150cc.png" alt="TVS 150cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">TVS 150cc</h3>
+          <div class="price-duo">
+            <div class="price-cell dep"><small>Acompte</small><strong>70 $</strong></div>
+            <div class="price-cell day"><small>Par jour</small><strong>1,40 $</strong></div>
+          </div>
+          <p class="pcard-desc">Payez <b>70 $</b> aujourd'hui, puis <b>1,40 $</b> /jour pendant 540 jours.</p>
+          <div class="pcard-foot">
+            <div class="pcard-foot-total"><small>Prix total</small><b>826 $ *</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Demander</button>
+          </div>
+        </div>
+      </article>
 
     </div>
-  </section>
 
-  <!-- ═══════════ OFFERS ═══════════ -->
-  <section id="offers" class="offers">
-    <div class="container">
+    <p class="note">* Les prix des motos sont des estimations. Veuillez préciser l'acompte souhaité, le tarif journalier et la durée de location, et nous mettrons à jour ces offres en conséquence.</p>
+  </div>
+</section>
 
-      <div class="offers-head">
-        <div>
-          <p class="eyebrow">Choisissez une marque</p>
-          <h2>Parcourir les offres disponibles</h2>
-          <p class="desc">
-            Sélectionnez une catégorie pour voir les appareils et motos que vous pouvez emporter
-            aujourd'hui avec un petit acompte et des paiements quotidiens faciles.
-          </p>
-        </div>
+<section id="how" class="how">
+  <div class="container">
+    <p class="eyebrow">Comment ça marche</p>
+    <h2>Quatre étapes simples pour devenir propriétaire</h2>
 
-        <div class="select">
-          <label for="category" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Catégorie</label>
-          <select id="category">
-            <option value="all" selected>Toutes les offres</option>
-            <option value="iphone">iPhone</option>
-            <option value="samsung">Samsung</option>
-            <option value="tecno">Tecno</option>
-            <option value="infinix">Infinix</option>
-            <option value="motorcycle">Moto</option>
-          </select>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-        </div>
-      </div>
-
-      <div class="chips" id="chips" role="tablist">
-        <button class="chip active" data-cat="all" role="tab">Tous</button>
-        <button class="chip" data-cat="iphone" role="tab">iPhone</button>
-        <button class="chip" data-cat="samsung" role="tab">Samsung</button>
-        <button class="chip" data-cat="tecno" role="tab">Tecno</button>
-        <button class="chip" data-cat="infinix" role="tab">Infinix</button>
-        <button class="chip" data-cat="motorcycle" role="tab">Moto</button>
-      </div>
-
-      <div class="grid" id="productGrid">
-
-        <!-- iPhone 12 -->
-        <article class="pcard" data-cat="iphone" data-name="iPhone 12" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/iphone-12.png" alt="iPhone 12" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">iPhone 12</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>35 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,65 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>35 $</b> aujourd'hui, puis <b>0,65 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>269 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- iPhone 12 Pro Max -->
-        <article class="pcard" data-cat="iphone" data-name="iPhone 12 Pro Max" data-price="297 $" data-deposit="45 $" data-daily="0,70 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/iphone-12-pro-max.png" alt="iPhone 12 Pro Max" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">iPhone 12 Pro Max</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,70 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,70 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>297 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- iPhone 13 -->
-        <article class="pcard" data-cat="iphone" data-name="iPhone 13" data-price="310 $" data-deposit="40 $" data-daily="0,75 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/iphone-13.png" alt="iPhone 13" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">iPhone 13</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>40 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>40 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>310 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- iPhone 13 Pro Max -->
-        <article class="pcard" data-cat="iphone" data-name="iPhone 13 Pro Max" data-price="338 $" data-deposit="50 $" data-daily="0,80 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/iphone-13-pro-max.png" alt="iPhone 13 Pro Max" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">iPhone 13 Pro Max</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>50 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,80 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>50 $</b> aujourd'hui, puis <b>0,80 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>338 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- iPhone 14 Pro Max -->
-        <article class="pcard" data-cat="iphone" data-name="iPhone 14 Pro Max" data-price="397 $" data-deposit="55 $" data-daily="0,95 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/iphone-14-pro-max.png" alt="iPhone 14 Pro Max" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">iPhone 14 Pro Max</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>55 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,95 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>55 $</b> aujourd'hui, puis <b>0,95 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>397 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Samsung Galaxy S23 Ultra -->
-        <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S23 Ultra" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/galaxy-s23-ultra.png" alt="Samsung Galaxy S23 Ultra" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Samsung Galaxy S23 Ultra</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Samsung Galaxy S24 Ultra -->
-        <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S24 Ultra" data-price="356 $" data-deposit="50 $" data-daily="0,85 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/galaxy-s24-ultra.png" alt="Samsung Galaxy S24 Ultra" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Samsung Galaxy S24 Ultra</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>50 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,85 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>50 $</b> aujourd'hui, puis <b>0,85 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>356 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Samsung Galaxy S25 Ultra -->
-        <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S25 Ultra" data-price="425 $" data-deposit="65 $" data-daily="1,00 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/galaxy-s25-ultra.png" alt="Samsung Galaxy S25 Ultra" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Samsung Galaxy S25 Ultra</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>65 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>1,00 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>65 $</b> aujourd'hui, puis <b>1,00 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>425 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tecno Camon 40 -->
-        <article class="pcard" data-cat="tecno" data-name="Tecno Camon 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/tecno-camon-40.png" alt="Tecno Camon 40" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Tecno Camon 40</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>35 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,65 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>35 $</b> aujourd'hui, puis <b>0,65 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>269 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tecno Camon 50 -->
-        <article class="pcard" data-cat="tecno" data-name="Tecno Camon 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/tecno-camon-50.png" alt="Tecno Camon 50" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Tecno Camon 50</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tecno Spark 40 -->
-        <article class="pcard" data-cat="tecno" data-name="Tecno Spark 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/tecno-spark-40.png" alt="Tecno Spark 40" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Tecno Spark 40</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>35 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,65 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>35 $</b> aujourd'hui, puis <b>0,65 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>269 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Tecno Spark 50 -->
-        <article class="pcard" data-cat="tecno" data-name="Tecno Spark 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/tecno-spark-50.png" alt="Tecno Spark 50" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Tecno Spark 50</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Infinix Hot 60 Pro Plus -->
-        <article class="pcard" data-cat="infinix" data-name="Infinix Hot 60 Pro Plus" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/infinix-hot-60-pro-plus.png" alt="Infinix Hot 60 Pro Plus" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Infinix Hot 60 Pro Plus</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>45 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,75 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>45 $</b> aujourd'hui, puis <b>0,75 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>315 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Infinix Hot 70 Pro Plus -->
-        <article class="pcard" data-cat="infinix" data-name="Infinix Hot 70 Pro Plus" data-price="361 $" data-deposit="55 $" data-daily="0,85 $" data-days="360">
-          <div class="pcard-media">
-            <img src="assets/infinix-hot-70-pro-plus.png" alt="Infinix Hot 70 Pro Plus" loading="lazy" decoding="async">
-            <span class="pcard-tag">12 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Infinix Hot 70 Pro Plus</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>55 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>0,85 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>55 $</b> aujourd'hui, puis <b>0,85 $</b> /jour pendant 360 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>361 $</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Boxer 125cc -->
-        <article class="pcard" data-cat="motorcycle" data-name="Boxer 125cc" data-price="708 $" data-deposit="60 $" data-daily="1,20 $" data-days="540">
-          <div class="pcard-media">
-            <img src="assets/boxer-125cc.png" alt="Boxer 125cc" loading="lazy" decoding="async">
-            <span class="pcard-tag">18 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Boxer 125cc</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>60 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>1,20 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>60 $</b> aujourd'hui, puis <b>1,20 $</b> /jour pendant 540 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>708 $ *</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Boxer 150cc -->
-        <article class="pcard" data-cat="motorcycle" data-name="Boxer 150cc" data-price="799 $" data-deposit="70 $" data-daily="1,35 $" data-days="540">
-          <div class="pcard-media">
-            <img src="assets/boxer-150cc.png" alt="Boxer 150cc" loading="lazy" decoding="async">
-            <span class="pcard-tag">18 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">Boxer 150cc</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>70 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>1,35 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>70 $</b> aujourd'hui, puis <b>1,35 $</b> /jour pendant 540 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>799 $ *</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- TVS 125cc -->
-        <article class="pcard" data-cat="motorcycle" data-name="TVS 125cc" data-price="735 $" data-deposit="60 $" data-daily="1,25 $" data-days="540">
-          <div class="pcard-media">
-            <img src="assets/tvs-125cc.png" alt="TVS 125cc" loading="lazy" decoding="async">
-            <span class="pcard-tag">18 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">TVS 125cc</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>60 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>1,25 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>60 $</b> aujourd'hui, puis <b>1,25 $</b> /jour pendant 540 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>735 $ *</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- TVS 150cc -->
-        <article class="pcard" data-cat="motorcycle" data-name="TVS 150cc" data-price="826 $" data-deposit="70 $" data-daily="1,40 $" data-days="540">
-          <div class="pcard-media">
-            <img src="assets/tvs-150cc.png" alt="TVS 150cc" loading="lazy" decoding="async">
-            <span class="pcard-tag">18 mois</span>
-          </div>
-          <div class="pcard-body">
-            <h3 class="pcard-title">TVS 150cc</h3>
-            <div class="price-duo">
-              <div class="price-cell dep"><small>Acompte</small><strong>70 $</strong></div>
-              <div class="price-cell day"><small>Par jour</small><strong>1,40 $</strong></div>
-            </div>
-            <p class="pcard-desc">Payez <b>70 $</b> aujourd'hui, puis <b>1,40 $</b> /jour pendant 540 jours.</p>
-            <div class="pcard-foot">
-              <div class="pcard-foot-total"><small>Prix total</small><b>826 $ *</b></div>
-              <button class="btn btn-primary btn-sm ask-btn">Demander</button>
-            </div>
-          </div>
-        </article>
-
-      </div>
-
-      <p class="note">* Les prix des motos sont des estimations. Veuillez préciser l'acompte souhaité, le tarif journalier et la durée de location, et nous mettrons à jour ces offres en conséquence.</p>
-
-    </div>
-  </section>
-
-  <!-- ═══════════ HOW IT WORKS ═══════════ -->
-  <section id="how" class="how">
-    <div class="container">
-      <p class="eyebrow">Comment ça marche</p>
-      <h2>Quatre étapes simples pour devenir propriétaire</h2>
-
-      <ol class="steps">
-        <li class="step">
-          <span class="step-n">1</span>
-          <h3>Choisissez votre article</h3>
-          <p>Sélectionnez un téléphone ou une moto parmi les offres et vérifiez l'acompte et le montant quotidien.</p>
-        </li>
-        <li class="step">
-          <span class="step-n">2</span>
-          <h3>Payez l'acompte</h3>
-          <p>Versez le petit acompte unique pour réserver votre article et démarrer votre plan.</p>
-        </li>
-        <li class="step">
-          <span class="step-n">3</span>
-          <h3>Payez chaque jour</h3>
-          <p>Remboursez un petit montant fixe chaque jour sur la durée choisie de 12 à 18 mois.</p>
-        </li>
-        <li class="step">
-          <span class="step-n">4</span>
-          <h3>Devenez propriétaire</h3>
-          <p>Une fois votre plan terminé, l'article est 100 % à vous, sans rien de plus à payer.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
+    <ol class="steps">
+      <li class="step"><span class="step-n">1</span><h3>Choisissez votre article</h3><p>Sélectionnez un téléphone ou une moto parmi les offres et vérifiez l'acompte et le montant quotidien.</p></li>
+      <li class="step"><span class="step-n">2</span><h3>Payez l'acompte</h3><p>Versez le petit acompte unique pour réserver votre article et démarrer votre plan.</p></li>
+      <li class="step"><span class="step-n">3</span><h3>Payez chaque jour</h3><p>Remboursez un petit montant fixe chaque jour sur la durée choisie de 12 à 18 mois.</p></li>
+      <li class="step"><span class="step-n">4</span><h3>Devenez propriétaire</h3><p>Une fois votre plan terminé, l'article est 100 % à vous, sans rien de plus à payer.</p></li>
+    </ol>
+  </div>
+</section>
 
 </main>
 
 <footer class="footer">
   <div class="container footer-in">
-    <p class="footer-brand">PayLite</p>
+    <p class="footer-brand">DigiRoues</p>
     <p>Devenez propriétaire d'appareils et de motos avec un petit acompte et des paiements quotidiens.</p>
   </div>
 </footer>
 
-<!-- ═══════════ BOTTOM SHEET ═══════════ -->
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet" role="document">
     <div class="sheet-bar"></div>
-
     <div class="sheet-head">
       <h3 id="sheetTitle">Entrez votre numéro Airtel</h3>
       <p>Un code OTP vous sera envoyé par SMS pour confirmer le paiement.</p>
@@ -952,8 +803,7 @@ input,select{font:inherit;color:inherit}
     <div class="field" id="phoneField">
       <span class="field-flag">🇨🇩 +243</span>
       <input id="phoneInput" type="tel" inputmode="numeric" maxlength="9"
-             autocomplete="tel-national" placeholder="9XX XXX XXX"
-             aria-label="Numéro Airtel">
+             autocomplete="tel-national" placeholder="9XX XXX XXX" aria-label="Numéro Airtel">
     </div>
 
     <p class="sheet-hint">Le numéro doit commencer par <b>9</b> et contenir <b>9 chiffres</b>.</p>
@@ -968,7 +818,6 @@ input,select{font:inherit;color:inherit}
 <script>
 'use strict';
 
-/* ── Category filter ──────────────────────────── */
 var cards = document.querySelectorAll('#productGrid .pcard');
 var chips = document.querySelectorAll('#chips .chip');
 var categorySelect = document.getElementById('category');
@@ -985,7 +834,6 @@ function applyFilter(cat){
 chips.forEach(function(ch){ ch.addEventListener('click', function(){ applyFilter(this.dataset.cat); }); });
 if (categorySelect) categorySelect.addEventListener('change', function(){ applyFilter(this.value); });
 
-/* ── Phone sheet ──────────────────────────────── */
 var currentProduct = null;
 var overlay      = document.getElementById('overlay');
 var phoneField   = document.getElementById('phoneField');
@@ -1013,10 +861,7 @@ function closeSheet(){
   currentProduct = null;
   if (lastFocus && lastFocus.focus) lastFocus.focus();
 }
-
-function validatePhone(digits){
-  return digits.length === 9 && digits[0] === '9';
-}
+function validatePhone(digits){ return digits.length === 9 && digits[0] === '9'; }
 
 phoneInput.addEventListener('input', function(){
   var digits = this.value.replace(/\D/g, '').slice(0, 9);
@@ -1026,7 +871,6 @@ phoneInput.addEventListener('input', function(){
   errMsg.textContent = '';
   sheetConfirm.disabled = !ok;
 });
-
 phoneInput.addEventListener('keydown', function(e){
   if (e.key === 'Enter' && !sheetConfirm.disabled) confirmPhone();
   if (e.key === 'Escape') closeSheet();
@@ -1040,7 +884,6 @@ function confirmPhone(){
     return;
   }
   if (!currentProduct) return;
-
   var forfait = {
     name:    currentProduct.name,
     price:   currentProduct.price,
