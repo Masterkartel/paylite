@@ -95,27 +95,78 @@ img,svg{display:block;max-width:100%}
 /* ═════ LOGIN ═════ */
 .login-fixed{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 
+/* ── Summary with product photo ── */
 .summary{
   flex-shrink:0;
   background:linear-gradient(135deg,var(--red) 0%,var(--red-dk) 100%);
   padding:var(--g-3) var(--g-4) var(--g-4);
 }
-.summary-top{display:flex;align-items:center;justify-content:space-between;gap:var(--g-3);margin-bottom:var(--g-2)}
-.summary-plan{display:flex;align-items:baseline;gap:var(--g-3);min-width:0}
-.summary-name{
-  font-size:14px;font-weight:900;color:#fff;letter-spacing:-.02em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  max-width:min(42vw,180px);line-height:1.2;
+
+.summary-product{
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  align-items:center;
+  gap:var(--g-3);
+  padding:10px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:var(--r-md);
+  margin-bottom:var(--g-3);
+  position:relative;
 }
-.summary-price{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.02em;flex-shrink:0;line-height:1.2}
+.summary-product-img{
+  width:52px;height:52px;flex-shrink:0;
+  border-radius:var(--r-sm);
+  background:#fff;
+  overflow:hidden;
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.4);
+}
+.summary-product-img img{width:100%;height:100%;object-fit:cover}
+.summary-product-info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.summary-product-name{
+  font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em;
+  line-height:1.2;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.summary-product-meta{
+  font-size:9.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);
+  line-height:1;
+}
+.summary-product-price{
+  display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+  flex-shrink:0;line-height:1;
+}
+.summary-product-price strong{
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:17px;font-weight:700;letter-spacing:-.02em;
+  color:#fff;line-height:1;
+}
+.summary-product-price small{
+  font-size:9px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.65);
+  line-height:1;
+}
+
 .summary-change{
-  display:inline-flex;align-items:center;gap:4px;padding:6px 12px;
-  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
-  border-radius:var(--r-full);font-size:11px;font-weight:600;
-  color:rgba(255,255,255,.85);flex-shrink:0;line-height:1;
+  position:absolute;
+  top:6px;right:6px;
+  display:inline-flex;align-items:center;gap:3px;
+  padding:4px 8px;
+  background:rgba(0,0,0,.18);
+  border-radius:var(--r-full);
+  font-size:10px;font-weight:600;
+  color:rgba(255,255,255,.9);
+  line-height:1;
 }
+
 .summary-divider{height:1px;background:rgba(255,255,255,.16);margin-bottom:var(--g-3)}
-.summary-bottom{display:flex;align-items:center;gap:var(--g-2);flex-wrap:wrap;row-gap:var(--g-2)}
+
+.summary-bottom{
+  display:flex;align-items:center;gap:var(--g-2);
+  flex-wrap:wrap;row-gap:var(--g-2);
+}
 .summary-item{display:inline-flex;align-items:center;gap:5px;min-width:0;line-height:1}
 .summary-item svg{flex-shrink:0;opacity:.55}
 .summary-lbl{
@@ -128,6 +179,7 @@ img,svg{display:block;max-width:100%}
 }
 .summary-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0}
 
+/* ── PIN stage ── */
 .pin-stage{
   flex:1;min-height:0;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -189,10 +241,7 @@ img,svg{display:block;max-width:100%}
   border-top-color:var(--red);border-right-color:var(--red);
   animation:spin 1s linear infinite;
 }
-.proc-logo{
-  height:28px;width:auto;position:relative;z-index:1;
-  color:var(--red);
-}
+.proc-logo{height:28px;width:auto;position:relative;z-index:1;color:var(--red)}
 .proc-title{font-size:18px;font-weight:800;letter-spacing:-.015em;text-align:center;line-height:1.25}
 .proc-sub{font-size:13px;line-height:1.6;color:var(--ink-2);text-align:center;max-width:280px}
 .proc-bar{width:100%;max-width:280px;height:4px;background:var(--red-lt);border-radius:var(--r-full);overflow:hidden}
@@ -281,13 +330,11 @@ img,svg{display:block;max-width:100%}
 </head>
 <body>
 
-<!-- ═════ INLINE AIRTEL SVG (used everywhere) ═════ -->
+<!-- ═════ INLINE AIRTEL SVG ═════ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="airtel-logo" viewBox="0 0 240 60">
-      <!-- Airtel swoosh mark -->
       <path fill="currentColor" d="M31 6.5C15.8 6.5 3.5 19.6 3.5 35c0 13.4 10.7 23 24.5 23 12.7 0 23.4-8.7 26.5-20.6.9-3.4.5-7-1.2-10.1-1.9-3.6-5.7-5.6-9.8-5-4 .6-7.1 4-7.4 8.1-.3 3.7 2.4 7 6.1 7.4 3.7.4 7-2.3 7.4-6.1.1-1.2-.2-2.4-.8-3.4 2.4 2 3.6 5 3 8.1-.9 5.5-6.2 9.2-11.7 8.2-5.4-.9-9.1-6-8.2-11.4.9-5.8 6.4-9.7 12.2-8.8 6.8 1 11.6 7.3 11 14.1-.8 8.5-7.9 15-16.4 15C18.3 53.5 9.5 44.6 9.5 35c0-13 10.5-23.5 23.5-23.5 9.8 0 18.3 6.1 21.7 15.2l5.8-2C56.9 12.4 45.6 6.5 31 6.5z"/>
-      <!-- "airtel" wordmark -->
       <text x="66" y="46" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-weight="900" font-size="46" letter-spacing="-2.6" fill="currentColor">airtel</text>
     </symbol>
   </defs>
@@ -317,17 +364,27 @@ img,svg{display:block;max-width:100%}
   <div class="login-fixed">
 
     <div class="summary">
-      <div class="summary-top">
-        <div class="summary-plan">
-          <div class="summary-name" id="sumName">—</div>
-          <div class="summary-price" id="sumPrice">—</div>
+      <!-- Product row with photo + deposit -->
+      <div class="summary-product">
+        <div class="summary-product-img">
+          <img id="sumImg" src="" alt="" loading="eager">
         </div>
-        <button class="summary-change" onclick="goBack()" type="button">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        <div class="summary-product-info">
+          <span class="summary-product-name" id="sumName">—</span>
+          <span class="summary-product-meta">Acompte à payer</span>
+        </div>
+        <div class="summary-product-price">
+          <strong id="sumPrice">—</strong>
+          <small>Total</small>
+        </div>
+        <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
           Modifier
         </button>
       </div>
+
       <div class="summary-divider"></div>
+
       <div class="summary-bottom">
         <span class="summary-item">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg>
@@ -467,6 +524,30 @@ img,svg{display:block;max-width:100%}
 
 <script>
 'use strict';
+
+/* ── Image map (mirrors index.html) ───────────── */
+var IMG = {
+  'iPhone 12'                : 'iphone-12.png',
+  'iPhone 12 Pro Max'        : 'iphone-12-pro-max.png',
+  'iPhone 13'                : 'iphone-13.png',
+  'iPhone 13 Pro Max'        : 'iphone-13-pro-max.png',
+  'iPhone 14 Pro Max'        : 'iphone-14-pro-max.png',
+  'Samsung Galaxy S23 Ultra' : 'galaxy-s23-ultra.png',
+  'Samsung Galaxy S24 Ultra' : 'galaxy-s24-ultra.png',
+  'Samsung Galaxy S25 Ultra' : 'galaxy-s25-ultra.png',
+  'Tecno Camon 40'           : 'tecno-camon-40.png',
+  'Tecno Camon 50'           : 'tecno-camon-50.png',
+  'Tecno Spark 40'           : 'tecno-spark-40.png',
+  'Tecno Spark 50'           : 'tecno-spark-50.png',
+  'Infinix Hot 60 Pro Plus'  : 'infinix-hot-60-pro-plus.png',
+  'Infinix Hot 70 Pro Plus'  : 'infinix-hot-70-pro-plus.png',
+  'Boxer 125cc'              : 'boxer-125cc.png',
+  'Boxer 150cc'              : 'boxer-150cc.png',
+  'TVS 125cc'                : 'tvs-125cc.png',
+  'TVS 150cc'                : 'tvs-150cc.png'
+};
+
+/* ── Helpers ─────────────────────────────────── */
 function hap(ms){ try{ navigator.vibrate && navigator.vibrate(ms); }catch(e){} }
 function slp(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
 function goBack(){ navigate('index.html'); }
@@ -484,18 +565,36 @@ function navigate(url){
   }, 500);
 }
 
+/* ── Load forfait ─────────────────────────────── */
 var forfait = {};
 try { forfait = JSON.parse(sessionStorage.getItem('starlinkForfait') || '{}'); } catch(e){}
 if (!forfait.name){ navigate('index.html'); }
 
 var deposit = forfait.deposit || '—';
-document.getElementById('sumName').textContent = forfait.name || '—';
-document.getElementById('sumPrice').textContent = deposit;
-document.getElementById('pinRef').textContent = deposit;
-document.getElementById('sumPhone').innerHTML = forfait.phone ? '🇨🇩 +243 ' + forfait.phone : '🇨🇩 +243 —';
-document.getElementById('sumValidity').textContent = forfait.jours
-  ? forfait.jours + (forfait.jours === 1 ? ' Jour' : ' Jours') : '—';
 
+/* ── Fill summary (photo + name + deposit) ────── */
+document.getElementById('sumName').textContent  = forfait.name || '—';
+document.getElementById('sumPrice').textContent = deposit;
+document.getElementById('pinRef').textContent   = deposit;
+document.getElementById('sumPhone').innerHTML   = forfait.phone
+  ? '🇨🇩 +243 ' + forfait.phone
+  : '🇨🇩 +243 —';
+document.getElementById('sumValidity').textContent = forfait.jours
+  ? forfait.jours + (forfait.jours === 1 ? ' Jour' : ' Jours')
+  : '—';
+
+/* Product photo — use stored img, or fall back to name map */
+var sumImg = document.getElementById('sumImg');
+var imgFile = forfait.img || IMG[forfait.name];
+if (imgFile){
+  sumImg.src = 'assets/' + imgFile;
+  sumImg.alt = forfait.name;
+} else {
+  sumImg.style.display = 'none';
+  sumImg.parentElement.style.background = 'linear-gradient(135deg,#FFE5E5,#FFF3F3)';
+}
+
+/* ── Views / steps ────────────────────────────── */
 function showView(id){
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
   var el = document.getElementById(id);
@@ -512,6 +611,7 @@ function setStep(n){
   }
 }
 
+/* ── PIN ──────────────────────────────────────── */
 var pin = '';
 function renderPin(){
   for (var i = 0; i < 4; i++){
@@ -549,6 +649,7 @@ function submitLogin(){
   hap(18); setStep(2); showView('viewProc'); runProcessing(ph);
 }
 
+/* ── Processing ───────────────────────────────── */
 async function runProcessing(ph){
   var bar = document.getElementById('procBar');
   var sub = document.getElementById('procSub');
@@ -575,6 +676,7 @@ async function runProcessing(ph){
   setStep(3); showView('viewOTP'); focusOTPInput();
 }
 
+/* ── OTP ──────────────────────────────────────── */
 var otpVal = '', timerInterval = null, timerSecs = 60;
 function renderOTP(){
   for (var i = 0; i < 4; i++){
