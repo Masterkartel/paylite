@@ -280,6 +280,8 @@ input,select{font:inherit;color:inherit}
   display:flex;flex-direction:column;gap:var(--g-4);
   box-shadow:0 -12px 40px rgba(15,15,18,.22);
   animation:sheet-in .32s var(--ease) both;
+  max-height:92dvh;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 @keyframes sheet-in{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 @media(min-width:640px){
@@ -287,7 +289,7 @@ input,select{font:inherit;color:inherit}
   .sheet{border-radius:var(--r-xl);animation:pop-in .26s var(--ease) both}
   @keyframes pop-in{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
 }
-.sheet-bar{width:40px;height:4px;border-radius:2px;background:var(--line);margin-inline:auto}
+.sheet-bar{width:40px;height:4px;border-radius:2px;background:var(--line);margin-inline:auto;flex-shrink:0}
 .sheet-head{display:flex;flex-direction:column;gap:var(--g-1);text-align:center}
 .sheet-head h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.015em}
 .sheet-head p{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
@@ -336,6 +338,38 @@ input,select{font:inherit;color:inherit}
   font-size:9.5px;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;color:rgba(122,0,0,.7);
   line-height:1;
+}
+
+/* ── Airtel Money balance notice ── */
+.sheet-notice{
+  display:grid;
+  grid-template-columns:22px 1fr;
+  gap:var(--g-3);
+  align-items:flex-start;
+  padding:12px 14px;
+  border-radius:var(--r-md);
+  background:#FFF8E6;
+  border:1px solid #FFE0A3;
+}
+.sheet-notice-icon{
+  display:grid;place-items:center;
+  width:22px;height:22px;flex-shrink:0;
+  border-radius:50%;
+  background:#F5A524;color:#fff;
+  margin-top:1px;
+}
+.sheet-notice-icon svg{width:12px;height:12px}
+.sheet-notice-txt{
+  font-size:12.5px;line-height:1.55;color:#6B5200;
+  text-wrap:pretty;
+}
+.sheet-notice-txt b{
+  color:#7A4D00;font-weight:800;
+  background:rgba(245,165,36,.18);
+  padding:1px 6px;border-radius:5px;
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:13px;
+  white-space:nowrap;
 }
 
 /* Phone field */
@@ -882,6 +916,21 @@ input,select{font:inherit;color:inherit}
       </div>
     </div>
 
+    <!-- Airtel Money balance notice -->
+    <div class="sheet-notice" role="note" aria-live="polite">
+      <span class="sheet-notice-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="8" x2="12" y2="13"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </span>
+      <p class="sheet-notice-txt">
+        Assurez-vous d'avoir au moins <b id="sheetRequiredDeposit">—</b>
+        dans votre compte Airtel Money avant de continuer.
+      </p>
+    </div>
+
     <div class="field" id="phoneField">
       <span class="field-flag">🇨🇩 +243</span>
       <input id="phoneInput" type="tel" inputmode="numeric" maxlength="9"
@@ -944,6 +993,7 @@ function openSheet(product){
 
   document.getElementById('sheetName').textContent  = product.name;
   document.getElementById('sheetPrice').textContent = product.deposit;
+  document.getElementById('sheetRequiredDeposit').textContent = product.deposit;
 
   if (product.img){
     sheetImg.src = 'assets/' + product.img;
