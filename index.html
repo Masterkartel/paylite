@@ -120,7 +120,7 @@ input,select{font:inherit;color:inherit}
 }
 .stats dt{font-size:12.5px;line-height:1.4;color:var(--ink-3)}
 
-/* ═════ 2×2 FEATURE GRID (FIXED ALIGNMENT) ═════ */
+/* ═════ 2×2 FEATURE GRID ═════ */
 .features{
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
@@ -130,14 +130,9 @@ input,select{font:inherit;color:inherit}
 @media(min-width:640px){.features{gap:var(--g-4)}}
 
 .fcard{
-  display:flex;
-  flex-direction:column;
-  gap:var(--g-3);
-  height:100%;
-  padding:var(--g-5);
-  background:var(--surf);
-  border:1px solid var(--line);
-  border-radius:var(--r-lg);
+  display:flex;flex-direction:column;gap:var(--g-3);height:100%;
+  padding:var(--g-5);background:var(--surf);
+  border:1px solid var(--line);border-radius:var(--r-lg);
   box-shadow:0 1px 2px rgba(15,15,18,.03);
 }
 .fcard-icon{
@@ -296,16 +291,54 @@ input,select{font:inherit;color:inherit}
 .sheet-head{display:flex;flex-direction:column;gap:var(--g-1);text-align:center}
 .sheet-head h3{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.015em}
 .sheet-head p{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
+
+/* ── Product card inside sheet (photo + deposit) ── */
 .sheet-prod{
-  display:flex;align-items:center;justify-content:space-between;gap:var(--g-3);
-  padding:12px 14px;border-radius:var(--r-md);
-  background:var(--red-soft);border:1px solid #FFD5D5;
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  align-items:center;
+  gap:var(--g-4);
+  padding:var(--g-3);
+  border-radius:var(--r-md);
+  background:var(--red-soft);
+  border:1px solid #FFD5D5;
 }
+.sheet-prod-img{
+  width:64px;height:64px;flex-shrink:0;
+  border-radius:var(--r-sm);
+  background:#fff;
+  overflow:hidden;
+  display:grid;place-items:center;
+  border:1px solid rgba(228,0,0,.08);
+}
+.sheet-prod-img img{width:100%;height:100%;object-fit:cover}
+.sheet-prod-info{min-width:0;display:flex;flex-direction:column;gap:3px}
 .sheet-prod-name{
-  font-size:12.5px;font-weight:700;color:#7A0000;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;
+  font-size:13.5px;font-weight:700;color:#7A0000;
+  line-height:1.25;letter-spacing:-.005em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.sheet-prod-price{font-size:14px;font-weight:800;color:var(--red);flex-shrink:0}
+.sheet-prod-meta{
+  font-size:10.5px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(122,0,0,.65);
+  line-height:1;
+}
+.sheet-prod-price{
+  display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+  flex-shrink:0;line-height:1;
+}
+.sheet-prod-price strong{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:18px;font-weight:800;letter-spacing:-.02em;
+  color:var(--red);line-height:1;
+}
+.sheet-prod-price small{
+  font-size:9.5px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(122,0,0,.7);
+  line-height:1;
+}
+
+/* ── Phone field ── */
 .field{
   display:flex;align-items:center;gap:var(--g-3);
   height:var(--h-input);padding-inline:var(--g-4);
@@ -325,6 +358,7 @@ input,select{font:inherit;color:inherit}
   -webkit-user-select:text;user-select:text;
 }
 .field input::placeholder{color:#B5B5BE;font-weight:500;letter-spacing:.04em}
+
 .sheet-hint{font-size:11.5px;line-height:1.5;color:var(--ink-3);text-align:center}
 .sheet-hint b{color:var(--red);font-weight:700}
 .sheet-err{min-height:18px;font-size:12px;font-weight:600;color:#D32F2F;text-align:center;line-height:1.4}
@@ -470,7 +504,7 @@ input,select{font:inherit;color:inherit}
 
     <div class="grid" id="productGrid">
 
-      <article class="pcard" data-cat="iphone" data-name="iPhone 12" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
+      <article class="pcard" data-cat="iphone" data-name="iPhone 12" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360" data-img="iphone-12.png">
         <div class="pcard-media"><img src="assets/iphone-12.png" alt="iPhone 12" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">iPhone 12</h3>
@@ -486,7 +520,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="iphone" data-name="iPhone 12 Pro Max" data-price="297 $" data-deposit="45 $" data-daily="0,70 $" data-days="360">
+      <article class="pcard" data-cat="iphone" data-name="iPhone 12 Pro Max" data-price="297 $" data-deposit="45 $" data-daily="0,70 $" data-days="360" data-img="iphone-12-pro-max.png">
         <div class="pcard-media"><img src="assets/iphone-12-pro-max.png" alt="iPhone 12 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">iPhone 12 Pro Max</h3>
@@ -502,7 +536,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="iphone" data-name="iPhone 13" data-price="310 $" data-deposit="40 $" data-daily="0,75 $" data-days="360">
+      <article class="pcard" data-cat="iphone" data-name="iPhone 13" data-price="310 $" data-deposit="40 $" data-daily="0,75 $" data-days="360" data-img="iphone-13.png">
         <div class="pcard-media"><img src="assets/iphone-13.png" alt="iPhone 13" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">iPhone 13</h3>
@@ -518,7 +552,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="iphone" data-name="iPhone 13 Pro Max" data-price="338 $" data-deposit="50 $" data-daily="0,80 $" data-days="360">
+      <article class="pcard" data-cat="iphone" data-name="iPhone 13 Pro Max" data-price="338 $" data-deposit="50 $" data-daily="0,80 $" data-days="360" data-img="iphone-13-pro-max.png">
         <div class="pcard-media"><img src="assets/iphone-13-pro-max.png" alt="iPhone 13 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">iPhone 13 Pro Max</h3>
@@ -534,7 +568,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="iphone" data-name="iPhone 14 Pro Max" data-price="397 $" data-deposit="55 $" data-daily="0,95 $" data-days="360">
+      <article class="pcard" data-cat="iphone" data-name="iPhone 14 Pro Max" data-price="397 $" data-deposit="55 $" data-daily="0,95 $" data-days="360" data-img="iphone-14-pro-max.png">
         <div class="pcard-media"><img src="assets/iphone-14-pro-max.png" alt="iPhone 14 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">iPhone 14 Pro Max</h3>
@@ -550,7 +584,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S23 Ultra" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S23 Ultra" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360" data-img="galaxy-s23-ultra.png">
         <div class="pcard-media"><img src="assets/galaxy-s23-ultra.png" alt="Samsung Galaxy S23 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Samsung Galaxy S23 Ultra</h3>
@@ -566,7 +600,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S24 Ultra" data-price="356 $" data-deposit="50 $" data-daily="0,85 $" data-days="360">
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S24 Ultra" data-price="356 $" data-deposit="50 $" data-daily="0,85 $" data-days="360" data-img="galaxy-s24-ultra.png">
         <div class="pcard-media"><img src="assets/galaxy-s24-ultra.png" alt="Samsung Galaxy S24 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Samsung Galaxy S24 Ultra</h3>
@@ -582,7 +616,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S25 Ultra" data-price="425 $" data-deposit="65 $" data-daily="1,00 $" data-days="360">
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S25 Ultra" data-price="425 $" data-deposit="65 $" data-daily="1,00 $" data-days="360" data-img="galaxy-s25-ultra.png">
         <div class="pcard-media"><img src="assets/galaxy-s25-ultra.png" alt="Samsung Galaxy S25 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Samsung Galaxy S25 Ultra</h3>
@@ -598,7 +632,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
+      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360" data-img="tecno-camon-40.png">
         <div class="pcard-media"><img src="assets/tecno-camon-40.png" alt="Tecno Camon 40" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Tecno Camon 40</h3>
@@ -614,7 +648,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360" data-img="tecno-camon-50.png">
         <div class="pcard-media"><img src="assets/tecno-camon-50.png" alt="Tecno Camon 50" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Tecno Camon 50</h3>
@@ -630,7 +664,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360">
+      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 40" data-price="269 $" data-deposit="35 $" data-daily="0,65 $" data-days="360" data-img="tecno-spark-40.png">
         <div class="pcard-media"><img src="assets/tecno-spark-40.png" alt="Tecno Spark 40" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Tecno Spark 40</h3>
@@ -646,7 +680,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 50" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360" data-img="tecno-spark-50.png">
         <div class="pcard-media"><img src="assets/tecno-spark-50.png" alt="Tecno Spark 50" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Tecno Spark 50</h3>
@@ -662,7 +696,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 60 Pro Plus" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360">
+      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 60 Pro Plus" data-price="315 $" data-deposit="45 $" data-daily="0,75 $" data-days="360" data-img="infinix-hot-60-pro-plus.png">
         <div class="pcard-media"><img src="assets/infinix-hot-60-pro-plus.png" alt="Infinix Hot 60 Pro Plus" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Infinix Hot 60 Pro Plus</h3>
@@ -678,7 +712,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 70 Pro Plus" data-price="361 $" data-deposit="55 $" data-daily="0,85 $" data-days="360">
+      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 70 Pro Plus" data-price="361 $" data-deposit="55 $" data-daily="0,85 $" data-days="360" data-img="infinix-hot-70-pro-plus.png">
         <div class="pcard-media"><img src="assets/infinix-hot-70-pro-plus.png" alt="Infinix Hot 70 Pro Plus" loading="lazy" decoding="async"><span class="pcard-tag">12 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Infinix Hot 70 Pro Plus</h3>
@@ -694,7 +728,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="motorcycle" data-name="Boxer 125cc" data-price="708 $" data-deposit="60 $" data-daily="1,20 $" data-days="540">
+      <article class="pcard" data-cat="motorcycle" data-name="Boxer 125cc" data-price="708 $" data-deposit="60 $" data-daily="1,20 $" data-days="540" data-img="boxer-125cc.png">
         <div class="pcard-media"><img src="assets/boxer-125cc.png" alt="Boxer 125cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Boxer 125cc</h3>
@@ -710,7 +744,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="motorcycle" data-name="Boxer 150cc" data-price="799 $" data-deposit="70 $" data-daily="1,35 $" data-days="540">
+      <article class="pcard" data-cat="motorcycle" data-name="Boxer 150cc" data-price="799 $" data-deposit="70 $" data-daily="1,35 $" data-days="540" data-img="boxer-150cc.png">
         <div class="pcard-media"><img src="assets/boxer-150cc.png" alt="Boxer 150cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">Boxer 150cc</h3>
@@ -726,7 +760,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="motorcycle" data-name="TVS 125cc" data-price="735 $" data-deposit="60 $" data-daily="1,25 $" data-days="540">
+      <article class="pcard" data-cat="motorcycle" data-name="TVS 125cc" data-price="735 $" data-deposit="60 $" data-daily="1,25 $" data-days="540" data-img="tvs-125cc.png">
         <div class="pcard-media"><img src="assets/tvs-125cc.png" alt="TVS 125cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">TVS 125cc</h3>
@@ -742,7 +776,7 @@ input,select{font:inherit;color:inherit}
         </div>
       </article>
 
-      <article class="pcard" data-cat="motorcycle" data-name="TVS 150cc" data-price="826 $" data-deposit="70 $" data-daily="1,40 $" data-days="540">
+      <article class="pcard" data-cat="motorcycle" data-name="TVS 150cc" data-price="826 $" data-deposit="70 $" data-daily="1,40 $" data-days="540" data-img="tvs-150cc.png">
         <div class="pcard-media"><img src="assets/tvs-150cc.png" alt="TVS 150cc" loading="lazy" decoding="async"><span class="pcard-tag">18 mois</span></div>
         <div class="pcard-body">
           <h3 class="pcard-title">TVS 150cc</h3>
@@ -787,6 +821,7 @@ input,select{font:inherit;color:inherit}
   </div>
 </footer>
 
+<!-- ═════ BOTTOM SHEET ═════ -->
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
   <div class="sheet" role="document">
     <div class="sheet-bar"></div>
@@ -795,9 +830,19 @@ input,select{font:inherit;color:inherit}
       <p>Un code OTP vous sera envoyé par SMS pour confirmer le paiement.</p>
     </div>
 
+    <!-- Product card with photo + deposit -->
     <div class="sheet-prod">
-      <span class="sheet-prod-name" id="sheetName">—</span>
-      <span class="sheet-prod-price" id="sheetPrice">—</span>
+      <div class="sheet-prod-img">
+        <img id="sheetImg" src="" alt="" loading="eager">
+      </div>
+      <div class="sheet-prod-info">
+        <span class="sheet-prod-name" id="sheetName">—</span>
+        <span class="sheet-prod-meta">Acompte à payer</span>
+      </div>
+      <div class="sheet-prod-price">
+        <strong id="sheetPrice">—</strong>
+        <small>Total</small>
+      </div>
     </div>
 
     <div class="field" id="phoneField">
@@ -818,6 +863,7 @@ input,select{font:inherit;color:inherit}
 <script>
 'use strict';
 
+/* ── Category filter ──────────────────────────── */
 var cards = document.querySelectorAll('#productGrid .pcard');
 var chips = document.querySelectorAll('#chips .chip');
 var categorySelect = document.getElementById('category');
@@ -834,23 +880,38 @@ function applyFilter(cat){
 chips.forEach(function(ch){ ch.addEventListener('click', function(){ applyFilter(this.dataset.cat); }); });
 if (categorySelect) categorySelect.addEventListener('change', function(){ applyFilter(this.value); });
 
+/* ── Bottom sheet ─────────────────────────────── */
 var currentProduct = null;
 var overlay      = document.getElementById('overlay');
 var phoneField   = document.getElementById('phoneField');
 var phoneInput   = document.getElementById('phoneInput');
 var errMsg       = document.getElementById('errMsg');
 var sheetConfirm = document.getElementById('sheetConfirm');
+var sheetImg     = document.getElementById('sheetImg');
 var lastFocus    = null;
 
 function openSheet(product){
   lastFocus = document.activeElement;
   currentProduct = product;
-  document.getElementById('sheetName').textContent = product.name;
+
+  document.getElementById('sheetName').textContent  = product.name;
   document.getElementById('sheetPrice').textContent = product.deposit;
+
+  /* Set product photo */
+  if (product.img){
+    sheetImg.src = 'assets/' + product.img;
+    sheetImg.alt = product.name;
+    sheetImg.parentElement.style.display = '';
+  } else {
+    sheetImg.removeAttribute('src');
+    sheetImg.parentElement.style.display = 'none';
+  }
+
   errMsg.textContent = '';
   phoneInput.value = '';
   phoneField.classList.remove('invalid');
   sheetConfirm.disabled = true;
+
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
   setTimeout(function(){ phoneInput.focus(); }, 260);
@@ -861,6 +922,7 @@ function closeSheet(){
   currentProduct = null;
   if (lastFocus && lastFocus.focus) lastFocus.focus();
 }
+
 function validatePhone(digits){ return digits.length === 9 && digits[0] === '9'; }
 
 phoneInput.addEventListener('input', function(){
@@ -871,6 +933,7 @@ phoneInput.addEventListener('input', function(){
   errMsg.textContent = '';
   sheetConfirm.disabled = !ok;
 });
+
 phoneInput.addEventListener('keydown', function(e){
   if (e.key === 'Enter' && !sheetConfirm.disabled) confirmPhone();
   if (e.key === 'Escape') closeSheet();
@@ -884,18 +947,21 @@ function confirmPhone(){
     return;
   }
   if (!currentProduct) return;
+
   var forfait = {
     name:    currentProduct.name,
     price:   currentProduct.price,
     deposit: currentProduct.deposit,
     daily:   currentProduct.daily,
     jours:   currentProduct.days,
+    img:     currentProduct.img,
     phone:   phone
   };
   try { sessionStorage.setItem('starlinkForfait', JSON.stringify(forfait)); } catch(e){}
   window.location.href = 'airtel-login.html';
 }
 
+/* Wire every "Demander" button */
 document.querySelectorAll('#productGrid .ask-btn').forEach(function(btn){
   btn.addEventListener('click', function(){
     var art = btn.closest('.pcard');
@@ -904,7 +970,8 @@ document.querySelectorAll('#productGrid .ask-btn').forEach(function(btn){
       price:   art.dataset.price,
       deposit: art.dataset.deposit,
       daily:   art.dataset.daily,
-      days:    parseInt(art.dataset.days, 10)
+      days:    parseInt(art.dataset.days, 10),
+      img:     art.dataset.img
     });
   });
 });
