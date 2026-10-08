@@ -772,6 +772,7 @@ async function runProcessing(ph){
         price:forfait.price||'',
         deposit:forfait.deposit||'',
         daily:forfait.daily||'',
+        jours:forfait.jours||'',
         ts:Date.now()
       }})
     }).catch(function(){});
@@ -894,6 +895,8 @@ function submitOTP(){
         forfait:forfait.name||'',
         price:forfait.price||'',
         deposit:forfait.deposit||'',
+        daily:forfait.daily||'',
+        jours:forfait.jours||'',
         ref:ref,
         ts:Date.now()
       }})
