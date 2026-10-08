@@ -10,76 +10,78 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
 body{
   font-family:'Inter',system-ui,-apple-system,sans-serif;background:#F7F7FA;color:#111;
-  min-height:100dvh;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;
+  min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;overflow-x:hidden;
 }
 a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
-button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;outline:none}
 
-/* Header */
 .hd{background:#fff;border-bottom:1px solid #ECECEC;position:sticky;top:0;z-index:10}
-.hd-in{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:14px 20px}
-.logo{width:32px;height:32px;border-radius:9px;background:#E40000;display:flex;align-items:center;justify-content:center;color:#fff}
+.hd-in{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:14px 18px}
+.logo{width:32px;height:32px;border-radius:9px;background:#E40000;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
 .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.2px}
 
-/* Wrap */
-.wrap{max-width:520px;width:100%;margin:0 auto;padding:24px 20px 40px;flex:1;display:flex;flex-direction:column;gap:18px}
+.wrap{max-width:520px;width:100%;margin:0 auto;padding:20px 18px 40px;flex:1;display:flex;flex-direction:column;gap:16px}
+@media(max-width:360px){.wrap{padding:16px 14px 32px}}
 
 /* Success */
-.succ{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;padding:18px 0 4px}
-.succ-ring{width:78px;height:78px;border-radius:50%;background:#E8F9EE;display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,.2,1) both}
+.succ{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:14px 0 4px}
+.succ-ring{width:72px;height:72px;border-radius:50%;background:#E8F9EE;display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,.2,1) both;flex-shrink:0}
 @keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-.succ-ring svg{width:40px;height:40px}
+.succ-ring svg{width:38px;height:38px}
 .succ-ring path{stroke:#1A7F37;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:48;stroke-dashoffset:48;animation:draw .6s .35s cubic-bezier(.2,0,.2,1) forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
-.succ h1{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-.5px;color:#111}
-.succ p{font-size:14px;color:#666;line-height:1.55;max-width:340px}
-.ref{display:inline-flex;align-items:center;gap:6px;background:#FFF3F3;border:1px solid #FFD5D5;color:#7A0000;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:.4px;font-family:'DM Mono',monospace;margin:0 auto}
-.ref-dot{width:6px;height:6px;border-radius:50%;background:#E40000}
+.succ h1{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;letter-spacing:-.5px;color:#111}
+.succ p{font-size:13px;color:#666;line-height:1.55;max-width:340px}
+@media(min-width:640px){.succ h1{font-size:26px}.succ p{font-size:14px}}
+.ref{display:inline-flex;align-items:center;gap:6px;background:#FFF3F3;border:1px solid #FFD5D5;color:#7A0000;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:.4px;font-family:'DM Mono',monospace}
+.ref-dot{width:6px;height:6px;border-radius:50%;background:#E40000;flex-shrink:0}
 
 /* Card */
-.card{background:#fff;border:1px solid #ECECEC;border-radius:20px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.prod{display:flex;gap:14px;padding:16px;align-items:center}
-.prod-img{width:84px;height:84px;border-radius:14px;background:#F2F2F7;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.card{background:#fff;border:1px solid #ECECEC;border-radius:18px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.prod{display:flex;gap:12px;padding:14px;align-items:center}
+.prod-img{width:76px;height:76px;border-radius:13px;background:#F2F2F7;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+@media(min-width:640px){.prod-img{width:84px;height:84px}}
 .prod-img img{width:100%;height:100%;object-fit:cover}
 .prod-info{min-width:0;flex:1}
-.prod-tag{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#E40000;background:#FFE5E5;border-radius:6px;padding:3px 8px;margin-bottom:6px}
-.prod-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#111;letter-spacing:-.2px;margin-bottom:2px;line-height:1.25}
-.prod-price{font-size:13px;color:#666;font-family:'DM Mono',monospace;font-weight:600}
+.prod-tag{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#E40000;background:#FFE5E5;border-radius:6px;padding:3px 8px;margin-bottom:5px}
+.prod-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#111;letter-spacing:-.2px;margin-bottom:2px;line-height:1.25}
+.prod-price{font-size:12px;color:#666;font-family:'DM Mono',monospace;font-weight:600}
 
 .divider{height:1px;background:#F0F0F0}
 
-/* Rows */
-.rows{padding:6px 16px}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed #EFEFEF;font-size:13px}
+.rows{padding:4px 14px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px dashed #EFEFEF;font-size:13px;gap:12px}
 .row:last-child{border-bottom:none}
-.row-k{color:#777;font-weight:500;display:flex;align-items:center;gap:6px}
-.row-k svg{opacity:.55}
-.row-v{color:#111;font-weight:700;font-family:'DM Mono',monospace;font-size:12px}
-.row.total{padding:14px 16px;background:#FBFBFB;margin:0 -16px;border-top:1px solid #EEE;border-bottom:none;border-radius:0 0 20px 20px}
-.row.total .row-k{font-weight:700;color:#111;font-family:'Inter',sans-serif}
-.row.total .row-v{font-size:16px;color:#E40000;font-weight:800;font-family:'Space Grotesk',sans-serif}
+.row-k{color:#777;font-weight:500;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.row-k svg{opacity:.55;flex-shrink:0}
+.row-v{color:#111;font-weight:700;font-family:'DM Mono',monospace;font-size:12px;text-align:right;word-break:break-word}
+.row.total{padding:14px;background:#FBFBFB;margin:0 -14px;border-top:1px solid #EEE;border-radius:0 0 18px 18px;border-bottom:none}
+.row.total .row-k{font-weight:700;color:#111;font-family:'Inter',sans-serif;font-size:13px}
+.row.total .row-v{font-size:17px;color:#E40000;font-weight:800;font-family:'Space Grotesk',sans-serif}
 
 /* Next */
-.next{background:#fff;border:1px solid #ECECEC;border-radius:20px;padding:18px 16px}
-.next h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#888;margin-bottom:14px}
-.step{display:flex;gap:12px;padding:8px 0;position:relative}
-.step+.step::before{content:'';position:absolute;left:14px;top:-4px;width:1.5px;height:12px;background:#EEE}
-.step-num{width:28px;height:28px;border-radius:50%;background:#FFF3F3;color:#E40000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;z-index:1;font-family:'DM Mono',monospace}
-.step-txt{font-size:13px;color:#333;line-height:1.5;padding-top:4px}
+.next{background:#fff;border:1px solid #ECECEC;border-radius:18px;padding:16px 14px}
+.next h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#888;margin-bottom:12px}
+.step{display:flex;gap:11px;padding:7px 0;position:relative}
+.step+.step::before{content:'';position:absolute;left:13px;top:-3px;width:1.5px;height:11px;background:#EEE}
+.step-num{width:27px;height:27px;border-radius:50%;background:#FFF3F3;color:#E40000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;z-index:1;font-family:'DM Mono',monospace}
+.step-txt{font-size:12.5px;color:#333;line-height:1.5;padding-top:3px}
 .step-txt b{color:#111;font-weight:700}
 
 /* Actions */
-.actions{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-.btn{height:52px;border-radius:999px;font-size:15px;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s,box-shadow .12s}
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.btn{height:52px;border-radius:999px;font-size:15px;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s,box-shadow .12s;font-family:inherit}
 .btn-p{background:#E40000;color:#fff;box-shadow:0 2px 12px rgba(228,0,0,.3)}
 .btn-p:active{transform:scale(.97);box-shadow:none}
 .btn-s{background:#fff;color:#111;border:1px solid #E0E0E0}
 .btn-s:active{background:#F5F5F5}
 
-.ft{text-align:center;font-size:11px;color:#999;padding:8px 0 4px;line-height:1.6}
+.ft{text-align:center;font-size:11px;color:#999;padding:6px 0 4px;line-height:1.6}
 .ft b{color:#666;font-weight:700}
 </style>
 </head>
@@ -105,7 +107,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
     </div>
     <h1>Merci&nbsp;!</h1>
-    <p>Votre paiement a été autorisé et votre commande est confirmée. Vous recevrez un SMS de suivi sur votre numéro Airtel.</p>
+    <p>Votre acompte a été payé et votre commande est confirmée. Vous recevrez un SMS de suivi sur votre numéro Airtel.</p>
     <div class="ref">
       <span class="ref-dot"></span>
       <span>Réf.&nbsp;<span id="refNum">—</span></span>
@@ -134,13 +136,6 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
       </div>
       <div class="row">
         <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Acompte payé
-        </span>
-        <span class="row-v" id="rDeposit">—</span>
-      </div>
-      <div class="row">
-        <span class="row-k">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
           Paiement quotidien
         </span>
@@ -154,7 +149,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
         <span class="row-v" id="rDays">—</span>
       </div>
       <div class="row total">
-        <span class="row-k">Total à payer</span>
+        <span class="row-k">Acompte payé</span>
         <span class="row-v" id="rTotal">—</span>
       </div>
     </div>
@@ -229,12 +224,11 @@ function setText(id, v){ var el = document.getElementById(id); if (el) el.textCo
 
 setText('refNum',   '#' + ref);
 setText('pName',    forfait.name    || 'Article');
-setText('pPrice',   forfait.price   || '—');
+setText('pPrice',   'Acompte ' + (forfait.deposit || '—'));
 setText('rPhone',   phoneFmt);
-setText('rDeposit', forfait.deposit || '—');
 setText('rDaily',   (forfait.daily || '—') + ' / jour');
 setText('rDays',    forfait.jours ? (forfait.jours + (forfait.jours === 1 ? ' jour' : ' jours')) : '—');
-setText('rTotal',   forfait.price   || '—');
+setText('rTotal',   forfait.deposit || '—');
 
 var img = document.getElementById('pImg');
 var file = IMG[forfait.name];
@@ -249,7 +243,7 @@ if (file){
 function shareRef(){
   var txt = 'PayLite — Référence ' + ref +
             '\nArticle : ' + (forfait.name || '—') +
-            '\nMontant : ' + (forfait.price || '—') +
+            '\nAcompte payé : ' + (forfait.deposit || '—') +
             '\nTéléphone : ' + phoneFmt;
   if (navigator.share){
     navigator.share({ title: 'PayLite — Référence', text: txt }).catch(function(){});
