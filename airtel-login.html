@@ -102,9 +102,34 @@ img,svg{display:block;max-width:100%}
   padding:var(--g-3) var(--g-4) var(--g-4);
 }
 
+/* Top row: label + modifier chip */
+.summary-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--g-3);
+  margin-bottom:var(--g-2);
+  padding-inline:2px;
+}
+.summary-head-label{
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.6);
+  line-height:1;
+}
+.summary-change{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 11px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:var(--r-full);
+  font-size:10.5px;font-weight:600;
+  color:rgba(255,255,255,.92);
+  line-height:1;
+}
+.summary-change:active{background:rgba(255,255,255,.22)}
+
+/* Product row */
 .summary-product{
   display:grid;
-  grid-template-columns:52px 1fr auto;
+  grid-template-columns:48px 1fr auto;
   align-items:center;
   gap:var(--g-3);
   padding:10px;
@@ -112,10 +137,9 @@ img,svg{display:block;max-width:100%}
   border:1px solid rgba(255,255,255,.18);
   border-radius:var(--r-md);
   margin-bottom:var(--g-3);
-  position:relative;
 }
 .summary-product-img{
-  width:52px;height:52px;flex-shrink:0;
+  width:48px;height:48px;flex-shrink:0;
   border-radius:var(--r-sm);
   background:#fff;
   overflow:hidden;
@@ -135,8 +159,8 @@ img,svg{display:block;max-width:100%}
   line-height:1;
 }
 .summary-product-price{
-  display:flex;flex-direction:column;align-items:flex-end;gap:2px;
-  flex-shrink:0;line-height:1;
+  display:flex;flex-direction:column;align-items:flex-end;gap:3px;
+  flex-shrink:0;line-height:1;padding-right:2px;
 }
 .summary-product-price strong{
   font-family:'DM Mono',ui-monospace,monospace;
@@ -146,18 +170,6 @@ img,svg{display:block;max-width:100%}
 .summary-product-price small{
   font-size:9px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:rgba(255,255,255,.65);
-  line-height:1;
-}
-
-.summary-change{
-  position:absolute;
-  top:6px;right:6px;
-  display:inline-flex;align-items:center;gap:3px;
-  padding:4px 8px;
-  background:rgba(0,0,0,.18);
-  border-radius:var(--r-full);
-  font-size:10px;font-weight:600;
-  color:rgba(255,255,255,.9);
   line-height:1;
 }
 
@@ -364,7 +376,19 @@ img,svg{display:block;max-width:100%}
   <div class="login-fixed">
 
     <div class="summary">
-      <!-- Product row with photo + deposit -->
+
+      <!-- Header row: label + modifier chip -->
+      <div class="summary-head">
+        <span class="summary-head-label">Votre commande</span>
+        <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier la commande">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          Modifier
+        </button>
+      </div>
+
+      <!-- Product row: photo + name + deposit -->
       <div class="summary-product">
         <div class="summary-product-img">
           <img id="sumImg" src="" alt="" loading="eager">
@@ -377,10 +401,6 @@ img,svg{display:block;max-width:100%}
           <strong id="sumPrice">—</strong>
           <small>Total</small>
         </div>
-        <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier">
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          Modifier
-        </button>
       </div>
 
       <div class="summary-divider"></div>
