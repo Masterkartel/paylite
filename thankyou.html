@@ -4,119 +4,314 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#E40000">
-<title>PayLite — Confirmation</title>
+<title>DigiRoues — Confirmation</title>
+<meta name="description" content="Votre acompte a été payé. Votre commande DigiRoues est confirmée.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%}
-body{
-  font-family:'Inter',system-ui,-apple-system,sans-serif;background:#F7F7FA;color:#111;
-  min-height:100vh;min-height:100dvh;-webkit-font-smoothing:antialiased;
-  display:flex;flex-direction:column;overflow-x:hidden;
+/* ═════ TOKENS (identical to index / login) ═════ */
+:root{
+  --red:#E40000;--red-dk:#B20000;--red-lt:#FFE5E5;--red-soft:#FFF3F3;
+  --ink:#0F0F12;--ink-2:#4A4A52;--ink-3:#7A7A82;
+  --bg:#FFFFFF;--surf:#FFFFFF;--surf-lo:#F5F5F8;--line:#E8E8EC;
+  --ok:#1A7F37;--ok-soft:#E8F9EE;
+
+  --container:560px;
+  --pad-x:clamp(16px,4vw,24px);
+  --pad-y:clamp(24px,6vw,40px);
+
+  --g-1:4px;--g-2:8px;--g-3:12px;--g-4:16px;--g-5:20px;--g-6:24px;
+  --g-7:32px;--g-8:40px;
+
+  --r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:24px;--r-full:999px;
+
+  --h-btn:52px;--h-header:60px;
+  --ease:cubic-bezier(.2,0,0,1);
 }
+
+/* ═════ RESET ═════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:15px;line-height:1.55;color:var(--ink);background:var(--surf-lo);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  min-height:100vh;min-height:100dvh;
+  display:flex;flex-direction:column;
+  overflow-x:hidden;text-rendering:optimizeLegibility;
+}
+img,svg{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
-img{display:block;max-width:100%}
-button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;outline:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outline:none;-webkit-user-select:none;user-select:none}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:6px}
 
-.hd{background:#fff;border-bottom:1px solid #ECECEC;position:sticky;top:0;z-index:10}
-.hd-in{max-width:520px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:14px 18px}
-.logo{width:32px;height:32px;border-radius:9px;background:#E40000;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:-.2px}
+/* ═════ HEADER ═════ */
+.header{
+  background:#fff;border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:10;
+}
+.header-in{
+  max-width:var(--container);margin-inline:auto;
+  padding:14px var(--pad-x);
+  display:flex;align-items:center;gap:var(--g-3);
+  height:var(--h-header);
+}
+.brand-mark{
+  display:grid;place-items:center;
+  width:34px;height:34px;flex-shrink:0;
+  border-radius:var(--r-sm);background:var(--red);color:#fff;
+}
+.brand-mark svg{width:18px;height:18px}
+.brand-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:16px;font-weight:700;letter-spacing:-.02em;
+  color:var(--ink);line-height:1;
+}
+.header-ref{
+  margin-left:auto;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;
+  background:var(--surf-lo);border:1px solid var(--line);
+  border-radius:var(--r-full);
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  color:var(--ink-2);line-height:1;
+  white-space:nowrap;
+}
+.header-ref-dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
 
-.wrap{max-width:520px;width:100%;margin:0 auto;padding:20px 18px 40px;flex:1;display:flex;flex-direction:column;gap:16px}
-@media(max-width:360px){.wrap{padding:16px 14px 32px}}
+/* ═════ LAYOUT ═════ */
+.wrap{
+  flex:1;
+  width:100%;max-width:var(--container);margin-inline:auto;
+  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + env(safe-area-inset-bottom,0px));
+  display:flex;flex-direction:column;gap:var(--g-4);
+}
 
-/* Success */
-.succ{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:14px 0 4px}
-.succ-ring{width:72px;height:72px;border-radius:50%;background:#E8F9EE;display:flex;align-items:center;justify-content:center;animation:pop .5s cubic-bezier(.2,0,.2,1) both;flex-shrink:0}
+/* ═════ SUCCESS BLOCK ═════ */
+.success{
+  display:flex;flex-direction:column;align-items:center;
+  gap:var(--g-3);
+  text-align:center;
+  padding:var(--g-2) 0 var(--g-4);
+}
+.success-ring{
+  width:76px;height:76px;border-radius:50%;
+  background:var(--ok-soft);
+  display:grid;place-items:center;
+  animation:pop .5s cubic-bezier(.2,0,.2,1) both;
+  flex-shrink:0;
+}
 @keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-.succ-ring svg{width:38px;height:38px}
-.succ-ring path{stroke:#1A7F37;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:48;stroke-dashoffset:48;animation:draw .6s .35s cubic-bezier(.2,0,.2,1) forwards}
+.success-ring svg{width:40px;height:40px}
+.success-ring path{
+  stroke:var(--ok);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;
+  fill:none;stroke-dasharray:48;stroke-dashoffset:48;
+  animation:draw .6s .35s cubic-bezier(.2,0,.2,1) forwards;
+}
 @keyframes draw{to{stroke-dashoffset:0}}
-.succ h1{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;letter-spacing:-.5px;color:#111}
-.succ p{font-size:13px;color:#666;line-height:1.55;max-width:340px}
-@media(min-width:640px){.succ h1{font-size:26px}.succ p{font-size:14px}}
-.ref{display:inline-flex;align-items:center;gap:6px;background:#FFF3F3;border:1px solid #FFD5D5;color:#7A0000;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:.4px;font-family:'DM Mono',monospace}
-.ref-dot{width:6px;height:6px;border-radius:50%;background:#E40000;flex-shrink:0}
+.success h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(22px,5vw,26px);font-weight:700;letter-spacing:-.03em;
+  color:var(--ink);line-height:1.15;
+}
+.success p{
+  font-size:13.5px;line-height:1.6;color:var(--ink-2);
+  max-width:38ch;text-wrap:pretty;
+}
 
-/* Card */
-.card{background:#fff;border:1px solid #ECECEC;border-radius:18px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.prod{display:flex;gap:12px;padding:14px;align-items:center}
-.prod-img{width:76px;height:76px;border-radius:13px;background:#F2F2F7;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-@media(min-width:640px){.prod-img{width:84px;height:84px}}
+/* ═════ CARD ═════ */
+.card{
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 1px 3px rgba(15,15,18,.04);
+}
+
+/* Product row */
+.prod{
+  display:flex;align-items:center;gap:var(--g-4);
+  padding:var(--g-4);
+}
+.prod-img{
+  width:80px;height:80px;flex-shrink:0;
+  border-radius:var(--r-md);
+  background:var(--surf-lo);
+  overflow:hidden;
+  display:grid;place-items:center;
+}
+@media(min-width:400px){.prod-img{width:88px;height:88px}}
 .prod-img img{width:100%;height:100%;object-fit:cover}
-.prod-info{min-width:0;flex:1}
-.prod-tag{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#E40000;background:#FFE5E5;border-radius:6px;padding:3px 8px;margin-bottom:5px}
-.prod-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#111;letter-spacing:-.2px;margin-bottom:2px;line-height:1.25}
-.prod-price{font-size:12px;color:#666;font-family:'DM Mono',monospace;font-weight:600}
+.prod-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:6px}
+.prod-tag{
+  display:inline-flex;align-self:flex-start;
+  font-size:10px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--red);background:var(--red-lt);
+  padding:4px 9px;border-radius:6px;line-height:1;
+}
+.prod-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:15px;font-weight:700;letter-spacing:-.015em;
+  color:var(--ink);line-height:1.25;
+}
+.prod-price{
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:12.5px;font-weight:600;color:var(--ink-3);
+  line-height:1;
+}
 
-.divider{height:1px;background:#F0F0F0}
+.divider{height:1px;background:var(--line)}
 
-.rows{padding:4px 14px}
-.row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px dashed #EFEFEF;font-size:13px;gap:12px}
+/* Summary rows */
+.rows{padding:var(--g-1) var(--g-4)}
+.row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--g-3);
+  padding:12px 0;
+  border-bottom:1px dashed var(--line);
+  font-size:13px;
+}
 .row:last-child{border-bottom:none}
-.row-k{color:#777;font-weight:500;display:flex;align-items:center;gap:6px;flex-shrink:0}
-.row-k svg{opacity:.55;flex-shrink:0}
-.row-v{color:#111;font-weight:700;font-family:'DM Mono',monospace;font-size:12px;text-align:right;word-break:break-word}
-.row.total{padding:14px;background:#FBFBFB;margin:0 -14px;border-top:1px solid #EEE;border-radius:0 0 18px 18px;border-bottom:none}
-.row.total .row-k{font-weight:700;color:#111;font-family:'Inter',sans-serif;font-size:13px}
-.row.total .row-v{font-size:17px;color:#E40000;font-weight:800;font-family:'Space Grotesk',sans-serif}
+.row-k{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--ink-2);font-weight:500;
+  flex-shrink:0;line-height:1.2;
+}
+.row-k svg{flex-shrink:0;opacity:.5;color:var(--ink-3)}
+.row-v{
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:12.5px;font-weight:700;color:var(--ink);
+  text-align:right;word-break:break-word;
+  line-height:1.2;
+}
 
-/* Next */
-.next{background:#fff;border:1px solid #ECECEC;border-radius:18px;padding:16px 14px}
-.next h3{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:#888;margin-bottom:12px}
-.step{display:flex;gap:11px;padding:7px 0;position:relative}
-.step+.step::before{content:'';position:absolute;left:13px;top:-3px;width:1.5px;height:11px;background:#EEE}
-.step-num{width:27px;height:27px;border-radius:50%;background:#FFF3F3;color:#E40000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;z-index:1;font-family:'DM Mono',monospace}
-.step-txt{font-size:12.5px;color:#333;line-height:1.5;padding-top:3px}
-.step-txt b{color:#111;font-weight:700}
+/* Total row */
+.total{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:var(--g-3);
+  margin:0 calc(var(--g-4) * -1);
+  padding:14px var(--g-4);
+  background:#FAFAFC;
+  border-top:1px solid var(--line);
+}
+.total-k{
+  font-size:13px;font-weight:700;color:var(--ink);
+  line-height:1;
+}
+.total-v{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:19px;font-weight:700;letter-spacing:-.02em;
+  color:var(--red);line-height:1;
+}
 
-/* Actions */
-.actions{display:flex;flex-direction:column;gap:10px;margin-top:4px}
-.btn{height:52px;border-radius:999px;font-size:15px;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s,box-shadow .12s;font-family:inherit}
-.btn-p{background:#E40000;color:#fff;box-shadow:0 2px 12px rgba(228,0,0,.3)}
-.btn-p:active{transform:scale(.97);box-shadow:none}
-.btn-s{background:#fff;color:#111;border:1px solid #E0E0E0}
-.btn-s:active{background:#F5F5F5}
+/* ═════ NEXT STEPS ═════ */
+.next{
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:var(--g-4);
+  display:flex;flex-direction:column;gap:var(--g-3);
+}
+.next-title{
+  font-size:11.5px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3);
+  line-height:1;
+}
+.steps{list-style:none;display:flex;flex-direction:column;gap:var(--g-3)}
+.step{
+  display:grid;grid-template-columns:28px 1fr;
+  gap:var(--g-3);align-items:start;
+  position:relative;
+}
+.step+.step::before{
+  content:'';position:absolute;
+  left:13.5px;top:-10px;
+  width:1.5px;height:12px;
+  background:var(--line);
+}
+.step-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--red-soft);color:var(--red);
+  display:grid;place-items:center;
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:12px;font-weight:800;
+  flex-shrink:0;z-index:1;line-height:1;
+}
+.step-txt{
+  font-size:13px;line-height:1.5;color:var(--ink-2);
+  padding-top:4px;text-wrap:pretty;
+}
+.step-txt b{color:var(--ink);font-weight:700}
 
-.ft{text-align:center;font-size:11px;color:#999;padding:6px 0 4px;line-height:1.6}
-.ft b{color:#666;font-weight:700}
+/* ═════ ACTIONS ═════ */
+.actions{display:flex;flex-direction:column;gap:var(--g-3);margin-top:var(--g-2)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:var(--h-btn);padding-inline:var(--g-6);
+  border-radius:var(--r-full);
+  font-size:15px;font-weight:700;letter-spacing:.005em;
+  transition:background .15s,transform .12s,box-shadow .15s;
+  white-space:nowrap;
+}
+.btn:active{transform:scale(.98)}
+.btn-p{
+  background:var(--red);color:#fff;
+  box-shadow:0 2px 12px rgba(228,0,0,.3);
+}
+.btn-p:hover{background:#C80000}
+.btn-p:active{box-shadow:none}
+.btn-g{
+  background:#fff;color:var(--ink);
+  border:1px solid var(--line);
+}
+.btn-g:hover{background:var(--surf-lo)}
+
+/* ═════ FOOTER ═════ */
+.footer{
+  text-align:center;font-size:11.5px;line-height:1.6;
+  color:var(--ink-3);padding:var(--g-2) 0 0;
+}
+.footer b{color:var(--ink-2);font-weight:700}
 </style>
 </head>
 <body>
 
-<header class="hd">
-  <div class="hd-in">
-    <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+<!-- ═════ HEADER ═════ -->
+<header class="header">
+  <div class="header-in">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
         <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
       </svg>
-    </div>
-    <span class="brand">PayLite</span>
+    </span>
+    <span class="brand-name">DigiRoues</span>
+
+    <span class="header-ref" aria-label="Référence de commande">
+      <span class="header-ref-dot"></span>
+      <span id="refHeader">—</span>
+    </span>
   </div>
 </header>
 
 <main class="wrap">
 
-  <section class="succ">
-    <div class="succ-ring">
+  <!-- ═════ SUCCESS ═════ -->
+  <section class="success">
+    <div class="success-ring" aria-hidden="true">
       <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
     </div>
     <h1>Merci&nbsp;!</h1>
-    <p>Votre acompte a été payé et votre commande est confirmée. Vous recevrez un SMS de suivi sur votre numéro Airtel.</p>
-    <div class="ref">
-      <span class="ref-dot"></span>
-      <span>Réf.&nbsp;<span id="refNum">—</span></span>
-    </div>
+    <p>Votre acompte a bien été payé et votre commande est confirmée. Vous recevrez un SMS de suivi sur votre numéro Airtel.</p>
   </section>
 
+  <!-- ═════ ORDER SUMMARY ═════ -->
   <section class="card">
     <div class="prod">
-      <div class="prod-img"><img id="pImg" src="" alt=""></div>
+      <div class="prod-img">
+        <img id="pImg" src="" alt="">
+      </div>
       <div class="prod-info">
         <span class="prod-tag">Votre commande</span>
         <div class="prod-name" id="pName">—</div>
@@ -129,66 +324,99 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
     <div class="rows">
       <div class="row">
         <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/>
+          </svg>
           Numéro Airtel
         </span>
         <span class="row-v" id="rPhone">—</span>
       </div>
+
       <div class="row">
         <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+          </svg>
           Paiement quotidien
         </span>
         <span class="row-v" id="rDaily">—</span>
       </div>
+
       <div class="row">
         <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/>
+          </svg>
           Durée du plan
         </span>
         <span class="row-v" id="rDays">—</span>
       </div>
-      <div class="row total">
-        <span class="row-k">Acompte payé</span>
+
+      <div class="row">
+        <span class="row-k">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          Prix total
+        </span>
         <span class="row-v" id="rTotal">—</span>
       </div>
     </div>
+
+    <div class="total">
+      <span class="total-k">Acompte payé</span>
+      <span class="total-v" id="rDeposit">—</span>
+    </div>
   </section>
 
+  <!-- ═════ NEXT STEPS ═════ -->
   <section class="next">
-    <h3>Prochaines étapes</h3>
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-txt"><b>Confirmation par SMS</b> — vous recevrez votre numéro de commande et les instructions de retrait.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-txt"><b>Retrait de l'article</b> — présentez votre pièce d'identité et le SMS de confirmation au point de retrait agréé.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-txt"><b>Payez chaque jour</b> — le montant quotidien sera prélevé automatiquement sur votre compte Airtel Money.</div>
-    </div>
+    <div class="next-title">Prochaines étapes</div>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-num">1</span>
+        <span class="step-txt"><b>Confirmation par SMS</b> — vous recevrez votre numéro de commande et les instructions de retrait.</span>
+      </li>
+      <li class="step">
+        <span class="step-num">2</span>
+        <span class="step-txt"><b>Retrait de l'article</b> — présentez votre pièce d'identité et le SMS de confirmation au point de retrait agréé.</span>
+      </li>
+      <li class="step">
+        <span class="step-num">3</span>
+        <span class="step-txt"><b>Payez chaque jour</b> — le montant quotidien sera prélevé automatiquement sur votre compte Airtel Money.</span>
+      </li>
+    </ol>
   </section>
 
+  <!-- ═════ ACTIONS ═════ -->
   <div class="actions">
-    <button class="btn btn-p" onclick="window.location.href='index.html'">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+    <button class="btn btn-p" onclick="window.location.href='index.html'" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 12l9-9 9 9M5 10v10h14V10"/>
+      </svg>
       Retour à l'accueil
     </button>
-    <button class="btn btn-s" onclick="shareRef()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+
+    <button class="btn btn-g" onclick="shareRef()" type="button" id="shareBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+        <line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/>
+        <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>
+      </svg>
       Enregistrer ma référence
     </button>
   </div>
 
-  <p class="ft">Besoin d'aide&nbsp;? Contactez le support PayLite au <b>+243 800 000 000</b></p>
+  <p class="footer">
+    Besoin d'aide&nbsp;? Contactez le support <b>DigiRoues</b> au <b>+243 800 000 000</b>
+  </p>
 
 </main>
 
 <script>
 'use strict';
 
+/* ── Product name → image file ────────────────── */
 var IMG = {
   'iPhone 12'                : 'iphone-12.png',
   'iPhone 12 Pro Max'        : 'iphone-12-pro-max.png',
@@ -210,28 +438,43 @@ var IMG = {
   'TVS 150cc'                : 'tvs-150cc.png'
 };
 
-function read(k, fb){ try { return JSON.parse(sessionStorage.getItem(k) || fb); } catch(e){ return JSON.parse(fb); } }
+/* ── Safe storage read ───────────────────────── */
+function read(k, fallback){
+  try { return JSON.parse(sessionStorage.getItem(k) || fallback); }
+  catch(e){ return JSON.parse(fallback); }
+}
+
 var forfait = read('starlinkForfait', '{}');
 var auth    = read('starlinkAuth',    '{}');
 var ref     = sessionStorage.getItem('starlinkRef') || 'STL-CG-000000';
 
+/* ── Format phone ─────────────────────────────── */
 var phone = (auth.phone || forfait.phone || '').replace(/\D/g, '');
 var phoneFmt = phone.length === 9
   ? '+243 ' + phone.slice(0,2) + ' ' + phone.slice(2,5) + ' ' + phone.slice(5)
   : '—';
 
-function setText(id, v){ var el = document.getElementById(id); if (el) el.textContent = v; }
+function setText(id, v){
+  var el = document.getElementById(id);
+  if (el) el.textContent = v;
+}
 
-setText('refNum',   '#' + ref);
-setText('pName',    forfait.name    || 'Article');
-setText('pPrice',   'Acompte ' + (forfait.deposit || '—'));
-setText('rPhone',   phoneFmt);
-setText('rDaily',   (forfait.daily || '—') + ' / jour');
-setText('rDays',    forfait.jours ? (forfait.jours + (forfait.jours === 1 ? ' jour' : ' jours')) : '—');
-setText('rTotal',   forfait.deposit || '—');
+/* ── Populate summary ─────────────────────────── */
+setText('refHeader', '#' + ref);
+setText('pName',     forfait.name    || 'Article');
+setText('pPrice',    'Acompte ' + (forfait.deposit || '—'));
+setText('rPhone',    phoneFmt);
+setText('rDaily',    (forfait.daily || '—') + ' / jour');
+setText('rDays',     forfait.jours
+  ? forfait.jours + (forfait.jours === 1 ? ' jour' : ' jours')
+  : '—');
+setText('rTotal',    forfait.price   || '—');
+setText('rDeposit',  forfait.deposit || '—');
 
-var img = document.getElementById('pImg');
+/* ── Load product image ───────────────────────── */
+var img  = document.getElementById('pImg');
 var file = IMG[forfait.name];
+
 if (file){
   img.src = 'assets/' + file;
   img.alt = forfait.name;
@@ -240,20 +483,25 @@ if (file){
   img.parentElement.style.background = 'linear-gradient(135deg,#FFE5E5,#FFF3F3)';
 }
 
+/* ── Share / copy reference ───────────────────── */
 function shareRef(){
-  var txt = 'PayLite — Référence ' + ref +
-            '\nArticle : ' + (forfait.name || '—') +
-            '\nAcompte payé : ' + (forfait.deposit || '—') +
-            '\nTéléphone : ' + phoneFmt;
+  var txt =
+    'DigiRoues — Référence ' + ref + '\n' +
+    'Article : ' + (forfait.name || '—') + '\n' +
+    'Acompte payé : ' + (forfait.deposit || '—') + '\n' +
+    'Téléphone : ' + phoneFmt;
+
   if (navigator.share){
-    navigator.share({ title: 'PayLite — Référence', text: txt }).catch(function(){});
-  } else if (navigator.clipboard){
+    navigator.share({ title: 'DigiRoues — Référence', text: txt }).catch(function(){});
+    return;
+  }
+  if (navigator.clipboard){
     navigator.clipboard.writeText(txt).then(function(){
-      var b = document.querySelector('.btn-s');
-      var old = b.innerHTML;
+      var b = document.getElementById('shareBtn');
+      var original = b.innerHTML;
       b.innerHTML = '✓ Référence copiée';
-      setTimeout(function(){ b.innerHTML = old; }, 1800);
-    });
+      setTimeout(function(){ b.innerHTML = original; }, 1800);
+    }).catch(function(){});
   }
 }
 </script>
