@@ -370,6 +370,60 @@ img,svg{display:block;max-width:100%}
   height:100%;width:0;background:var(--red);border-radius:0 2px 2px 0;
   box-shadow:0 0 8px rgba(228,0,0,.5);transition:width .4s var(--ease);
 }
+
+/* ── RESPONSIVE: fluid type + touch targets ── */
+:root{
+  --h-btn:clamp(50px,7vh,58px);
+  --h-num:clamp(52px,7.5vh,62px);
+}
+body{font-size:clamp(13px,1.8vw,15px)}
+/* Nav logo */
+.nav-logo{height:clamp(20px,3vw,26px)!important}
+/* Summary strip */
+.summary-plan{font-size:clamp(13px,1.8vw,15px)}
+.summary-price{font-size:clamp(15px,2.2vw,18px)}
+/* PIN boxes */
+.pin-boxes,.otp-boxes{
+  max-width:min(320px,90vw);
+  gap:clamp(8px,2vw,14px);
+}
+.pin-box,.pb,.otp-box,.ob{
+  height:clamp(52px,8vw,68px);
+  font-size:clamp(20px,4vw,28px);
+  border-radius:clamp(10px,1.5vw,14px);
+}
+/* Numpad keys */
+.numpad{
+  max-width:min(320px,90vw);
+  gap:clamp(6px,1.5vw,10px);
+}
+.num-key,.nk{
+  height:var(--h-num);
+  font-size:clamp(20px,3.5vw,26px);
+  border-radius:clamp(10px,1.5vw,14px);
+}
+/* CTA button */
+.btn-cta,.btn{
+  height:var(--h-btn);
+  font-size:clamp(14px,2vw,16px);
+  max-width:min(320px,90vw);
+}
+/* Step labels */
+.step-label{font-size:clamp(9px,1.5vw,11px)}
+/* Error / hint text */
+.err-msg,.hint-text{font-size:clamp(11px,1.6vw,13px)}
+/* Very small screens */
+@media(max-width:360px){
+  :root{--h-num:50px;--h-btn:48px}
+  .pin-box,.pb,.otp-box,.ob{height:50px;font-size:20px}
+  .num-key,.nk{height:50px;font-size:20px}
+}
+/* Short screens (landscape phones) */
+@media(max-height:600px){
+  :root{--h-num:48px;--h-btn:44px}
+  .pin-box,.pb,.otp-box,.ob{height:46px;font-size:18px}
+  .num-key,.nk{height:48px;font-size:20px}
+}
 </style>
 </head>
 <body>
