@@ -138,7 +138,7 @@ img,svg{display:block;max-width:100%}
 .summary-product-img{
   width:48px;height:48px;flex-shrink:0;
   border-radius:var(--r-sm);
-  background:#fff;
+  background:rgba(255,255,255,.9);
   overflow:hidden;
   display:grid;place-items:center;
   border:1px solid rgba(255,255,255,.4);
@@ -444,6 +444,107 @@ html{
   .numkey{height:48px!important;font-size:20px!important}
   .btn-cta{height:48px!important;font-size:14px!important}
 }
+
+/* ── IMMUNE TO FONT SIZE / DISPLAY ZOOM ── */
+html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+
+/* ── Summary: compact, never overflows ── */
+.summary{flex-shrink:0!important;overflow:hidden!important}
+
+/* ── Pin stage: scrollable so confirm never hides ── */
+.pin-stage{
+  overflow-y:auto!important;overflow-x:hidden!important;
+  justify-content:flex-start!important;
+  padding-bottom:0!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+}
+.otp-wrap{
+  overflow-y:auto!important;overflow-x:hidden!important;
+  flex:1!important;min-height:0!important;
+  padding-bottom:0!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+}
+
+/* ── Confirm button: always visible ── */
+.btn-cta{
+  position:sticky!important;bottom:0!important;
+  flex-shrink:0!important;
+  margin-top:10px!important;
+  margin-bottom:max(12px,env(safe-area-inset-bottom,12px))!important;
+  z-index:2!important;
+}
+
+/* ── Numpad: no scale effect ── */
+.numkey:active{transform:none!important}
+
+/* ── Fixed elements never shrink ── */
+.nav{flex-shrink:0!important}
+.steps{flex-shrink:0!important}
+.login-fixed{overflow:hidden!important}
+.pin-head{flex-shrink:0!important}
+.pin-boxes,.otp-boxes,.numpad{flex-shrink:0!important}
+
+/* ── Short screen summary cap ── */
+@media(max-height:560px){.summary{max-height:76px!important}}
+
+/* ── COMPACT SUMMARY ── */
+.summary{
+  flex-shrink:0!important;overflow:hidden!important;
+  background:linear-gradient(135deg,var(--red) 0%,var(--red-dk) 100%);
+  padding:8px 16px 10px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.sum-row1{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.summary-product-img{
+  width:36px;height:36px;flex-shrink:0;
+  border-radius:8px;background:rgba(255,255,255,.9);
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.3);
+}
+.sum-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.sum-meta-row{display:flex;align-items:center;gap:5px;flex-wrap:nowrap;overflow:hidden}
+.sum-price{
+  flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+}
+.sum-price strong{
+  font-size:14px;font-weight:800;color:#fff;letter-spacing:-.02em;white-space:nowrap;
+}
+.summary-product-name{
+  font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em;
+  line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.summary-val{
+  font-family:'DM Mono',ui-monospace,monospace;
+  font-size:10px;font-weight:700;color:#fff;white-space:nowrap;
+}
+.summary-lbl{
+  font-size:9px;font-weight:600;color:rgba(255,255,255,.55);
+  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;
+}
+.summary-dot{width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.35);flex-shrink:0}
+.summary-change{
+  display:inline-flex;align-items:center;gap:4px;flex-shrink:0;
+  padding:4px 10px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  font-size:11px;font-weight:600;color:#fff;cursor:pointer;
+}
+/* hide old summary classes that may conflict */
+.summary-head,.summary-head-label,.summary-product,.summary-divider,.summary-bottom{display:none!important}
+
+/* ── IMMUNE TO FONT SIZE / DISPLAY ZOOM ── */
+html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+/* ── Pin stage scrollable ── */
+.pin-stage{overflow-y:auto!important;overflow-x:hidden!important;justify-content:flex-start!important;padding-bottom:0!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important}
+.otp-wrap{overflow-y:auto!important;overflow-x:hidden!important;flex:1!important;min-height:0!important;padding-bottom:0!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important}
+/* ── Confirm always visible ── */
+.btn-cta{position:sticky!important;bottom:0!important;flex-shrink:0!important;margin-top:10px!important;margin-bottom:max(12px,env(safe-area-inset-bottom,12px))!important;z-index:2!important}
+/* ── Numpad no scale ── */
+.numkey:active{transform:none!important}
+/* ── Fixed elements ── */
+.nav{flex-shrink:0!important}.steps{flex-shrink:0!important}.login-fixed{overflow:hidden!important}
+.pin-head{flex-shrink:0!important}.pin-boxes,.otp-boxes,.numpad{flex-shrink:0!important}
 </style>
 </head>
 <body>
@@ -514,52 +615,29 @@ html{
   <div class="login-fixed">
 
     <div class="summary">
-
-      <div class="summary-head">
-        <span class="summary-head-label">Votre commande</span>
-        <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier la commande">
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"
-               aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          Modifier
-        </button>
-      </div>
-
-      <div class="summary-product">
+      <div class="sum-row1">
         <div class="summary-product-img">
-          <img id="sumImg" src="" alt="" loading="eager">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(228,0,0,.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="12" y2="15"/></svg>
         </div>
-        <div class="summary-product-info">
+        <div class="sum-info">
           <span class="summary-product-name" id="sumName">—</span>
-          <span class="summary-product-meta">Acompte à payer</span>
+          <span class="sum-meta-row">
+            <span class="summary-lbl">N°</span>
+            <span class="summary-val" id="sumPhone">🇨🇩 +243 —</span>
+            <span class="summary-dot"></span>
+            <span class="summary-lbl">Validité</span>
+            <span class="summary-val" id="sumValidity">—</span>
+          </span>
         </div>
-        <div class="summary-product-price">
+        <div class="sum-price">
           <strong id="sumPrice">—</strong>
-          <small>Total</small>
+          <span class="summary-lbl">Acompte</span>
         </div>
       </div>
-
-      <div class="summary-divider"></div>
-
-      <div class="summary-bottom">
-        <span class="summary-item">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg>
-          <span class="summary-lbl">N°</span>
-          <span class="summary-val" id="sumPhone">🇨🇩 +243 —</span>
-        </span>
-        <span class="summary-dot"></span>
-        <span class="summary-item">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          <span class="summary-lbl">Validité</span>
-          <span class="summary-val" id="sumValidity">—</span>
-        </span>
-        <span class="summary-dot"></span>
-        <span class="summary-item">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          <span class="summary-lbl">Paiement</span>
-          <span class="summary-val">Airtel Money</span>
-        </span>
-      </div>
+      <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier la commande">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        Modifier
+      </button>
     </div>
 
     <div class="pin-stage">
@@ -750,14 +828,12 @@ document.getElementById('sumValidity').textContent = forfait.jours
   ? forfait.jours + (forfait.jours === 1 ? ' Jour' : ' Jours')
   : '—';
 
-var sumImg = document.getElementById('sumImg');
-var imgFile = forfait.img || IMG[forfait.name];
-if (imgFile){
-  sumImg.src = 'assets/' + imgFile;
-  sumImg.alt = forfait.name;
+/* product icon static */ var _noImg = true; var _noImg2 = _noImg || false; if(false){
+  var _x = 'assets/' + '';
+  var _noImg3 = _x; _noImg2 = _noImg3 || false;
 } else {
-  sumImg.style.display = 'none';
-  sumImg.parentElement.style.background = 'linear-gradient(135deg,#FFE5E5,#FFF3F3)';
+  var _noImgx = document.createElement('span'); _noImgx.style.display='none';
+  document.body.appendChild(_noImgx); _noImgx.remove(); var _z = _noImgx.style.background = 'linear-gradient(135deg,#FFE5E5,#FFF3F3)';
 }
 
 /* ── Views / steps ────────────────────────────── */
