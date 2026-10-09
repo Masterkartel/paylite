@@ -282,41 +282,32 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outlin
 }
 .footer b{color:var(--ink-2);font-weight:700}
 
-/* ── RESPONSIVE: fluid type + layout ── */
-:root{
-  --h-btn:clamp(48px,6.5vw,56px);
-  --pad-x:clamp(14px,4vw,24px);
+/* ══ VIEWPORT LOCK — immune to user font size & display zoom ══ */
+html{
+  -webkit-text-size-adjust:100%;
+  -moz-text-size-adjust:100%;
+  text-size-adjust:100%;
 }
-body{font-size:clamp(13px,1.8vw,15px)}
-/* Header */
-.header,.nav{min-height:clamp(52px,7vw,64px)}
-.logo,.logo-img{height:clamp(20px,3vw,26px)!important}
-/* Status icon */
-.status-icon{
-  width:clamp(56px,10vw,72px);
-  height:clamp(56px,10vw,72px);
-  font-size:clamp(26px,5vw,36px);
-}
-/* Status title */
-.status-title,.confirm-title{font-size:clamp(18px,4vw,24px)!important}
-.status-sub{font-size:clamp(12px,2vw,14px)}
-/* Ref code */
-.ref-code{font-size:clamp(16px,3.5vw,22px)!important}
-/* Detail rows */
-.detail-label{font-size:clamp(11px,1.8vw,13px)}
-.detail-value{font-size:clamp(12px,2vw,14px);font-weight:600}
-/* Buttons */
+/* Force all text to ignore system font scale on Android WebView */
+* { -webkit-text-size-adjust:100%; }
+
+/* ── THANKYOU: buttons always reachable ── */
 .btn,.btn-primary,.btn-outline{
-  height:var(--h-btn);
-  font-size:clamp(13px,1.8vw,15px);
+  flex-shrink:0!important;
+  height:52px!important;
+  font-size:15px!important;
 }
-/* Cards */
-.card,.detail-card{
-  padding:clamp(14px,3.5vw,24px);
-  border-radius:clamp(12px,2vw,18px);
+.actions,.btn-group,.cta-group{
+  flex-shrink:0!important;
+  padding-bottom:max(16px,env(safe-area-inset-bottom,16px))!important;
+}
+/* Page scrolls fully */
+.page,.scroll,.content-wrap{
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
 }
 @media(max-width:380px){
-  :root{--pad-x:12px;--h-btn:46px}
+  .btn,.btn-primary{height:48px!important;font-size:14px!important}
 }
 </style>
 </head>
