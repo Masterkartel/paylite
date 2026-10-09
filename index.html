@@ -446,51 +446,43 @@ input,select{font:inherit;color:inherit}
   font-size:12.5px;line-height:1.5;color:var(--ink-3);
 }
 
-/* ── RESPONSIVE: fluid type + layout ── */
-:root{
-  --h-btn:clamp(44px,6vw,52px);
-  --h-btn-lg:clamp(48px,6.5vw,56px);
-  --h-input:clamp(48px,6vw,56px);
-  --h-header:clamp(56px,7vw,68px);
-  --pad-x:clamp(14px,4vw,24px);
+/* ══ VIEWPORT LOCK — immune to user font size & display zoom ══ */
+html{
+  -webkit-text-size-adjust:100%;
+  -moz-text-size-adjust:100%;
+  text-size-adjust:100%;
 }
-/* Fluid body text */
-body{font-size:clamp(14px,1.8vw,16px)}
-/* Nav */
-.header-inner{min-height:var(--h-header)}
-.logo-img{height:clamp(22px,3.5vw,28px)}
-.nav-link{font-size:clamp(13px,1.6vw,15px)}
-/* Hero headline */
-.hero-title,.hero-h1,h1{font-size:clamp(22px,5vw,42px)!important}
-.hero-sub,.hero-lead{font-size:clamp(13px,2vw,16px)!important}
-/* Buttons */
+/* Force all text to ignore system font scale on Android WebView */
+* { -webkit-text-size-adjust:100%; }
+
+/* ── INDEX: buttons always visible ── */
 .btn,.btn-lg,.btn-primary,.btn-outline{
-  height:var(--h-btn);
-  font-size:clamp(13px,1.8vw,15px);
-  padding-inline:clamp(16px,3vw,28px);
-  white-space:nowrap;
+  flex-shrink:0!important;
+  height:44px!important;
+  font-size:14px!important;
+  white-space:nowrap!important;
 }
-/* Cards */
-.product-card,.card{border-radius:clamp(12px,2vw,18px)}
-.product-name,.card-title{font-size:clamp(14px,2vw,17px)}
-.product-price,.price{font-size:clamp(18px,3vw,24px)!important}
-/* Sheet */
-.sheet{max-width:min(440px,100%)}
-.sheet-inner{padding:clamp(16px,4vw,24px)}
-/* Phone input */
-.phone-input,.input{
-  height:var(--h-input);
-  font-size:clamp(15px,2.2vw,18px);
+/* Sheet confirm button sticky at bottom */
+.sheet-footer,.sheet-foot,.sheet-cta{
+  flex-shrink:0!important;
+  position:sticky;
+  bottom:0;
+  background:#fff;
+  padding-bottom:max(16px,env(safe-area-inset-bottom,0px))!important;
 }
-/* Small screens */
-@media(max-width:400px){
-  :root{--pad-x:12px}
-  .btn,.btn-lg{height:48px;font-size:14px}
-  .hero-title,h1{font-size:clamp(20px,6vw,28px)!important}
+/* Phone field */
+.phone-row input,.phone-input{
+  font-size:16px!important;
+  height:50px!important;
 }
-/* Large screens */
-@media(min-width:1280px){
-  body{font-size:16px}
+/* Sheet scrolls, never clips */
+.sheet-body,.sheet-scroll,.sheet-inner{
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+}
+@media(max-width:380px){
+  .btn,.btn-lg{height:44px!important;font-size:13px!important;padding-inline:14px!important}
 }
 </style>
 </head>
