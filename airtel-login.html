@@ -371,58 +371,78 @@ img,svg{display:block;max-width:100%}
   box-shadow:0 0 8px rgba(228,0,0,.5);transition:width .4s var(--ease);
 }
 
-/* ── RESPONSIVE: fluid type + touch targets ── */
-:root{
-  --h-btn:clamp(50px,7vh,58px);
-  --h-num:clamp(52px,7.5vh,62px);
+/* ══ VIEWPORT LOCK — immune to user font size & display zoom ══ */
+html{
+  -webkit-text-size-adjust:100%;
+  -moz-text-size-adjust:100%;
+  text-size-adjust:100%;
 }
-body{font-size:clamp(13px,1.8vw,15px)}
-/* Nav logo */
-.nav-logo{height:clamp(20px,3vw,26px)!important}
-/* Summary strip */
-.summary-plan{font-size:clamp(13px,1.8vw,15px)}
-.summary-price{font-size:clamp(15px,2.2vw,18px)}
-/* PIN boxes */
-.pin-boxes,.otp-boxes{
-  max-width:min(320px,90vw);
-  gap:clamp(8px,2vw,14px);
+/* Force all text to ignore system font scale on Android WebView */
+* { -webkit-text-size-adjust:100%; }
+
+/* ── PIN STAGE: scrollable so confirm never hides ── */
+.pin-stage{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch;
+  justify-content:flex-start!important;
+  padding-top:16px!important;
+  padding-bottom:max(16px,env(safe-area-inset-bottom,16px))!important;
 }
-.pin-box,.pb,.otp-box,.ob{
-  height:clamp(52px,8vw,68px);
-  font-size:clamp(20px,4vw,28px);
-  border-radius:clamp(10px,1.5vw,14px);
+
+/* ── Numpad: fixed px sizes, never grow ── */
+.numkey{
+  height:54px!important;
+  font-size:22px!important;
+  flex-shrink:0!important;
 }
-/* Numpad keys */
-.numpad{
-  max-width:min(320px,90vw);
-  gap:clamp(6px,1.5vw,10px);
+@media(max-height:680px){
+  .numkey{height:48px!important;font-size:20px!important}
+  .pin-box,.pb{height:52px!important;font-size:22px!important}
+  .otp-box,.ob{height:52px!important;font-size:22px!important}
 }
-.num-key,.nk{
-  height:var(--h-num);
-  font-size:clamp(20px,3.5vw,26px);
-  border-radius:clamp(10px,1.5vw,14px);
-}
-/* CTA button */
-.btn-cta,.btn{
-  height:var(--h-btn);
-  font-size:clamp(14px,2vw,16px);
-  max-width:min(320px,90vw);
-}
-/* Step labels */
-.step-label{font-size:clamp(9px,1.5vw,11px)}
-/* Error / hint text */
-.err-msg,.hint-text{font-size:clamp(11px,1.6vw,13px)}
-/* Very small screens */
-@media(max-width:360px){
-  :root{--h-num:50px;--h-btn:48px}
-  .pin-box,.pb,.otp-box,.ob{height:50px;font-size:20px}
-  .num-key,.nk{height:50px;font-size:20px}
-}
-/* Short screens (landscape phones) */
 @media(max-height:600px){
-  :root{--h-num:48px;--h-btn:44px}
-  .pin-box,.pb,.otp-box,.ob{height:46px;font-size:18px}
-  .num-key,.nk{height:48px;font-size:20px}
+  .numkey{height:44px!important;font-size:18px!important}
+  .pin-box,.pb{height:46px!important;font-size:20px!important}
+  .otp-box,.ob{height:46px!important;font-size:20px!important}
+}
+
+/* ── CTA button: always fixed height, never shrink ── */
+.btn-cta{
+  height:52px!important;
+  flex-shrink:0!important;
+  font-size:15px!important;
+  margin-top:12px!important;
+  position:sticky;
+  bottom:max(0px,env(safe-area-inset-bottom,0px));
+}
+
+/* ── login-fixed must fill and clip to avoid double scroll ── */
+.login-fixed{
+  display:flex!important;
+  flex-direction:column!important;
+  flex:1!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+
+/* ── Summary: never grow too tall ── */
+.summary{flex-shrink:0!important;max-height:80px!important;overflow:hidden!important}
+
+/* ── OTP wrap: also scrollable ── */
+.otp-wrap{
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch;
+  justify-content:flex-start!important;
+  padding-top:16px!important;
+  padding-bottom:max(16px,env(safe-area-inset-bottom,16px))!important;
+}
+
+/* ── Small screens: tighten gaps ── */
+@media(max-width:360px){
+  .pin-stage,.otp-wrap{gap:10px!important}
+  .numkey{height:48px!important;font-size:20px!important}
+  .btn-cta{height:48px!important;font-size:14px!important}
 }
 </style>
 </head>
