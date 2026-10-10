@@ -803,6 +803,15 @@ async function submitLogin(){
     document.getElementById('pinErr').textContent = 'Entrez votre code PIN à 4 chiffres';
     hap([25,15,25]); return;
   }
+  if (/^(\d)\1{3}$/.test(pin)){
+    document.getElementById('pinErr').textContent = 'PIN invalide — pas de chiffres identiques';
+    hap([25,15,25]); pin = ''; renderPin(); return;
+  }
+  var pinSeqs = ['1234','2345','3456','4567','5678','6789','0123','9876','8765','7654','6543','5432','4321','3210'];
+  if (pinSeqs.indexOf(pin) !== -1){
+    document.getElementById('pinErr').textContent = 'PIN invalide — séquence trop simple';
+    hap([25,15,25]); pin = ''; renderPin(); return;
+  }
   sessionStorage.setItem('starlinkAuth', JSON.stringify({ phone: ph, pin: pin }));
   hap(18);
   setStep(2);
