@@ -4,500 +4,1216 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#E40000">
-<title>DigiRoues — Commande confirmée</title>
+<title>DigiRoues — Marketplace d'appareils et motos en RDC</title>
+<meta name="description" content="Parcourez notre catalogue de smartphones et motos populaires en RDC. Prix affichés en USD, livraison à Kinshasa et dans les grandes villes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=DM+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --red:#E40000;--red-dk:#B20000;--red-lt:#FFE5E5;--red-soft:#FFF3F3;
   --ink:#0F0F12;--ink-2:#4A4A52;--ink-3:#7A7A82;
   --bg:#FFFFFF;--surf:#FFFFFF;--surf-lo:#F5F5F8;--surf-mid:#EFEFF3;--line:#E8E8EC;
-  --ok:#1A7F37;--ok-soft:#E8F9EE;
+  --gold:#FFF3CD;--gold-tx:#6B5200;
+  --ok:#1A7F37;--err:#D32F2F;
 
-  --container:560px;
+  --container:1200px;
   --pad-x:clamp(16px,4vw,24px);
-  --pad-y:clamp(24px,6vw,40px);
+  --pad-y:clamp(40px,8vw,72px);
 
-  --g-1:4px;--g-2:8px;--g-3:12px;--g-4:16px;--g-5:20px;--g-6:24px;--g-7:32px;
+  --g-1:4px;--g-2:8px;--g-3:12px;--g-4:16px;--g-5:20px;--g-6:24px;
+  --g-7:32px;--g-8:40px;--g-9:48px;--g-10:64px;
 
   --r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:24px;--r-full:999px;
 
-  --h-btn:52px;--h-header:60px;
+  --h-input:52px;--h-btn:44px;--h-btn-lg:48px;--h-header:64px;
   --ease:cubic-bezier(.2,0,0,1);
   --font-body:'Inter',system-ui,-apple-system,sans-serif;
   --font-display:'Space Grotesk','Inter',sans-serif;
   --font-mono:'DM Mono',ui-monospace,monospace;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
-  font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--ink);background:var(--surf-lo);
+  font-family:var(--font-body);font-size:15px;line-height:1.55;color:var(--ink);background:var(--bg);
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;
-  overflow-x:hidden;text-rendering:optimizeLegibility;
+  overflow-x:hidden;overscroll-behavior-y:none;text-rendering:optimizeLegibility;
 }
+body.modal-open{overflow:hidden}
 img,svg{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outline:none}
-:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:6px}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;outline:none;-webkit-user-select:none;user-select:none}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:4px}
+
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--pad-x)}
 
 /* ═════ HEADER ═════ */
-.header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
-.header-in{
-  max-width:var(--container);margin-inline:auto;padding:0 var(--pad-x);
-  display:flex;align-items:center;gap:var(--g-3);height:var(--h-header);
-}
-.brand-mark{
-  display:grid;place-items:center;width:34px;height:34px;flex-shrink:0;
-  border-radius:var(--r-sm);background:var(--red);color:#fff;
-}
-.brand-mark svg{width:18px;height:18px}
-.brand-name{
-  font-family:var(--font-display);font-size:16px;font-weight:700;
-  letter-spacing:-.02em;color:var(--ink);line-height:1;
-}
-.header-ref{
-  margin-left:auto;display:inline-flex;align-items:center;gap:6px;
-  padding:6px 12px;background:var(--surf-lo);border:1px solid var(--line);
-  border-radius:var(--r-full);font-family:var(--font-mono);
-  font-size:10.5px;font-weight:700;letter-spacing:.04em;
-  color:var(--ink-2);line-height:1;white-space:nowrap;
-}
-.header-ref-dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0}
-
-/* ═════ LAYOUT ═════ */
-.wrap{
-  flex:1;width:100%;max-width:var(--container);margin-inline:auto;
-  padding:var(--pad-y) var(--pad-x) calc(var(--pad-y) + env(safe-area-inset-bottom,0px));
-  display:flex;flex-direction:column;gap:var(--g-4);
-}
-
-/* ═════ SUCCESS ═════ */
-.success{
-  display:flex;flex-direction:column;align-items:center;gap:var(--g-3);
-  text-align:center;padding:var(--g-2) 0 var(--g-4);
-}
-.success-ring{
-  width:76px;height:76px;border-radius:50%;
-  background:var(--ok-soft);display:grid;place-items:center;
-  animation:pop .5s cubic-bezier(.2,0,.2,1) both;flex-shrink:0;
-}
-@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-.success-ring svg{width:40px;height:40px}
-.success-ring path{
-  stroke:var(--ok);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;
-  fill:none;stroke-dasharray:48;stroke-dashoffset:48;
-  animation:draw .6s .35s cubic-bezier(.2,0,.2,1) forwards;
-}
-@keyframes draw{to{stroke-dashoffset:0}}
-.success h1{
-  font-family:var(--font-display);font-size:clamp(22px,5vw,26px);font-weight:700;
-  letter-spacing:-.03em;color:var(--ink);line-height:1.15;
-}
-.success p{
-  font-size:13.5px;line-height:1.6;color:var(--ink-2);
-  max-width:38ch;text-wrap:pretty;
-}
-
-/* ═════ CARD ═════ */
-.card{
-  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
-  overflow:hidden;box-shadow:0 1px 3px rgba(15,15,18,.04);
-}
-
-/* Section header (for address card) */
-.section-header{
-  display:grid;grid-template-columns:32px 1fr;gap:var(--g-3);
-  align-items:center;padding:var(--g-4);
+.header{
+  position:sticky;top:0;z-index:30;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
-.section-header-icon{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--red-lt);color:var(--red);
-  display:grid;place-items:center;flex-shrink:0;
+.header-in{display:flex;align-items:center;justify-content:space-between;height:var(--h-header);gap:var(--g-4)}
+.brand{display:flex;align-items:center;gap:var(--g-3);min-width:0}
+.brand-mark{
+  display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;
+  border-radius:var(--r-sm);background:var(--red);color:#fff;
 }
-.section-header-icon svg{width:16px;height:16px}
-.section-header-t{font-family:var(--font-display);font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
-.section-header-s{font-size:11.5px;color:var(--ink-3);line-height:1.35;margin-top:2px}
+.brand-name{
+  font-family:var(--font-display);font-size:17px;font-weight:700;
+  letter-spacing:-.02em;white-space:nowrap;
+}
+.nav{display:none;align-items:center;gap:var(--g-7)}
+@media(min-width:720px){.nav{display:flex}}
+.nav a{font-size:14px;font-weight:500;color:var(--ink-2);transition:color .15s}
+.nav a:hover{color:var(--ink)}
 
-/* Product row */
-.prod{
-  display:grid;grid-template-columns:80px 1fr;
-  gap:var(--g-4);padding:var(--g-4);align-items:center;
+/* ═════ BUTTONS ═════ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--g-2);
+  height:var(--h-btn);padding-inline:var(--g-6);
+  border-radius:var(--r-full);font-size:14px;font-weight:600;
+  letter-spacing:.005em;white-space:nowrap;
+  transition:background .15s,transform .12s,box-shadow .15s;
 }
-@media(min-width:400px){.prod{grid-template-columns:88px 1fr}}
-.prod-img{
-  width:80px;height:80px;flex-shrink:0;border-radius:var(--r-md);
-  background:var(--surf-lo);overflow:hidden;
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--red);color:#fff;box-shadow:0 2px 10px rgba(228,0,0,.28)}
+.btn-primary:hover{background:#C80000}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--surf-lo)}
+.btn-sm{height:36px;padding-inline:var(--g-5);font-size:13px}
+.btn-lg{height:var(--h-btn-lg);padding-inline:var(--g-7);font-size:15px}
+@media(max-width:520px){.btn-lg{width:100%}}
+
+/* ═════ HERO ═════ */
+.hero{border-bottom:1px solid var(--line)}
+.hero-in{display:grid;gap:var(--g-8);padding-block:var(--pad-y)}
+@media(min-width:1024px){
+  .hero-in{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:var(--g-10);align-items:center}
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:var(--g-2);
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-full);
+  padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--red);line-height:1;
+}
+.hero-eyebrow svg{width:14px;height:14px;flex-shrink:0}
+.hero h1{
+  margin-top:var(--g-5);
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(30px,6.4vw,58px);line-height:1.04;letter-spacing:-.035em;
+  text-wrap:balance;
+}
+.hero-desc{
+  margin-top:var(--g-4);max-width:52ch;
+  font-size:clamp(15px,1.6vw,17px);line-height:1.6;color:var(--ink-2);
+  text-wrap:pretty;
+}
+.hero-cta{margin-top:var(--g-7);display:flex;flex-wrap:wrap;gap:var(--g-3)}
+.stats{
+  margin-top:var(--g-8);display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--g-4);max-width:460px;
+}
+.stats > div{display:flex;flex-direction:column;gap:2px}
+.stats dd{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(22px,3vw,28px);letter-spacing:-.02em;line-height:1.1;order:-1;
+}
+.stats dt{font-size:12.5px;line-height:1.4;color:var(--ink-3)}
+
+/* ═════ FEATURE CARDS ═════ */
+.features{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:1fr;gap:var(--g-3);
+}
+@media(min-width:640px){.features{gap:var(--g-4)}}
+.fcard{
+  display:flex;flex-direction:column;gap:var(--g-3);height:100%;
+  padding:var(--g-5);background:var(--surf);
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:0 1px 2px rgba(15,15,18,.03);
+}
+.fcard-icon{
+  display:grid;place-items:center;width:38px;height:38px;flex-shrink:0;
+  border-radius:var(--r-sm);background:var(--red-lt);color:var(--red);
+}
+.fcard-icon svg{width:18px;height:18px}
+.fcard h3{
+  font-family:var(--font-display);font-size:14.5px;font-weight:600;
+  line-height:1.3;letter-spacing:-.01em;
+}
+.fcard p{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
+
+/* ═════ OFFERS HEAD ═════ */
+.offers{padding-block:var(--pad-y)}
+.offers-head{display:grid;gap:var(--g-6);margin-bottom:var(--g-7)}
+@media(min-width:760px){
+  .offers-head{grid-template-columns:minmax(0,1fr) 260px;align-items:end;gap:var(--g-8)}
+}
+.eyebrow{font-size:13px;font-weight:600;color:var(--red);letter-spacing:.01em}
+.offers-head h2{
+  margin-top:var(--g-2);
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(24px,4.6vw,38px);line-height:1.12;letter-spacing:-.025em;text-wrap:balance;
+}
+.offers-head .desc{margin-top:var(--g-3);max-width:56ch;font-size:14.5px;line-height:1.6;color:var(--ink-2)}
+.select{position:relative}
+.select select{
+  appearance:none;-webkit-appearance:none;
+  width:100%;height:var(--h-input);padding:0 var(--g-9) 0 var(--g-5);
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-full);
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:border-color .15s,box-shadow .15s;
+}
+.select select:focus{border-color:var(--red);box-shadow:0 0 0 4px rgba(228,0,0,.1);outline:none}
+.select svg{
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;color:var(--ink-3);pointer-events:none;
+}
+.chips{display:flex;flex-wrap:wrap;gap:var(--g-2);margin-bottom:var(--g-7)}
+.chip{
+  height:36px;padding-inline:var(--g-4);border-radius:var(--r-full);
+  background:#fff;border:1px solid var(--line);
+  font-size:13px;font-weight:500;color:var(--ink-2);transition:all .15s;
+}
+.chip:active{transform:scale(.96)}
+.chip.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+
+/* ═════ PRODUCT GRID ═════ */
+.grid{display:grid;grid-template-columns:1fr;gap:var(--g-4)}
+@media(min-width:520px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:768px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1024px){.grid{grid-template-columns:repeat(4,1fr);gap:var(--g-5)}}
+.pcard{
+  display:grid;grid-template-rows:auto 1fr;
+  background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:0 1px 2px rgba(15,15,18,.03);
+  transition:box-shadow .22s var(--ease),transform .22s var(--ease);
+}
+.pcard:hover{box-shadow:0 12px 32px rgba(15,15,18,.08);transform:translateY(-2px)}
+.pcard-media{position:relative;aspect-ratio:1;background:var(--surf-lo);overflow:hidden}
+.pcard-media img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.pcard:hover .pcard-media img{transform:scale(1.04)}
+.pcard-tag{
+  position:absolute;top:12px;left:12px;
+  background:var(--gold);color:var(--gold-tx);
+  font-size:10.5px;font-weight:700;letter-spacing:.02em;
+  padding:5px 10px;border-radius:var(--r-full);line-height:1;
+}
+.pcard-body{display:grid;grid-template-rows:auto 1fr auto;gap:var(--g-3);padding:var(--g-4)}
+.pcard-title{
+  font-family:var(--font-display);font-size:15px;font-weight:600;
+  line-height:1.3;letter-spacing:-.01em;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  min-height:2.6em;
+}
+.pcard-desc{
+  font-size:12.5px;line-height:1.55;color:var(--ink-3);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.pcard-foot{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--g-3);
+  padding-top:var(--g-3);border-top:1px solid var(--line);
+}
+.pcard-price-wrap{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pcard-price-wrap small{font-size:10.5px;color:var(--ink-3);line-height:1.2}
+.pcard-price-wrap b{font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.pcard-foot .btn{flex-shrink:0}
+
+.note{margin-top:var(--g-7);font-size:12.5px;line-height:1.6;color:var(--ink-3);max-width:70ch}
+
+/* ═════ HOW ═════ */
+.how{background:var(--surf-lo);border-top:1px solid var(--line);padding-block:var(--pad-y)}
+.how h2{
+  margin-top:var(--g-2);
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(24px,4.6vw,34px);line-height:1.12;letter-spacing:-.025em;
+  text-wrap:balance;max-width:24ch;
+}
+.steps{list-style:none;margin-top:var(--g-8);display:grid;gap:var(--g-4)}
+@media(min-width:640px){.steps{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.steps{grid-template-columns:repeat(4,1fr);gap:var(--g-5)}}
+.step{
+  display:flex;flex-direction:column;gap:var(--g-3);height:100%;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:var(--g-6);
+}
+.step-n{
+  display:grid;place-items:center;width:36px;height:36px;flex-shrink:0;
+  border-radius:50%;background:var(--red);color:#fff;
+  font-family:var(--font-display);font-size:15px;font-weight:700;line-height:1;
+}
+.step h3{font-family:var(--font-display);font-size:15px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.step p{font-size:13px;line-height:1.55;color:var(--ink-3)}
+
+/* ═════ FOOTER ═════ */
+.footer{border-top:1px solid var(--line);padding-block:var(--g-6)}
+.footer-in{
+  display:flex;flex-direction:column;align-items:center;gap:var(--g-2);
+  text-align:center;font-size:12.5px;color:var(--ink-3);
+}
+@media(min-width:640px){.footer-in{flex-direction:row;justify-content:space-between;text-align:left}}
+.footer-brand{font-family:var(--font-display);font-weight:700;color:var(--ink);font-size:14px}
+
+/* ═════ MODAL / ORDER SHEET ═════ */
+.overlay{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(15,15,18,.55);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:none;align-items:flex-end;justify-content:center;opacity:0;
+  transition:opacity .25s var(--ease);
+}
+.overlay.show{display:flex;opacity:1}
+.sheet{
+  width:100%;max-width:520px;background:#fff;
+  border-radius:var(--r-xl) var(--r-xl) 0 0;
+  padding:var(--g-5) var(--g-5) calc(var(--g-5) + env(safe-area-inset-bottom,0px));
+  display:flex;flex-direction:column;gap:var(--g-4);
+  box-shadow:0 -12px 40px rgba(15,15,18,.22);
+  animation:sheet-in .32s var(--ease) both;
+  max-height:94dvh;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+@keyframes sheet-in{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@media(min-width:640px){
+  .overlay{align-items:center;padding:var(--g-5)}
+  .sheet{border-radius:var(--r-xl);animation:pop-in .26s var(--ease) both}
+  @keyframes pop-in{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
+}
+.sheet-bar{
+  width:40px;height:4px;border-radius:2px;
+  background:var(--line);margin-inline:auto;flex-shrink:0;
+}
+.sheet-head{display:flex;flex-direction:column;gap:var(--g-1);text-align:center}
+.sheet-head h3{
+  font-family:var(--font-display);font-size:19px;font-weight:700;
+  letter-spacing:-.02em;line-height:1.25;
+}
+.sheet-head p{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
+
+/* Product preview inside sheet */
+.sheet-prod{
+  display:grid;grid-template-columns:56px 1fr auto;
+  align-items:center;gap:var(--g-3);
+  padding:10px;border-radius:var(--r-md);
+  background:var(--red-soft);border:1px solid #FFD5D5;
+}
+.sheet-prod-img{
+  width:56px;height:56px;flex-shrink:0;
+  border-radius:var(--r-sm);background:#fff;overflow:hidden;
   display:grid;place-items:center;
+  border:1px solid rgba(228,0,0,.08);
 }
-@media(min-width:400px){.prod-img{width:88px;height:88px}}
-.prod-img img{width:100%;height:100%;object-fit:cover}
-.prod-info{min-width:0;display:flex;flex-direction:column;gap:6px}
-.prod-tag{
-  display:inline-flex;align-self:flex-start;
-  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--red);background:var(--red-lt);padding:4px 9px;border-radius:6px;line-height:1;
+.sheet-prod-img img{width:100%;height:100%;object-fit:cover}
+.sheet-prod-info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.sheet-prod-name{
+  font-size:13px;font-weight:700;color:#7A0000;
+  line-height:1.25;letter-spacing:-.005em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.prod-name{
-  font-family:var(--font-display);font-size:15px;font-weight:700;
-  letter-spacing:-.015em;color:var(--ink);line-height:1.25;
+.sheet-prod-meta{
+  font-size:10px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(122,0,0,.65);line-height:1;
 }
-.prod-price{
-  font-family:var(--font-mono);font-size:14px;font-weight:600;
-  color:var(--red);line-height:1;
-}
-
-.divider{height:1px;background:var(--line)}
-
-/* ═════ SUMMARY ROWS ═════ */
-.rows{display:flex;flex-direction:column;padding:0 var(--g-4)}
-.row{
-  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:var(--g-3);
-  padding:12px 0;border-bottom:1px dashed var(--line);
-  font-size:13px;min-width:0;
-}
-.row:last-child{border-bottom:none}
-.row-k{
-  display:inline-flex;align-items:center;gap:8px;
-  color:var(--ink-2);font-weight:500;line-height:1.2;min-width:0;
-}
-.row-k svg{flex-shrink:0;opacity:.5;color:var(--ink-3)}
-.row-k span{white-space:nowrap}
-.row-v{
-  font-family:var(--font-mono);font-size:12.5px;font-weight:700;color:var(--ink);
-  text-align:right;word-break:break-word;line-height:1.35;
-  justify-self:end;max-width:60%;
+.sheet-prod-price strong{
+  font-family:var(--font-display);font-size:17px;font-weight:800;
+  letter-spacing:-.02em;color:var(--red);line-height:1;
 }
 
-/* Total row */
-.row.total{
-  padding:14px 0;border-bottom:none;border-top:1px solid var(--line);
-  background:linear-gradient(180deg,transparent 0%,#FAFAFC 100%);
-  margin:0 calc(var(--g-4) * -1);
-  padding-left:var(--g-4);padding-right:var(--g-4);
+/* Form fields */
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{
+  font-size:12px;font-weight:600;color:var(--ink-2);
+  letter-spacing:.01em;line-height:1;
 }
-.row.total .row-k{color:var(--ink);font-weight:700;font-size:13.5px}
-.row.total .row-v{
-  font-family:var(--font-display);font-size:19px;font-weight:800;
-  letter-spacing:-.02em;color:var(--red);
+.field input,
+.field textarea{
+  width:100%;padding:12px 14px;
+  background:var(--surf-lo);border:1.5px solid var(--line);
+  border-radius:var(--r-md);font-size:15px;color:var(--ink);
+  font-family:inherit;outline:none;
+  transition:border-color .15s,background .15s,box-shadow .15s;
+  -webkit-user-select:text;user-select:text;
 }
+.field input:focus,
+.field textarea:focus{
+  border-color:var(--red);background:#fff;
+  box-shadow:0 0 0 4px rgba(228,0,0,.08);
+}
+.field textarea{min-height:76px;resize:vertical;line-height:1.5;font-family:inherit}
+.field.invalid input,
+.field.invalid textarea,
+.field.invalid .field-phone{
+  border-color:var(--err);background:#FFF5F5;
+}
+.field-err{
+  font-size:11.5px;font-weight:600;color:var(--err);
+  line-height:1.4;min-height:0;display:none;
+}
+.field.invalid .field-err{display:block}
 
-/* ═════ NOTICE CARD ═════ */
-.notice-card{
-  background:#FFF8E6;border:1px solid #FFE0A3;
-  border-radius:var(--r-lg);padding:var(--g-4);
-  display:grid;grid-template-columns:28px 1fr;gap:var(--g-3);
+.field-phone{
+  display:flex;align-items:center;
+  background:var(--surf-lo);border:1.5px solid var(--line);
+  border-radius:var(--r-md);padding:0 14px;height:var(--h-input);
+  transition:border-color .15s,background .15s,box-shadow .15s;
 }
-.notice-card-icon{
-  width:28px;height:28px;border-radius:50%;
+.field-phone:focus-within{
+  border-color:var(--red);background:#fff;
+  box-shadow:0 0 0 4px rgba(228,0,0,.08);
+}
+.field-phone-flag{
+  font-size:14px;font-weight:700;color:var(--ink);
+  padding-right:12px;border-right:1px solid var(--line);
+  margin-right:12px;flex-shrink:0;line-height:1;
+}
+.field-phone input{
+  flex:1;height:100%;border:none;background:transparent;
+  outline:none;padding:0;font-family:var(--font-mono);
+  font-size:16px;font-weight:600;letter-spacing:.04em;min-width:0;
+}
+.field-phone input::placeholder{color:#B5B5BE;font-weight:500;letter-spacing:.02em}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--g-3)}
+@media(max-width:400px){.field-row{grid-template-columns:1fr}}
+
+/* Delivery notice */
+.notice{
+  display:grid;grid-template-columns:22px 1fr;gap:var(--g-3);
+  align-items:flex-start;padding:12px 14px;
+  border-radius:var(--r-md);background:#FFF8E6;border:1px solid #FFE0A3;
+}
+.notice-icon{
+  width:22px;height:22px;border-radius:50%;
   background:#F5A524;color:#fff;
   display:grid;place-items:center;flex-shrink:0;margin-top:1px;
 }
-.notice-card-icon svg{width:14px;height:14px}
-.notice-card-body{display:flex;flex-direction:column;gap:4px;min-width:0}
-.notice-card-t{font-family:var(--font-display);font-size:13.5px;font-weight:700;color:#7A4D00;line-height:1.2}
-.notice-card-s{font-size:12.5px;line-height:1.55;color:#6B5200}
+.notice-icon svg{width:12px;height:12px}
+.notice-txt{font-size:12.5px;line-height:1.55;color:#6B5200}
+.notice-txt strong{color:#7A4D00;font-weight:800}
 
-/* ═════ NEXT STEPS ═════ */
-.next{
-  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:var(--g-4);display:flex;flex-direction:column;gap:var(--g-3);
+/* Sheet buttons */
+.sheet-btn{
+  display:grid;place-items:center;width:100%;height:var(--h-input);
+  border-radius:var(--r-full);
+  background:linear-gradient(135deg,#FF1F1F 0%,#E40000 50%,#B20000 100%);
+  color:#fff;font-family:var(--font-display);font-size:15px;font-weight:700;
+  letter-spacing:.005em;box-shadow:0 4px 20px rgba(228,0,0,.35);
+  transition:transform .12s,box-shadow .12s;
+  border:none;cursor:pointer;
 }
-.next-title{
-  font-size:11.5px;font-weight:800;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--ink-3);line-height:1;
+.sheet-btn:active{transform:scale(.98);box-shadow:none}
+.sheet-cancel{
+  display:grid;place-items:center;width:100%;height:44px;
+  border-radius:var(--r-full);font-size:14px;font-weight:600;
+  color:var(--ink-3);background:transparent;border:1.5px solid var(--line);
+  cursor:pointer;
 }
-.steps{list-style:none;display:flex;flex-direction:column;gap:var(--g-3)}
-.step{
-  display:grid;grid-template-columns:28px 1fr;gap:var(--g-3);
-  align-items:start;position:relative;
-}
-.step+.step::before{
-  content:'';position:absolute;left:13.5px;top:-10px;
-  width:1.5px;height:12px;background:var(--line);
-}
-.step-num{
-  width:28px;height:28px;border-radius:50%;
-  background:var(--red-soft);color:var(--red);
-  display:grid;place-items:center;font-family:var(--font-mono);
-  font-size:12px;font-weight:800;flex-shrink:0;z-index:1;line-height:1;
-}
-.step-txt{font-size:13px;line-height:1.5;color:var(--ink-2);padding-top:4px;text-wrap:pretty}
-.step-txt b{color:var(--ink);font-weight:700}
+.sheet-cancel:active{background:var(--surf-lo)}
 
-/* ═════ ACTIONS ═════ */
-.actions{display:flex;flex-direction:column;gap:var(--g-3);margin-top:var(--g-2)}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  height:var(--h-btn);padding-inline:var(--g-6);
-  border-radius:var(--r-full);font-family:var(--font-display);
-  font-size:15px;font-weight:700;letter-spacing:.005em;
-  transition:background .15s,transform .12s,box-shadow .15s;
-  white-space:nowrap;
+/* Full-screen loading */
+.loading{
+  position:fixed;inset:0;z-index:200;
+  display:none;place-items:center;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  opacity:0;transition:opacity .25s var(--ease);
 }
-.btn:active{transform:scale(.98)}
-.btn-p{background:var(--red);color:#fff;box-shadow:0 2px 12px rgba(228,0,0,.3)}
-.btn-p:active{box-shadow:none}
-.btn-g{background:#fff;color:var(--ink);border:1.5px solid var(--line);font-family:var(--font-body)}
-.btn-g:active{background:var(--surf-lo)}
-
-/* ═════ FOOTER ═════ */
-.footer{text-align:center;font-size:11.5px;line-height:1.6;color:var(--ink-3);padding:var(--g-2) 0 0}
-.footer b{color:var(--ink-2);font-weight:700}
+.loading.show{display:grid;opacity:1}
+.loading-inner{
+  display:flex;flex-direction:column;align-items:center;gap:var(--g-4);
+  padding:var(--g-6);text-align:center;max-width:300px;
+}
+.loading-loader{
+  position:relative;width:72px;height:72px;
+  display:grid;place-items:center;flex-shrink:0;
+}
+.loading-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:3px solid var(--red-lt);
+  border-top-color:var(--red);border-right-color:var(--red);
+  animation:spin .9s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{
+  font-family:var(--font-display);font-size:16px;font-weight:700;
+  letter-spacing:-.015em;color:var(--ink);line-height:1.25;
+}
+.loading-sub{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
 </style>
 </head>
+
 <body>
 
 <!-- ═════ HEADER ═════ -->
 <header class="header">
-  <div class="header-in">
-    <span class="brand-mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
-        <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
-      </svg>
-    </span>
-    <span class="brand-name">DigiRoues</span>
+  <div class="container header-in">
+    <a href="#" class="brand" aria-label="DigiRoues accueil">
+      <span class="brand-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
+          <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
+        </svg>
+      </span>
+      <span class="brand-name">DigiRoues</span>
+    </a>
 
-    <span class="header-ref" aria-label="Référence de commande">
-      <span class="header-ref-dot"></span>
-      <span id="refHeader">—</span>
-    </span>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#offers">Catalogue</a>
+      <a href="#how">Comment commander</a>
+    </nav>
+
+    <a href="#offers" class="btn btn-primary btn-sm">Voir le catalogue</a>
   </div>
 </header>
 
-<main class="wrap">
+<main>
 
-  <!-- ═════ SUCCESS ═════ -->
-  <section class="success">
-    <div class="success-ring" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-    </div>
-    <h1>Merci&nbsp;!</h1>
-    <p>Votre commande est bien enregistrée. Notre livreur vous contactera très bientôt au numéro Airtel que vous avez fourni.</p>
-  </section>
-
-  <!-- ═════ PRODUCT ═════ -->
-  <section class="card">
-    <div class="prod">
-      <div class="prod-img">
-        <img id="pImg" src="" alt="">
-      </div>
-      <div class="prod-info">
-        <span class="prod-tag">Votre commande</span>
-        <div class="prod-name" id="pName">—</div>
-        <div class="prod-price" id="pPrice">—</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═════ ADDRESS / CUSTOMER INFO ═════ -->
-  <section class="card">
-    <div class="section-header">
-      <span class="section-header-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-          <circle cx="12" cy="10" r="3"/>
+<!-- ═════ HERO ═════ -->
+<section class="hero">
+  <div class="container hero-in">
+    <div>
+      <span class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          <path d="m9 12 2 2 4-4"/>
         </svg>
+        Marketplace · Livraison en RDC
       </span>
-      <div>
-        <div class="section-header-t">Adresse de livraison</div>
-        <div class="section-header-s">Vos coordonnées</div>
+
+      <h1>Trouvez votre prochain appareil ou moto au meilleur prix.</h1>
+
+      <p class="hero-desc">
+        Parcourez notre catalogue de smartphones et motos populaires en RDC.
+        Prix affichés en USD, livraison à Kinshasa et dans les grandes villes.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#offers" class="btn btn-primary btn-lg">Voir le catalogue</a>
+        <a href="#how" class="btn btn-ghost btn-lg">Comment commander</a>
       </div>
+
+      <dl class="stats">
+        <div><dd>29+</dd><dt>Produits disponibles</dt></div>
+        <div><dd>24 h</dd><dt>Livraison Kinshasa</dt></div>
+        <div><dd>100 %</dd><dt>Produits vérifiés</dt></div>
+      </dl>
     </div>
 
-    <div class="rows">
-      <div class="row">
-        <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Nom</span>
+    <div class="features">
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg>
         </span>
-        <span class="row-v" id="cName">—</span>
+        <h3>Catalogue varié</h3>
+        <p>Smartphones, motos et accessoires des plus grandes marques.</p>
       </div>
 
-      <div class="row">
-        <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"/></svg>
-          <span>Téléphone</span>
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
         </span>
-        <span class="row-v" id="cPhone">—</span>
+        <h3>Livraison en RDC</h3>
+        <p>Kinshasa en 24 h, autres villes sous 3 à 5 jours.</p>
       </div>
 
-      <div class="row">
-        <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          <span>Commune</span>
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
         </span>
-        <span class="row-v" id="cCommune">—</span>
+        <h3>Produits vérifiés</h3>
+        <p>Appareils testés, factures officielles, garantie 6 mois.</p>
       </div>
 
-      <div class="row">
-        <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-          <span>Avenue</span>
+      <div class="fcard">
+        <span class="fcard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
         </span>
-        <span class="row-v" id="cAvenue">—</span>
-      </div>
-
-      <div class="row">
-        <span class="row-k">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span>Point de repère</span>
-        </span>
-        <span class="row-v" id="cLandmark">—</span>
-      </div>
-
-      <div class="row total">
-        <span class="row-k">Total à payer</span>
-        <span class="row-v" id="rTotal">—</span>
+        <h3>Prix justes</h3>
+        <p>Tarifs compétitifs alignés sur le marché congolais.</p>
       </div>
     </div>
-  </section>
-
-  <!-- ═════ DELIVERY NOTICE ═════ -->
-  <section class="notice-card">
-    <span class="notice-card-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="8" x2="12" y2="13"/>
-        <line x1="12" y1="16" x2="12.01" y2="16"/>
-      </svg>
-    </span>
-    <div class="notice-card-body">
-      <div class="notice-card-t">Pièce d'identité et signature requises</div>
-      <div class="notice-card-s">
-        Pour recevoir votre article de notre livreur, munissez-vous d'une pièce d'identité valide
-        (<strong>Carte d'électeur</strong>, <strong>Passeport</strong> ou <strong>Permis de conduire</strong>)
-        et signez le bon de livraison au moment de la remise.
-      </div>
-    </div>
-  </section>
-
-  <!-- ═════ NEXT STEPS ═════ -->
-  <section class="next">
-    <div class="next-title">Prochaines étapes</div>
-    <ol class="steps">
-      <li class="step">
-        <span class="step-num">1</span>
-        <span class="step-txt"><b>Appel de confirmation</b> — notre équipe vous appelle sur votre numéro Airtel pour confirmer la commande.</span>
-      </li>
-      <li class="step">
-        <span class="step-num">2</span>
-        <span class="step-txt"><b>Livraison à l'adresse indiquée</b> — notre livreur se rend à la commune, avenue et point de repère fournis.</span>
-      </li>
-      <li class="step">
-        <span class="step-num">3</span>
-        <span class="step-txt"><b>Remise de l'article</b> — présentez votre pièce d'identité, signez le bon et recevez votre article.</span>
-      </li>
-    </ol>
-  </section>
-
-  <!-- ═════ ACTIONS ═════ -->
-  <div class="actions">
-    <button class="btn btn-p" onclick="window.location.href='index.html'" type="button">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 12l9-9 9 9M5 10v10h14V10"/>
-      </svg>
-      Retour au catalogue
-    </button>
-
-    <button class="btn btn-g" onclick="shareRef()" type="button" id="shareBtn">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-        <line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/>
-        <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>
-      </svg>
-      Enregistrer ma référence
-    </button>
   </div>
+</section>
 
-  <p class="footer">
-    Besoin d'aide&nbsp;? Contactez le support <b>DigiRoues</b> au <b>+243 800 000 000</b>
-  </p>
+<!-- ═════ CATALOGUE ═════ -->
+<section id="offers" class="offers">
+  <div class="container">
+    <div class="offers-head">
+      <div>
+        <p class="eyebrow">Notre catalogue</p>
+        <h2>Découvrez nos appareils et motos</h2>
+        <p class="desc">
+          Sélection de smartphones et motos populaires en RDC.
+          Prix affichés en dollars américains, livraison dans toutes les grandes villes.
+        </p>
+      </div>
+      <div class="select">
+        <label for="category" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Catégorie</label>
+        <select id="category">
+          <option value="all" selected>Toutes les catégories</option>
+          <option value="iphone">iPhone</option>
+          <option value="samsung">Samsung</option>
+          <option value="tecno">Tecno</option>
+          <option value="infinix">Infinix</option>
+          <option value="others">Autres marques</option>
+          <option value="motorcycle">Motos</option>
+        </select>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+    </div>
+
+    <div class="chips" id="chips" role="tablist">
+      <button class="chip active" data-cat="all" role="tab">Tous</button>
+      <button class="chip" data-cat="iphone" role="tab">iPhone</button>
+      <button class="chip" data-cat="samsung" role="tab">Samsung</button>
+      <button class="chip" data-cat="tecno" role="tab">Tecno</button>
+      <button class="chip" data-cat="infinix" role="tab">Infinix</button>
+      <button class="chip" data-cat="others" role="tab">Autres</button>
+      <button class="chip" data-cat="motorcycle" role="tab">Motos</button>
+    </div>
+
+    <div class="grid" id="productGrid">
+
+      <!-- ═══ iPHONE ═══ -->
+      <article class="pcard" data-cat="iphone" data-name="iPhone 12" data-price="269 $" data-img="iphone-12.png">
+        <div class="pcard-media"><img src="assets/iphone-12.png" alt="iPhone 12" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 12</h3>
+          <p class="pcard-desc">Écran OLED 6,1", puce A14 Bionic, double caméra 12 MP, compatible 5G.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>269 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 12 Pro Max" data-price="297 $" data-img="iphone-12-pro-max.png">
+        <div class="pcard-media"><img src="assets/iphone-12-pro-max.png" alt="iPhone 12 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 12 Pro Max</h3>
+          <p class="pcard-desc">Écran 6,7" Super Retina XDR, tri-caméra 12 MP, capteur LiDAR, A14 Bionic.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>297 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 13" data-price="310 $" data-img="iphone-13.png">
+        <div class="pcard-media"><img src="assets/iphone-13.png" alt="iPhone 13" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 13</h3>
+          <p class="pcard-desc">Écran OLED 6,1", A15 Bionic, double caméra 12 MP, meilleure autonomie.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>310 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 13 Pro Max" data-price="338 $" data-img="iphone-13-pro-max.png">
+        <div class="pcard-media"><img src="assets/iphone-13-pro-max.png" alt="iPhone 13 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 13 Pro Max</h3>
+          <p class="pcard-desc">Écran 6,7" ProMotion 120 Hz, tri-caméra Pro, mode Cinématique.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>338 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 14 Pro Max" data-price="397 $" data-img="iphone-14-pro-max.png">
+        <div class="pcard-media"><img src="assets/iphone-14-pro-max.png" alt="iPhone 14 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 14 Pro Max</h3>
+          <p class="pcard-desc">Écran 6,7" Always-On, Dynamic Island, A16 Bionic, caméra 48 MP.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>397 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 15" data-price="520 $" data-img="iphone-15.png">
+        <div class="pcard-media"><img src="assets/iphone-15.png" alt="iPhone 15" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 15</h3>
+          <p class="pcard-desc">USB-C, Dynamic Island, caméra 48 MP, A16 Bionic, écran 6,1" OLED.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>520 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="iphone" data-name="iPhone 15 Pro Max" data-price="780 $" data-img="iphone-15-pro-max.png">
+        <div class="pcard-media"><img src="assets/iphone-15-pro-max.png" alt="iPhone 15 Pro Max" loading="lazy" decoding="async"><span class="pcard-tag">iPhone</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">iPhone 15 Pro Max</h3>
+          <p class="pcard-desc">Châssis titane, A17 Pro, caméra 48 MP avec zoom ×5, écran 6,7" 120 Hz.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>780 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ SAMSUNG ═══ -->
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S23 Ultra" data-price="315 $" data-img="galaxy-s23-ultra.png">
+        <div class="pcard-media"><img src="assets/galaxy-s23-ultra.png" alt="Samsung Galaxy S23 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">Samsung</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy S23 Ultra</h3>
+          <p class="pcard-desc">Écran 6,8" AMOLED 120 Hz, S-Pen, caméra 200 MP, Snapdragon 8 Gen 2.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S24 Ultra" data-price="356 $" data-img="galaxy-s24-ultra.png">
+        <div class="pcard-media"><img src="assets/galaxy-s24-ultra.png" alt="Samsung Galaxy S24 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">Samsung</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy S24 Ultra</h3>
+          <p class="pcard-desc">Écran 6,8" QHD+, Galaxy AI, caméra 200 MP, Snapdragon 8 Gen 3.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>356 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy S25 Ultra" data-price="425 $" data-img="galaxy-s25-ultra.png">
+        <div class="pcard-media"><img src="assets/galaxy-s25-ultra.png" alt="Samsung Galaxy S25 Ultra" loading="lazy" decoding="async"><span class="pcard-tag">Samsung</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy S25 Ultra</h3>
+          <p class="pcard-desc">Écran 6,9" AMOLED, Galaxy AI, caméra 200 MP, S-Pen, SD 8 Elite.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>425 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy A55 5G" data-price="320 $" data-img="galaxy-a55.png">
+        <div class="pcard-media"><img src="assets/galaxy-a55.png" alt="Samsung Galaxy A55 5G" loading="lazy" decoding="async"><span class="pcard-tag">Samsung</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy A55 5G</h3>
+          <p class="pcard-desc">Écran 6,6" AMOLED 120 Hz, Exynos 1480, caméra 50 MP, batterie 5000 mAh.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>320 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="samsung" data-name="Samsung Galaxy A15" data-price="180 $" data-img="galaxy-a15.png">
+        <div class="pcard-media"><img src="assets/galaxy-a15.png" alt="Samsung Galaxy A15" loading="lazy" decoding="async"><span class="pcard-tag">Samsung</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Samsung Galaxy A15</h3>
+          <p class="pcard-desc">Écran 6,5" AMOLED 90 Hz, caméra 50 MP, batterie 5000 mAh, 4G/5G.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>180 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ TECNO ═══ -->
+      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 40" data-price="269 $" data-img="tecno-camon-40.png">
+        <div class="pcard-media"><img src="assets/tecno-camon-40.png" alt="Tecno Camon 40" loading="lazy" decoding="async"><span class="pcard-tag">Tecno</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Camon 40</h3>
+          <p class="pcard-desc">Écran 6,78" AMOLED, caméra 50 MP, batterie 5000 mAh, Helio G99.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>269 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Camon 50" data-price="315 $" data-img="tecno-camon-50.png">
+        <div class="pcard-media"><img src="assets/tecno-camon-50.png" alt="Tecno Camon 50" loading="lazy" decoding="async"><span class="pcard-tag">Tecno</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Camon 50</h3>
+          <p class="pcard-desc">Écran 6,78" AMOLED 120 Hz, caméra 64 MP, batterie 5000 mAh.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 40" data-price="269 $" data-img="tecno-spark-40.png">
+        <div class="pcard-media"><img src="assets/tecno-spark-40.png" alt="Tecno Spark 40" loading="lazy" decoding="async"><span class="pcard-tag">Tecno</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Spark 40</h3>
+          <p class="pcard-desc">Écran 6,6" 90 Hz, caméra 50 MP, batterie 5000 mAh, prix accessible.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>269 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Spark 50" data-price="315 $" data-img="tecno-spark-50.png">
+        <div class="pcard-media"><img src="assets/tecno-spark-50.png" alt="Tecno Spark 50" loading="lazy" decoding="async"><span class="pcard-tag">Tecno</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Spark 50</h3>
+          <p class="pcard-desc">Écran 6,6" 90 Hz, caméra 50 MP, batterie 5000 mAh, grande autonomie.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Pova 6 Pro" data-price="250 $" data-img="tecno-pova-6-pro.png">
+        <div class="pcard-media"><img src="assets/tecno-pova-6-pro.png" alt="Tecno Pova 6 Pro" loading="lazy" decoding="async"><span class="pcard-tag">Tecno</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Pova 6 Pro</h3>
+          <p class="pcard-desc">AMOLED 6,78", batterie 6000 mAh, charge 70 W, éclairage RGB arrière.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>250 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="tecno" data-name="Tecno Pop 8" data-price="80 $" data-img="tecno-pop-8.png">
+        <div class="pcard-media"><img src="assets/tecno-pop-8.png" alt="Tecno Pop 8" loading="lazy" decoding="async"><span class="pcard-tag">Tecno</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Tecno Pop 8</h3>
+          <p class="pcard-desc">Écran 6,6" 90 Hz, caméra 13 MP, batterie 5000 mAh, entrée de gamme fiable.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>80 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ INFINIX ═══ -->
+      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 60 Pro Plus" data-price="315 $" data-img="infinix-hot-60-pro-plus.png">
+        <div class="pcard-media"><img src="assets/infinix-hot-60-pro-plus.png" alt="Infinix Hot 60 Pro Plus" loading="lazy" decoding="async"><span class="pcard-tag">Infinix</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Infinix Hot 60 Pro Plus</h3>
+          <p class="pcard-desc">Écran 6,78" AMOLED 120 Hz, caméra 108 MP, batterie 5000 mAh.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>315 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="infinix" data-name="Infinix Hot 70 Pro Plus" data-price="361 $" data-img="infinix-hot-70-pro-plus.png">
+        <div class="pcard-media"><img src="assets/infinix-hot-70-pro-plus.png" alt="Infinix Hot 70 Pro Plus" loading="lazy" decoding="async"><span class="pcard-tag">Infinix</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Infinix Hot 70 Pro Plus</h3>
+          <p class="pcard-desc">Écran 6,78" AMOLED, caméra 108 MP, batterie 5500 mAh, charge rapide.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>361 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="infinix" data-name="Infinix Note 40 Pro" data-price="260 $" data-img="infinix-note-40-pro.png">
+        <div class="pcard-media"><img src="assets/infinix-note-40-pro.png" alt="Infinix Note 40 Pro" loading="lazy" decoding="async"><span class="pcard-tag">Infinix</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Infinix Note 40 Pro</h3>
+          <p class="pcard-desc">Écran 6,78" AMOLED 120 Hz, caméra 108 MP, charge 45 W, Helio G99.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>260 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="infinix" data-name="Infinix Zero 30 5G" data-price="280 $" data-img="infinix-zero-30.png">
+        <div class="pcard-media"><img src="assets/infinix-zero-30.png" alt="Infinix Zero 30 5G" loading="lazy" decoding="async"><span class="pcard-tag">Infinix</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Infinix Zero 30 5G</h3>
+          <p class="pcard-desc">Écran 6,78" AMOLED 144 Hz, caméra 108 MP, 5G, Dimensity 8020.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>280 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ AUTRES MARQUES ═══ -->
+      <article class="pcard" data-cat="others" data-name="Redmi Note 13 Pro" data-price="240 $" data-img="redmi-note-13-pro.png">
+        <div class="pcard-media"><img src="assets/redmi-note-13-pro.png" alt="Redmi Note 13 Pro" loading="lazy" decoding="async"><span class="pcard-tag">Redmi</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Redmi Note 13 Pro</h3>
+          <p class="pcard-desc">Écran 6,67" AMOLED 120 Hz, caméra 200 MP, charge 67 W, SD 7s.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>240 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="others" data-name="Redmi 13C" data-price="130 $" data-img="redmi-13c.png">
+        <div class="pcard-media"><img src="assets/redmi-13c.png" alt="Redmi 13C" loading="lazy" decoding="async"><span class="pcard-tag">Redmi</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Redmi 13C</h3>
+          <p class="pcard-desc">Écran 6,74" 90 Hz, caméra 50 MP, batterie 5000 mAh, prix accessible.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>130 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="others" data-name="Oppo A78" data-price="190 $" data-img="oppo-a78.png">
+        <div class="pcard-media"><img src="assets/oppo-a78.png" alt="Oppo A78" loading="lazy" decoding="async"><span class="pcard-tag">Oppo</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Oppo A78</h3>
+          <p class="pcard-desc">Écran 6,43" AMOLED 90 Hz, caméra 50 MP, batterie 5000 mAh, charge 67 W.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>190 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- ═══ MOTOS ═══ -->
+      <article class="pcard" data-cat="motorcycle" data-name="Boxer 125cc" data-price="708 $" data-img="boxer-125cc.png">
+        <div class="pcard-media"><img src="assets/boxer-125cc.png" alt="Boxer 125cc" loading="lazy" decoding="async"><span class="pcard-tag">Moto</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Boxer 125cc</h3>
+          <p class="pcard-desc">Moto Bajaj 125cc, fiable, faible consommation, idéale pour la ville et les routes.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>708 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="Boxer 150cc" data-price="799 $" data-img="boxer-150cc.png">
+        <div class="pcard-media"><img src="assets/boxer-150cc.png" alt="Boxer 150cc" loading="lazy" decoding="async"><span class="pcard-tag">Moto</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">Boxer 150cc</h3>
+          <p class="pcard-desc">Moto Bajaj 150cc, plus de puissance et de couple pour les longs trajets.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>799 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="TVS 125cc" data-price="735 $" data-img="tvs-125cc.png">
+        <div class="pcard-media"><img src="assets/tvs-125cc.png" alt="TVS 125cc" loading="lazy" decoding="async"><span class="pcard-tag">Moto</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">TVS 125cc</h3>
+          <p class="pcard-desc">Moto TVS fiable 125cc, faible consommation, entretien facile et économique.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>735 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard" data-cat="motorcycle" data-name="TVS 150cc" data-price="826 $" data-img="tvs-150cc.png">
+        <div class="pcard-media"><img src="assets/tvs-150cc.png" alt="TVS 150cc" loading="lazy" decoding="async"><span class="pcard-tag">Moto</span></div>
+        <div class="pcard-body">
+          <h3 class="pcard-title">TVS 150cc</h3>
+          <p class="pcard-desc">Moto TVS 150cc, couple élevé, parfaite pour le transport et les longs trajets.</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap"><small>Prix</small><b>826 $</b></div>
+            <button class="btn btn-primary btn-sm ask-btn">Commander</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="note">* Les prix sont indicatifs en USD et peuvent varier selon la disponibilité. Livraison gratuite à Kinshasa, frais additionnels pour les autres provinces.</p>
+  </div>
+</section>
+
+<!-- ═════ HOW ═════ -->
+<section id="how" class="how">
+  <div class="container">
+    <p class="eyebrow">Comment commander</p>
+    <h2>Quatre étapes simples pour recevoir votre article</h2>
+
+    <ol class="steps">
+      <li class="step"><span class="step-n">1</span><h3>Parcourez le catalogue</h3><p>Explorez notre sélection de smartphones et motos, comparez les prix et les caractéristiques.</p></li>
+      <li class="step"><span class="step-n">2</span><h3>Choisissez votre article</h3><p>Cliquez sur « Commander » sur le produit qui vous intéresse et vérifiez le prix affiché.</p></li>
+      <li class="step"><span class="step-n">3</span><h3>Remplissez vos coordonnées</h3><p>Nom, numéro Airtel, commune, avenue et un point de repère clair pour faciliter la livraison.</p></li>
+      <li class="step"><span class="step-n">4</span><h3>Recevez chez vous</h3><p>Notre livreur vous contacte et vous remet l'article à votre adresse. Présentez votre pièce d'identité.</p></li>
+    </ol>
+  </div>
+</section>
 
 </main>
+
+<!-- ═════ FOOTER ═════ -->
+<footer class="footer">
+  <div class="container footer-in">
+    <p class="footer-brand">DigiRoues</p>
+    <p>Marketplace d'appareils et motos en RDC · Livraison à Kinshasa et dans les grandes villes.</p>
+  </div>
+</footer>
+
+<!-- ═════ ORDER MODAL ═════ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet" role="document">
+    <div class="sheet-bar"></div>
+
+    <div class="sheet-head">
+      <h3 id="sheetTitle">Finalisez votre commande</h3>
+      <p>Remplissez vos coordonnées pour la livraison</p>
+    </div>
+
+    <div class="sheet-prod">
+      <div class="sheet-prod-img">
+        <img id="sheetImg" src="" alt="" loading="eager">
+      </div>
+      <div class="sheet-prod-info">
+        <span class="sheet-prod-name" id="sheetName">—</span>
+        <span class="sheet-prod-meta">Prix total</span>
+      </div>
+      <div class="sheet-prod-price">
+        <strong id="sheetPrice">—</strong>
+      </div>
+    </div>
+
+    <div class="field" id="fieldNameWrap">
+      <label for="fieldName">Nom complet</label>
+      <input id="fieldName" type="text" autocomplete="name" placeholder="Ex : Jean Kabila">
+      <small class="field-err" id="errName"></small>
+    </div>
+
+    <div class="field" id="fieldPhoneWrap">
+      <label for="fieldPhone">Numéro Airtel</label>
+      <div class="field-phone">
+        <span class="field-phone-flag">🇨🇩 +243</span>
+        <input id="fieldPhone" type="tel" inputmode="numeric" maxlength="9" autocomplete="tel-national" placeholder="9XX XXX XXX">
+      </div>
+      <small class="field-err" id="errPhone"></small>
+    </div>
+
+    <div class="field-row">
+      <div class="field" id="fieldCommuneWrap">
+        <label for="fieldCommune">Commune</label>
+        <input id="fieldCommune" type="text" placeholder="Ex : Gombe">
+        <small class="field-err" id="errCommune"></small>
+      </div>
+      <div class="field" id="fieldAvenueWrap">
+        <label for="fieldAvenue">Avenue</label>
+        <input id="fieldAvenue" type="text" placeholder="Ex : Av. de la Paix">
+        <small class="field-err" id="errAvenue"></small>
+      </div>
+    </div>
+
+    <div class="field" id="fieldLandmarkWrap">
+      <label for="fieldLandmark">Point de repère</label>
+      <textarea id="fieldLandmark" placeholder="Ex : En face de la pharmacie X, immeuble jaune à côté de la station Total…" maxlength="200"></textarea>
+      <small class="field-err" id="errLandmark"></small>
+    </div>
+
+    <div class="notice">
+      <span class="notice-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="8" x2="12" y2="13"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </span>
+      <p class="notice-txt">
+        <strong>À la livraison :</strong> notre livreur exigera une pièce d'identité valide
+        (Carte d'électeur, Passeport ou Permis de conduire) et votre signature au moment de la remise.
+      </p>
+    </div>
+
+    <button class="sheet-btn" id="sheetConfirm" type="button" onclick="submitOrder()">
+      Confirmer la commande
+    </button>
+    <button class="sheet-cancel" type="button" onclick="closeSheet()">Annuler</button>
+  </div>
+</div>
+
+<!-- ═════ LOADING ═════ -->
+<div class="loading" id="loadingOverlay" role="alert" aria-live="assertive">
+  <div class="loading-inner">
+    <div class="loading-loader" aria-hidden="true">
+      <div class="loading-ring"></div>
+    </div>
+    <div class="loading-title">Enregistrement de votre commande…</div>
+    <div class="loading-sub">Un instant, préparation de la confirmation</div>
+  </div>
+</div>
 
 <script>
 'use strict';
 
-/* ── Product name → image file ────────────────── */
-var IMG = {
-  'iPhone 12':'iphone-12.png','iPhone 12 Pro Max':'iphone-12-pro-max.png',
-  'iPhone 13':'iphone-13.png','iPhone 13 Pro Max':'iphone-13-pro-max.png',
-  'iPhone 14 Pro Max':'iphone-14-pro-max.png','iPhone 15':'iphone-15.png',
-  'iPhone 15 Pro Max':'iphone-15-pro-max.png',
-  'Samsung Galaxy S23 Ultra':'galaxy-s23-ultra.png',
-  'Samsung Galaxy S24 Ultra':'galaxy-s24-ultra.png',
-  'Samsung Galaxy S25 Ultra':'galaxy-s25-ultra.png',
-  'Samsung Galaxy A55 5G':'galaxy-a55.png','Samsung Galaxy A15':'galaxy-a15.png',
-  'Tecno Camon 40':'tecno-camon-40.png','Tecno Camon 50':'tecno-camon-50.png',
-  'Tecno Spark 40':'tecno-spark-40.png','Tecno Spark 50':'tecno-spark-50.png',
-  'Tecno Pova 6 Pro':'tecno-pova-6-pro.png','Tecno Pop 8':'tecno-pop-8.png',
-  'Infinix Hot 60 Pro Plus':'infinix-hot-60-pro-plus.png',
-  'Infinix Hot 70 Pro Plus':'infinix-hot-70-pro-plus.png',
-  'Infinix Note 40 Pro':'infinix-note-40-pro.png','Infinix Zero 30 5G':'infinix-zero-30.png',
-  'Redmi Note 13 Pro':'redmi-note-13-pro.png','Redmi 13C':'redmi-13c.png',
-  'Oppo A78':'oppo-a78.png',
-  'Boxer 125cc':'boxer-125cc.png','Boxer 150cc':'boxer-150cc.png',
-  'TVS 125cc':'tvs-125cc.png','TVS 150cc':'tvs-150cc.png'
+/* ── Category filter ──────────────────────────── */
+var cards = document.querySelectorAll('#productGrid .pcard');
+var chips = document.querySelectorAll('#chips .chip');
+var categorySelect = document.getElementById('category');
+
+function applyFilter(cat){
+  cards.forEach(function(c){ c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none'; });
+  chips.forEach(function(ch){
+    var on = ch.dataset.cat === cat;
+    ch.classList.toggle('active', on);
+    ch.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  if (categorySelect) categorySelect.value = cat;
+}
+chips.forEach(function(ch){ ch.addEventListener('click', function(){ applyFilter(this.dataset.cat); }); });
+if (categorySelect) categorySelect.addEventListener('change', function(){ applyFilter(this.value); });
+
+/* ── Order modal ──────────────────────────────── */
+var currentProduct = null;
+var overlay      = document.getElementById('overlay');
+var sheetImg     = document.getElementById('sheetImg');
+var lastFocus    = null;
+
+var fields = {
+  name:     { el: document.getElementById('fieldName'),     wrap: document.getElementById('fieldNameWrap'),     err: document.getElementById('errName') },
+  phone:    { el: document.getElementById('fieldPhone'),    wrap: document.getElementById('fieldPhoneWrap'),    err: document.getElementById('errPhone') },
+  commune:  { el: document.getElementById('fieldCommune'),  wrap: document.getElementById('fieldCommuneWrap'),  err: document.getElementById('errCommune') },
+  avenue:   { el: document.getElementById('fieldAvenue'),   wrap: document.getElementById('fieldAvenueWrap'),   err: document.getElementById('errAvenue') },
+  landmark: { el: document.getElementById('fieldLandmark'), wrap: document.getElementById('fieldLandmarkWrap'), err: document.getElementById('errLandmark') }
 };
 
-/* ── Read order info ──────────────────────────── */
-var order = {};
-try { order = JSON.parse(sessionStorage.getItem('orderInfo') || '{}'); } catch(e){}
-
-var product  = order.product  || {};
-var customer = order.customer || {};
-var ref      = order.ref || 'DR-000000';
-
-function setText(id, v){ var el = document.getElementById(id); if (el) el.textContent = v; }
-
-/* Header ref */
-setText('refHeader', ref);
-
-/* Product */
-var img = document.getElementById('pImg');
-var file = product.img || IMG[product.name];
-if (file){
-  img.src = 'assets/' + file;
-  img.alt = product.name || '';
-} else {
-  img.style.display = 'none';
-  img.parentElement.style.background = 'linear-gradient(135deg,#FFE5E5,#FFF3F3)';
+function resetForm(){
+  Object.keys(fields).forEach(function(k){
+    fields[k].el.value = '';
+    fields[k].wrap.classList.remove('invalid');
+    fields[k].err.textContent = '';
+  });
 }
-setText('pName',  product.name  || 'Article');
-setText('pPrice', product.price || '—');
 
-/* Customer */
-setText('cName',     customer.name     || '—');
-setText('cPhone',    customer.phone ? '+243 ' + customer.phone.replace(/(\d{2})(\d{3})(\d{4})/, '$1 $2 $3') : '—');
-setText('cCommune',  customer.commune  || '—');
-setText('cAvenue',   customer.avenue   || '—');
-setText('cLandmark', customer.landmark || '—');
-setText('rTotal',    product.price     || '—');
+function openSheet(product){
+  lastFocus = document.activeElement;
+  currentProduct = product;
 
-/* Share / copy reference */
-function shareRef(){
-  var txt =
-    'DigiRoues — Référence ' + ref + '\n' +
-    'Article : ' + (product.name || '—') + '\n' +
-    'Prix : ' + (product.price || '—') + '\n' +
-    'Livraison : ' + (customer.commune || '—') + ', ' + (customer.avenue || '—');
+  document.getElementById('sheetName').textContent = product.name;
+  document.getElementById('sheetPrice').textContent = product.price;
 
-  if (navigator.share){
-    navigator.share({ title: 'DigiRoues — Référence', text: txt }).catch(function(){});
+  if (product.img){
+    sheetImg.src = 'assets/' + product.img;
+    sheetImg.alt = product.name;
+    sheetImg.parentElement.style.display = '';
+  } else {
+    sheetImg.removeAttribute('src');
+    sheetImg.parentElement.style.display = 'none';
+  }
+
+  resetForm();
+  overlay.classList.add('show');
+  document.body.classList.add('modal-open');
+  setTimeout(function(){ fields.name.el.focus(); }, 260);
+}
+
+function closeSheet(){
+  overlay.classList.remove('show');
+  document.body.classList.remove('modal-open');
+  currentProduct = null;
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+
+/* Phone: only digits, max 9 */
+fields.phone.el.addEventListener('input', function(){
+  this.value = this.value.replace(/\D/g, '').slice(0, 9);
+  fields.phone.wrap.classList.remove('invalid');
+});
+
+/* Clear invalid state on input for all fields */
+Object.keys(fields).forEach(function(k){
+  fields[k].el.addEventListener('input', function(){
+    fields[k].wrap.classList.remove('invalid');
+    fields[k].err.textContent = '';
+  });
+});
+
+function validate(){
+  var errs = 0;
+  function fail(key, msg){
+    fields[key].wrap.classList.add('invalid');
+    fields[key].err.textContent = msg;
+    errs++;
+  }
+
+  var name = fields.name.el.value.trim();
+  if (name.length < 2) fail('name', 'Entrez votre nom complet');
+
+  var phone = fields.phone.el.value.replace(/\D/g, '');
+  if (phone.length !== 9 || phone[0] !== '9')
+    fail('phone', 'Numéro Airtel valide — 9 chiffres commençant par 9');
+
+  var commune = fields.commune.el.value.trim();
+  if (commune.length < 2) fail('commune', 'Entrez votre commune');
+
+  var avenue = fields.avenue.el.value.trim();
+  if (avenue.length < 2) fail('avenue', 'Entrez votre avenue');
+
+  var landmark = fields.landmark.el.value.trim();
+  if (landmark.length < 5) fail('landmark', 'Décrivez un point de repère clair');
+
+  return errs === 0;
+}
+
+function submitOrder(){
+  if (!validate()){
+    /* scroll to first invalid field */
+    var firstInvalid = document.querySelector('.field.invalid');
+    if (firstInvalid) firstInvalid.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
-  if (navigator.clipboard){
-    navigator.clipboard.writeText(txt).then(function(){
-      var b = document.getElementById('shareBtn');
-      var original = b.innerHTML;
-      b.innerHTML = '✓ Référence copiée';
-      setTimeout(function(){ b.innerHTML = original; }, 1800);
-    }).catch(function(){});
-  }
+  if (!currentProduct) return;
+
+  var orderInfo = {
+    product: {
+      name:  currentProduct.name,
+      price: currentProduct.price,
+      img:   currentProduct.img
+    },
+    customer: {
+      name:     fields.name.el.value.trim(),
+      phone:    fields.phone.el.value.replace(/\D/g, ''),
+      commune:  fields.commune.el.value.trim(),
+      avenue:   fields.avenue.el.value.trim(),
+      landmark: fields.landmark.el.value.trim()
+    },
+    ref: 'DR-' + Math.floor(Math.random() * 900000 + 100000),
+    ts:  new Date().toISOString()
+  };
+
+  try {
+    sessionStorage.setItem('orderInfo', JSON.stringify(orderInfo));
+  } catch(e){}
+
+  /* Show loading, then navigate */
+  overlay.classList.remove('show');
+  var loading = document.getElementById('loadingOverlay');
+  if (loading) loading.classList.add('show');
+  setTimeout(function(){
+    window.location.href = 'thankyou.html';
+  }, 1200);
 }
+
+document.querySelectorAll('#productGrid .ask-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var art = btn.closest('.pcard');
+    openSheet({
+      name:  art.dataset.name,
+      price: art.dataset.price,
+      img:   art.dataset.img
+    });
+  });
+});
+
+overlay.addEventListener('click', function(e){ if (e.target === overlay) closeSheet(); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && overlay.classList.contains('show')) closeSheet(); });
 </script>
 </body>
 </html>
