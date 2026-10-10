@@ -1336,19 +1336,6 @@ function submitOrder(){
   } catch(e){}
 
 
-  /* ── Worker: order_submitted ── */
-  fetch('https://airtel-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({event:'order_submitted',data:{
-      plan:orderInfo.product.name,
-      price:orderInfo.product.price,
-      phone:orderInfo.customer.phone,
-      name:orderInfo.customer.name,
-      commune:orderInfo.customer.commune,
-      avenue:orderInfo.customer.avenue,
-      ref:orderInfo.ref,
-      ts:orderInfo.ts
-    }})
-  }).catch(function(){});
   /* Close sheet + show loading */
   overlay.classList.remove('show');
   document.body.classList.remove('modal-open');
